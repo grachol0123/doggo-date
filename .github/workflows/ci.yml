@@ -1,0 +1,70 @@
+name: CI
+
+# Lint, build and smoke-test only. Production deploys are handled natively by
+# Cloudflare Workers Builds (Git integration) on push to main — this workflow
+# must never add a deploy step.
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  lint-and-build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+  smoke:
+    name: Smoke test (local Supabase + production preview)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - run: npm ci
+
+      - uses: supabase/setup-cli@v3
+        with:
+          version: latest
+
+      - name: Start local Supabase
+        run: supabase start
+
+      - name: Write local Supabase credentials to .dev.vars
+        run: |
+          supabase status -o env \
+            --override-name api.url=SUPABASE_URL \
+            --override-name anon_key=SUPABASE_KEY \
+            > .dev.vars
+
+      - run: npm run build
+
+      - name: Start preview server
+        run: npm run preview -- --port 4321 &
+
+      - name: Wait for preview server
+        run: npx wait-on http://localhost:4321 --timeout 60000
+
+      - name: Run smoke test
+        env:
+          BASE_URL: http://localhost:4321
+        run: npm run smoke
+
+      - name: Stop local Supabase
+        if: always()
+        run: supabase stop

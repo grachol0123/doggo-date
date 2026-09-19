@@ -1,0 +1,147 @@
+---
+status: in-progress
+project: Doggo Date
+platform: Cloudflare Workers
+source: context/foundation/infrastructure.md
+---
+
+# Cloudflare Integration & Deployment Plan — Doggo Date
+
+> **Status: Phase 0 complete** (except one deferred, non-blocking item).
+> Wrangler CLI is installed, authenticated, and dry-run validated
+> (2026-09-19). Supabase CLI is logged in and linked to the production
+> project (`wogwfkeuyfdxsuvacpqj`, "grachol0123's Project", region West EU/
+> Ireland — confirmed 2026-09-19). Local `supabase start` (Docker-based dev
+> stack) is deferred since Docker isn't installed on this machine — not
+> required for the production deploy path. GitHub repo confirmed configured;
+> Cloudflare's Git integration authorization (Phase 2) is still pending.
+> Phases 1–7 remain unexecuted.
+
+## Problem & Approach
+
+`infrastructure.md` recommends deploying on Cloudflare Workers. The repo is
+already wired for it (`@astrojs/cloudflare` adapter, `wrangler.jsonc` with
+correct `compatibility_date`/`nodejs_compat`), but several gaps remain before
+a safe first production deploy:
+
+- `tech-stack.md` still labels the deployment target `cloudflare-pages`
+  (stale — actual config is Workers + static assets).
+- No `.github/workflows/ci.yml` exists yet, even though CLAUDE.md documents one.
+- Production auto-deploy should be handled **natively by Cloudflare** (Git
+  integration / Workers Builds triggering on push to `main`/`master`), not by
+  an external CI/CD pipeline — GitHub Actions is reserved for lint/build/smoke
+  checks only. A local `wrangler deploy` path stays available for manual/
+  one-off deploys (rollback, hotfix, first bootstrap deploy before Git
+  integration is wired up).
+- No secrets are provisioned yet (production or local `.dev.vars`).
+- Several edge cases flagged in `infrastructure.md`'s risk register need
+  concrete support steps (nodejs_compat drift, cross-region latency, free-plan
+  log-tailing limits, CPU-time ceiling, silent-failure alerting).
+- `OPENROUTER_API_KEY` is **not** provisioned now (no code uses it yet) — will
+  be revisited when the AI feature lands.
+- No custom domain — keep the default `*.workers.dev` subdomain for the MVP.
+
+## Phases
+
+### Phase 0 — Prerequisites & CLI setup
+
+#### 0.1 Base tooling
+- [x] Confirm Node v22.14.0 active (`nvm use` picks up `.nvmrc`) and run `npm install` so `wrangler` (`^4.131.1`) and `supabase` (`^2.23.4`) devDependencies are present in `node_modules/.bin`. *(Verified 2026-09-19 — both CLIs resolve via `npx`.)*
+- [x] Prefer invoking both CLIs via `npx`/`npm run` (pinned local versions) rather than any globally installed `wrangler`/`supabase` binary, to avoid version drift between machines.
+  - **Edge case:** if a global `wrangler`/`supabase` is also installed, `npx wrangler`/`npx supabase` still resolves the local devDependency first when run from the repo root — confirm with `npx wrangler --version` / `npx supabase --version` matching `package.json`.
+
+#### 0.2 Configuring the Cloudflare Wrangler CLI
+- [x] Verify the CLI resolves and check its version: `npx wrangler --version` (expect `^4.131.1`). *(Verified 2026-09-19 — `wrangler 4.131.1`.)*
+- [x] Authenticate one of two ways:
+  - **Interactive (local dev machine):** `npx wrangler login` — opens a browser OAuth flow, stores an OAuth token locally (`~/.wrangler/config`, gitignored/out-of-repo). Confirm with `npx wrangler whoami`, which prints the authenticated account name and account ID. ***(Done — already logged in via OAuth as `maciej.graszek@gmail.com`, confirmed via `wrangler whoami` on 2026-09-19.)***
+  - **Non-interactive / headless (CI, remote shells without a browser):** create a scoped Cloudflare **API Token** (Cloudflare dashboard → My Profile → API Tokens → "Create Token", using the "Edit Cloudflare Workers" template scoped to this project/account only — not the account-wide "Edit zone DNS" or Global API Key). Export it as `CLOUDFLARE_API_TOKEN` in the shell/CI secret store; Wrangler picks it up automatically without `wrangler login`. Optionally also set `CLOUDFLARE_ACCOUNT_ID` if the token has access to multiple accounts.
+    - **Edge case:** browser OAuth (`wrangler login`) cannot complete in headless/CI environments (no browser to redirect to) — always use the `CLOUDFLARE_API_TOKEN` path there. *(Still applies for the future CI/Git-integration setup in Phase 2/4 — the interactive login used for local dev doesn't cover that.)*
+    - **Edge case:** an overly broad token (e.g. Global API Key) violates the least-privilege posture from `infrastructure.md`'s operational story — always scope tokens to Workers edit permissions on the single relevant account, never account-wide admin. *(Note: the current OAuth token has broad account-wide scope (Workers, Pages, D1, KV, AI, etc.) — acceptable for solo local dev, but do not reuse this same token for CI; issue a narrowly-scoped API token instead when Phase 4 needs one.)*
+- [x] Confirm the correct account is targeted: `npx wrangler whoami` (interactive) shows the account name/ID; for token auth, cross-check `CLOUDFLARE_ACCOUNT_ID` matches the intended Cloudflare account if the token spans more than one. *(Verified 2026-09-19 — account "Maciej.graszek@gmail.com's Account", ID `9973e6d3f5c02fa214a6800cbd5119c3`.)*
+- [x] Sanity-check the project's Wrangler config resolves without errors: `npx wrangler deploy --dry-run` (or `npx wrangler versions upload --dry-run` on newer Wrangler) validates `wrangler.jsonc`, `compatibility_date`, and the `nodejs_compat` flag without actually deploying. *(Verified 2026-09-19 — dry-run succeeded: build produced 28 modules/2062.58 KiB, bindings `env.SESSION` (KV), `env.IMAGES`, `env.ASSETS` all resolved correctly.)*
+  - **Edge case:** a dry-run failure here almost always means either an invalid `wrangler.jsonc` field or a missing `main` entrypoint — fix before proceeding to Phase 2/5 rather than debugging on a live deploy.
+- [x] Record (not commit) the confirmed Cloudflare account ID for reference during Phase 2 (Git integration setup) and Phase 3 (secrets). *(Account ID `9973e6d3f5c02fa214a6800cbd5119c3` — see above; not committed to source.)*
+
+#### 0.3 Configuring the Supabase CLI
+> **Status:** a Supabase cloud project already exists for this app. Local CLI
+> authentication/linking is **not yet done** — `npx supabase projects list`
+> returned "Access token not provided" and `npx supabase status` returned
+> "Not linked." on 2026-09-19. The steps below remain open until `supabase
+> login` + `supabase link` are run.
+- [x] Verify the CLI resolves and check its version: `npx supabase --version` (expect `^2.23.4`); the repo already has `supabase/config.toml` (`project_id = "10x-astro-starter"`) from `supabase init`, so no re-init is needed. *(Verified 2026-09-19 — resolves via `npx` as `2.117.0`, which satisfies the `^2.23.4` semver range in `package.json` — no re-pin needed.)*
+- [x] Authenticate against Supabase's hosted platform (needed to link to/manage the production project, not just local dev): `npx supabase login` — opens a browser flow and stores a personal access token locally (`~/.supabase`, out-of-repo). *(Verified 2026-09-19 — `npx supabase projects list` now returns the account's project instead of "Access token not provided", confirming login succeeded.)*
+  - **Edge case (headless/CI):** generate a Supabase **Personal Access Token** (Supabase dashboard → Account → Access Tokens) and export it as `SUPABASE_ACCESS_TOKEN` in the shell/CI secret store; the CLI picks it up automatically without `supabase login`.
+- [x] Link the local repo to the production Supabase project: `npx supabase link --project-ref <project-ref>` (project ref is the short ID in the Supabase project's dashboard URL/Settings → General). This enables `supabase db push`/`supabase db diff` against the real project later, separate from local Docker-based dev. *(Done 2026-09-19 — linked to project ref `wogwfkeuyfdxsuvacpqj` ("grachol0123's Project", org `ltxdhtxcoggygcrzhfpf`); no DB password prompt was needed for the link step itself. `npx supabase status` now shows "Linked Project" instead of "Not linked".)*
+  - **Edge case:** `supabase link` will prompt for the database password if migrations need to run remotely — use the project's DB password from Supabase dashboard → Settings → Database, not the anon/service-role API keys (different credential).
+- [ ] For local development (Docker required): `npx supabase start` boots the local Postgres/Auth/Realtime stack defined in `supabase/config.toml`; `npx supabase status` prints local `API URL`/`anon key`/`service_role key` to populate `.dev.vars` (Phase 3) and `.env` for local `npm run dev`. **(Deferred — Docker is not installed on this machine (`docker` command not found), so the local dev stack can't be started here. Not required for the production deploy path; only needed if/when local Docker-based dev is used on this machine or another one that has Docker.)**
+  - **Edge case:** `supabase start` requires Docker Desktop (or an equivalent daemon) running — if Docker isn't installed/running, the command fails with a connection error to the Docker socket, not a Supabase-specific error; install/start Docker first.
+- [x] Confirm the **production** Supabase project region (Settings → General → Region) is close to the target single-region user base (per PRD/interview) — this is a one-time dashboard check that cannot be changed after project creation without migrating to a new project, so verify it before Phase 5's first deploy, not after. *(Confirmed 2026-09-19 via `npx supabase projects list` — region is "West EU (Ireland)".)*
+  - **Edge case:** if the wrong region was chosen at project creation, the only fix is creating a new Supabase project in the correct region and migrating schema/data — budget for this now rather than discovering it post-launch.
+- [x] Note the two distinct Supabase key types and where each is used: the **anon/public key** (`SUPABASE_KEY` in this repo's `.env.example`, safe for client-exposed contexts under RLS) vs. the **service_role key** (bypasses RLS — never set as a Worker secret unless a server-only code path explicitly requires it, and never expose to the client bundle). *(Documented 2026-09-19 — no server-only code path in this repo currently requires the service_role key; only the anon key is used.)*
+
+### Phase 1 — Reconcile configuration & known risks
+- [x] Update `context/foundation/tech-stack.md` frontmatter: `deployment_target: cloudflare-pages` → `cloudflare-workers` (matches the anti-bias finding — Cloudflare is steering new projects away from Pages, and this repo already uses `@astrojs/cloudflare` + `wrangler deploy`). *(Done 2026-09-19 — no other `cloudflare-pages` references found elsewhere in the file.)*
+- [x] Verify `wrangler.jsonc` keeps `compatibility_date` and explicit `"compatibility_flags": ["nodejs_compat"]` (already present — add a comment/note only if compatibility_date is ever bumped past 2026-08-04, since nodejs_compat becomes implicit after that date and the explicit flag can then be safely removed or left as a no-op). *(Verified 2026-09-19 — `compatibility_date` is `2026-05-08` (before the 2026-08-04 threshold) and `compatibility_flags: ["nodejs_compat"]` is present; still required as-is.)*
+  - **Edge case:** if a future config edit removes `nodejs_compat` before that threshold, Supabase calls fail silently at runtime (no build-time error). Add this as a required manual-review item in PR templates/checklist for any `wrangler.jsonc` change.
+- [x] Confirm `astro.config.mjs` `env.schema` matches the actual secret names used at runtime (`SUPABASE_URL`, `SUPABASE_KEY`). *(Verified 2026-09-19 — `env.schema` declares exactly `SUPABASE_URL` and `SUPABASE_KEY` as server-only secrets, matching Phase 3's secret names.)*
+
+### Phase 2 — Cloudflare project & native auto-deploy setup
+> **Status:** the GitHub repo itself is confirmed configured (`origin` remote →
+> `https://github.com/grachol0123/doggo-date.git`, repo renamed from
+> `hamsta-date` — re-verified 2026-09-19). Connecting that repo to
+> Cloudflare's Git integration (the dashboard authorization step below) is
+> still pending — it's a manual, non-scriptable action separate from the
+> repo's own git configuration.
+- [x] In the Cloudflare dashboard, connect the GitHub repo (`grachol0123/doggo-date`) via Workers Builds / Git integration so pushes to `main`/`master` trigger an automatic build+deploy natively on Cloudflare (per `infrastructure.md` operational story and the "platform handles deploy, not external CI" constraint). *(Done 2026-09-19 — user connected `grachol0123/doggo-date`, production branch `main`, Worker named `doggo-date`. Confirmed via dashboard screenshot: Worker `doggo-date` linked to GitHub repo, latest version `d23eaa94` tagged `main`, bindings `ASSETS`/`IMAGES`/`SESSION` (KV) present.)*
+  - **Edge case:** first-time Git integration requires GitHub App authorization — a human must approve repo access in the Cloudflare dashboard (cannot be scripted).
+  - **Edge case:** if the Git-integration webhook silently fails to trigger (known intermittent issue), fall back to manual `npm run build && npx wrangler deploy` from a local shell as an immediate unblock, then re-check the webhook delivery log in GitHub repo Settings → Webhooks.
+  - **Bug found & fixed:** `wrangler.jsonc`'s `"name"` field was `10x-astro-starter` (stale from the starter template) while Cloudflare's Git integration deployed the Worker as `doggo-date` (matching `package.json`). This mismatch meant a manual `npx wrangler deploy` would have created/targeted a **second, separate Worker** instead of updating the Git-managed one. Fixed by changing `wrangler.jsonc`'s `"name"` to `"doggo-date"` — re-validated with `npx wrangler deploy --dry-run` and confirmed with `npx wrangler deployments list` now correctly resolving the existing 3 deployments (previously errored with "This Worker does not exist").
+- [x] Confirm build command/output directory Cloudflare uses match `npm run build` → `./dist` (per `wrangler.jsonc` `assets.directory`). *(Confirmed 2026-09-19 — Git-integration build succeeded and deployed correctly; `wrangler.jsonc`'s `assets.directory: "./dist"` matches Astro's default build output.)*
+- [x] Keep local `npx wrangler deploy` as the documented manual/fallback deploy path (used for first bootstrap deploy before Git integration exists, and for urgent hotfixes). *(Confirmed working 2026-09-19 after the Worker-name fix above — `npx wrangler deploy --dry-run` succeeds and targets the same `doggo-date` Worker as the Git integration.)*
+- [x] Document that Cloudflare preview URLs are generated automatically per branch/PR once Git integration is connected — no extra protection step needed for this MVP (note Cloudflare Access as an optional future gate). *(Documented — default Cloudflare Workers Builds behavior; no action needed for MVP scope.)*
+- [x] Enable the `workers.dev` subdomain (was "Disabled"/"No URLs enabled" per the initial dashboard screenshot) so the Worker has a public `*.workers.dev` URL for Phase 5 smoke testing, per the "no custom domain for MVP" decision. Added `"workers_dev": true` to `wrangler.jsonc` so it stays enabled on future deploys. *(User confirmed enabled 2026-09-19.)*
+
+### Phase 3 — Secrets management
+- [x] Local dev: create `.dev.vars` (gitignored) with `SUPABASE_URL` and `SUPABASE_KEY`, copying `.env.example` shape. *(Done 2026-09-19 — `.dev.vars` created with the project's `SUPABASE_URL` (`https://wogwfkeuyfdxsuvacpqj.supabase.co`) and the public/publishable `SUPABASE_KEY` (`sb_publishable_...`, safe for client-exposed contexts under RLS — no service_role/secret key used). Confirmed already covered by `.gitignore`.)*
+- [x] Production secrets via CLI: `npx wrangler secret put SUPABASE_URL`, `npx wrangler secret put SUPABASE_KEY`. *(Done 2026-09-19 — both values piped via stdin non-interactively to avoid echoing secrets to the terminal; `npx wrangler secret list` confirms both `SUPABASE_KEY` and `SUPABASE_URL` exist as `secret_text` on the `doggo-date` Worker.)*
+  - **Edge case:** if Git-integration deploys are used instead of CLI deploys, secrets set via `wrangler secret put` still apply (they're bound to the Worker, not the deploy method) — verify with `npx wrangler secret list` after setup.
+- [x] Do **not** provision `OPENROUTER_API_KEY` yet — no code consumes it; revisit when the AI feature is implemented (tracked as a follow-up, not part of this deploy). *(Confirmed 2026-09-19 — skipped intentionally, matches "Notes & Decisions" section.)*
+- [x] Rotation procedure: re-run `wrangler secret put <NAME>` with a new value; document that rotating the primary Supabase service key requires human approval (per `infrastructure.md` operational story). *(Documented — no action needed now since no service_role key is in use; procedure recorded here for future rotation of `SUPABASE_URL`/`SUPABASE_KEY` or when a service_role key is later provisioned.)*
+
+### Phase 4 — CI workflow (lint/build/smoke only, no deploy)
+- [x] Recreate `.github/workflows/ci.yml` running on push/PR to `main`/`master`: `npm ci` → `npm run lint` → `npm run build` (matches CLAUDE.md's documented behavior, currently missing from the repo). *(Done 2026-09-19 — `lint-and-build` job created; `npm run lint` and `npm run build` verified passing locally beforehand.)*
+- [x] Add a second job (or step) running `npm run smoke` against a local Supabase instance + the built preview, mirroring CLAUDE.md's description ("a separate job runs the smoke test against a local Supabase + production preview"). *(Done 2026-09-19 — `smoke` job added: installs `supabase/setup-cli`, runs `supabase start` (Docker-based local stack, available on `ubuntu-latest` runners), writes the local instance's `api.url`/`anon_key` into `.dev.vars` via `supabase status -o env --override-name ...`, builds, starts `npm run preview` in the background, waits for it with `npx wait-on`, then runs `npm run smoke` against `http://localhost:4321`. Verified locally that `npm run build`/`preview` correctly picks up `.dev.vars` ("Using secrets defined in .dev.vars" in build output).)*
+  - **Deviation from original plan:** rather than using static `SUPABASE_URL`/`SUPABASE_KEY` **repo secrets** for the build step, the workflow derives fresh local credentials each run directly from the ephemeral `supabase start` instance. This avoids exposing/duplicating real Supabase credentials in GitHub Actions secrets purely for a smoke test that only needs a throwaway local auth backend — no repo secrets were added.
+  - **Edge case:** `supabase start` requires Docker, which is preinstalled on GitHub-hosted `ubuntu-latest` runners — no extra setup needed there (unlike this local dev machine, which lacks Docker).
+- [x] Explicitly do **not** add a deploy step to this workflow — deploy stays on Cloudflare's native Git integration per the constraint that platform handles production deploys, not external CI/CD. *(Confirmed 2026-09-19 — no deploy/wrangler step present in `ci.yml`.)*
+
+### Phase 5 — First deployment & verification
+- [ ] Trigger the first deploy: either push to `main` (native Git integration) or run `npm run build && npx wrangler deploy` manually for the initial bootstrap deploy.
+- [ ] Verify deployment succeeded: check Cloudflare dashboard deployment status or `npx wrangler deployments list`.
+- [ ] Run `npm run smoke` with `BASE_URL` pointed at the deployed `*.workers.dev` URL to confirm the auth flow and a Supabase-backed request succeed end-to-end.
+  - **Edge case:** if smoke fails only on the deployed URL (not locally), check for the missing/incorrect `nodejs_compat` flag or unset production secrets first (the two most likely silent-failure causes per the risk register).
+- [ ] Confirm the Supabase project region is close to the target user base (single-region per PRD) to minimize latency for Realtime messaging — this is a manual dashboard check, not scriptable.
+
+### Phase 6 — Rollback & observability procedures
+- [ ] Document rollback procedure: `npx wrangler versions list` → `npx wrangler rollback <VERSION_ID>`.
+  - **Edge case:** rollback reverts Worker code only — any Supabase schema migrations applied since the prior version do **not** roll back automatically. If a deploy included a migration, coordinate a manual reverse-migration before/alongside the code rollback.
+- [ ] Document that `npx wrangler tail` (live production log streaming) requires the **paid** Cloudflare plan.
+  - **Edge case (free plan):** no built-in way to tail production logs or get failure alerts. Recommended fallback: add a lightweight external error tracker (e.g. Sentry) or an uptime check hitting a Supabase-backed endpoint, so failures surface without needing `wrangler tail`.
+- [ ] Note the CPU-time ceiling (10ms/free plan) as a risk if/when OpenRouter streaming responses are added later; monitor Worker CPU-time metrics and budget for the $5/mo paid plan before that feature ships.
+
+### Phase 7 — Finalize the deployment plan record
+- [ ] Once Phases 0–6 are actually executed (in a future session), update this file by checking off completed steps and appending an "Outcomes" section noting anything that deviated from plan (e.g., manual deploy used instead of Git integration for the first deploy, any edge case actually hit).
+- [ ] Cross-link the risk register from `infrastructure.md` so future contributors/agents see both documents together.
+
+## Notes & Decisions Confirmed with User
+
+- Deploy automation: **native Cloudflare Git integration** for auto-deploy on push to `main`/`master`, with a manual `wrangler deploy` path kept available (not GitHub Actions running `wrangler deploy`).
+- CI workflow (`ci.yml`) will be recreated for lint/build/smoke only — never triggers a deploy.
+- `tech-stack.md`'s `deployment_target` label will be corrected from `cloudflare-pages` to reflect the actual Workers setup.
+- `OPENROUTER_API_KEY` is explicitly **out of scope** for this deployment pass (no consuming code yet).
+- No custom domain for this MVP — default `*.workers.dev` subdomain.
+
+## Related documents
+
+- `context/foundation/infrastructure.md` — platform research, comparison, anti-bias cross-check, and risk register this plan implements.
+- `context/foundation/tech-stack.md` — stack hand-off (to be updated in Phase 1).
