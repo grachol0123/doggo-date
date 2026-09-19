@@ -2,7 +2,10 @@
 // Zero dependencies on purpose. Run against a live server: BASE_URL=http://localhost:4321 node scripts/smoke.mjs
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:4321";
-const email = `smoke-${Date.now()}@example.com`;
+// mailinator.com is a real, publicly-resolvable domain (throwaway inbox service) —
+// Supabase's production email validation rejects reserved test domains like
+// example.com/example.org as invalid, unlike the local dev/CI instance.
+const email = `smoke-${Date.now()}@mailinator.com`;
 const password = "Smoke-Test-Passw0rd!";
 const jar = new Map();
 
