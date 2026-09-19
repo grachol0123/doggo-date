@@ -84,6 +84,8 @@ The team deployed Doggo Date on Cloudflare Workers' free plan, assuming that bec
 
 ## Risk Register
 
+> **Resolution status (2026-09-20):** see `context/changes/deployment/deployment-plan.md` for how each risk below was actually addressed during the production deploy (Phases 0–6), including two bugs found and fixed that aren't in this original register: a stale `wrangler.jsonc` Worker `name` mismatch (Phase 2) and a Supabase CLI `--override-name` field-path error in CI (Phase 4).
+
 | Risk | Source | Likelihood | Impact | Mitigation |
 |---|---|---|---|---|
 | Cross-region latency between the Worker's edge node and Supabase's fixed database region undercuts "instant" message delivery (NFR/FR-006) | Devil's advocate / Pre-mortem | M | M | Pick/confirm a Supabase project region close to the target user base (single region per interview Q4); measure round-trip latency with `npm run smoke` against the deployed URL before relying on "instant" messaging in the PRD. |

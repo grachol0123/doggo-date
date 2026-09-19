@@ -1,5 +1,5 @@
 ---
-status: in-progress
+status: complete
 project: Doggo Date
 platform: Cloudflare Workers
 source: context/foundation/infrastructure.md
@@ -7,14 +7,13 @@ source: context/foundation/infrastructure.md
 
 # Cloudflare Integration & Deployment Plan — Doggo Date
 
-> **Status: Phases 0–6 complete.** Worker `doggo-date` is live at
+> **Status: Complete (Phases 0–7).** Worker `doggo-date` is live at
 > `https://doggo-date.maciej-graszek.workers.dev/`, deployed automatically via
 > Cloudflare's Git integration on push to `main`. Production secrets set,
 > CI (lint/build/smoke) green, and smoke test passes end-to-end against
-> production. Rollback (`wrangler versions list` / `wrangler rollback`) and
-> observability constraints (no `wrangler tail` on free plan, CPU-time
-> ceiling) documented in Phase 6. Only Phase 7 (finalize plan record)
-> remains.
+> production. Rollback and observability procedures documented (Phase 6).
+> See the "Outcomes" section below Phase 7 for all deviations/bugs found
+> and fixed during rollout.
 
 ## Problem & Approach
 
@@ -135,8 +134,22 @@ a safe first production deploy:
 - [x] Note the CPU-time ceiling (10ms/free plan) as a risk if/when OpenRouter streaming responses are added later; monitor Worker CPU-time metrics and budget for the $5/mo paid plan before that feature ships. *(Documented 2026-09-20 — no action needed now since `OPENROUTER_API_KEY`/streaming is explicitly out of scope for this deployment pass; flagged here so it's revisited when that feature is built.)*
 
 ### Phase 7 — Finalize the deployment plan record
-- [ ] Once Phases 0–6 are actually executed (in a future session), update this file by checking off completed steps and appending an "Outcomes" section noting anything that deviated from plan (e.g., manual deploy used instead of Git integration for the first deploy, any edge case actually hit).
-- [ ] Cross-link the risk register from `infrastructure.md` so future contributors/agents see both documents together.
+- [x] Once Phases 0–6 are actually executed (in a future session), update this file by checking off completed steps and appending an "Outcomes" section noting anything that deviated from plan (e.g., manual deploy used instead of Git integration for the first deploy, any edge case actually hit). *(Done 2026-09-20 — see Outcomes section below.)*
+- [x] Cross-link the risk register from `infrastructure.md` so future contributors/agents see both documents together. *(Done 2026-09-20 — added a "Resolution status" note above `infrastructure.md`'s Risk Register table pointing back to this plan.)*
+
+## Outcomes (deviations from the original plan)
+
+- **Deploy path used:** Cloudflare's native Git integration (auto-deploy on push to `main`), as originally planned — no manual `wrangler deploy` bootstrap was needed since the Worker already existed from connecting the repo in the dashboard.
+- **Worker name mismatch bug (Phase 2):** `wrangler.jsonc` still had the old starter's `"name": "10x-astro-starter"`. Cloudflare's Git integration had created the Worker as `doggo-date` (matching `package.json`). Left unfixed, a manual `wrangler deploy` would have created a second, split-brain Worker. Fixed by renaming to `"doggo-date"` and adding `"workers_dev": true`.
+- **`workers.dev` subdomain not enabled by default:** had to be manually toggled on in the Cloudflare dashboard (Settings → Domains & Routes) since Git-integration deploys don't enable it automatically even with `"workers_dev": true` in config (that setting only affects future/manual deploys).
+- **CI smoke-test override-name bug (Phase 4):** Supabase CLI's `--override-name` requires the dotted internal field path `auth.anon_key`, not the bare `anon_key` originally used — caused "Supabase is not configured" failures in the ephemeral CI Supabase instance.
+- **CI lint failures traced to a CI-config gap, not app bugs (Phase 4):** a fresh checkout has no `.astro/` directory (gitignored), so Astro virtual-module types (`astro:env/server`, `astro:middleware`) are unresolved, cascading into 20 `@typescript-eslint/no-unsafe-*` errors. Fixed by adding `npx astro sync` before `npm run lint` in CI. Confirmed via local reproduction (deleting `.astro/` and relinting) before concluding it wasn't an app defect.
+- **`gh` CLI authenticated as the wrong account:** blocked the first `git push` to the renamed repo (`grachol0123/doggo-date`) with "Repository not found" until the user ran `gh auth login`/`gh auth switch` to the correct account.
+- **Repo renamed mid-deployment:** `hamsta-date` → `doggo-date`; all plan references and Worker naming were updated to match.
+- **Smoke test email domain (Phase 5):** production Supabase rejects `@example.com` (reserved test domain) that the local/CI ephemeral instance accepts; switched `scripts/smoke.mjs` to `@mailinator.com`.
+- **Supabase production email rate limit (Phase 5):** hit after two consecutive production smoke runs; expected free-tier behavior, not a config defect — resets over time or requires custom SMTP (out of scope for this MVP pass).
+- **Local `supabase start` deferred:** Docker isn't installed on this dev machine; not required for the production deploy path, so left as a non-blocking gap rather than blocking the rollout.
+- **No live rollback test performed:** Phase 6 documents the rollback procedure (`wrangler versions list` → `wrangler rollback <VERSION_ID>`) and confirms the list command works against the live Worker, but no rollback was actually triggered since there's no faulty production version to roll back from yet.
 
 ## Notes & Decisions Confirmed with User
 
