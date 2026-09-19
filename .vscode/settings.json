@@ -1,0 +1,25 @@
+{
+  "eslint.enable": true,
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "astro"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "chat.tools.terminal.enableAutoApprove": true,
+  "chat.tools.terminal.autoApprove": {
+    "npm": true,
+    "npx": true,
+    "node": true,
+    "git add": true,
+    "git commit": true,
+    "git diff": true,
+    "git log": true,
+    "git status": true,
+    "git branch": true,
+    "git checkout": true,
+    "git stash": true,
+    "curl": false,
+    "wget": false,
+    "git push": false,
+    "rm": false
+  }
+}
