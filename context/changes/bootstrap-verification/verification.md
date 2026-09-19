@@ -2,7 +2,7 @@
 bootstrapped_at: 2026-09-19T14:54:28Z
 starter_id: 10x-astro-starter
 starter_name: 10x Astro Starter (Astro + Supabase + Cloudflare)
-project_name: hamsta-date
+project_name: doggo-date
 language_family: js
 package_manager: npm
 cwd_strategy: git-clone
@@ -16,7 +16,7 @@ audit_command: npm audit --json
 ```yaml
 starter_id: 10x-astro-starter
 package_manager: npm
-project_name: hamsta-date
+project_name: doggo-date
 hints:
   language_family: js
   team_size: solo
@@ -36,8 +36,8 @@ hints:
 
 ### Why this stack
 
-HamstaDate is a solo, after-hours web-app MVP with a 3-week timeline that needs
-email+password auth, a Postgres-backed data model (hamster profiles, matches,
+DoggoDate is a solo, after-hours web-app MVP with a 3-week timeline that needs
+email+password auth, a Postgres-backed data model (dog profiles, matches,
 messages), and a fast, cheap path to first deploy. The 10x Astro Starter
 (Astro + React islands + TypeScript + Supabase + Cloudflare) covers auth,
 database, and edge deployment out of the box, satisfies the solo user's stated
