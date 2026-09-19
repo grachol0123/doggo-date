@@ -7,15 +7,14 @@ source: context/foundation/infrastructure.md
 
 # Cloudflare Integration & Deployment Plan — Doggo Date
 
-> **Status: Phase 0 complete** (except one deferred, non-blocking item).
-> Wrangler CLI is installed, authenticated, and dry-run validated
-> (2026-09-19). Supabase CLI is logged in and linked to the production
-> project (`wogwfkeuyfdxsuvacpqj`, "grachol0123's Project", region West EU/
-> Ireland — confirmed 2026-09-19). Local `supabase start` (Docker-based dev
-> stack) is deferred since Docker isn't installed on this machine — not
-> required for the production deploy path. GitHub repo confirmed configured;
-> Cloudflare's Git integration authorization (Phase 2) is still pending.
-> Phases 1–7 remain unexecuted.
+> **Status: Phases 0–6 complete.** Worker `doggo-date` is live at
+> `https://doggo-date.maciej-graszek.workers.dev/`, deployed automatically via
+> Cloudflare's Git integration on push to `main`. Production secrets set,
+> CI (lint/build/smoke) green, and smoke test passes end-to-end against
+> production. Rollback (`wrangler versions list` / `wrangler rollback`) and
+> observability constraints (no `wrangler tail` on free plan, CPU-time
+> ceiling) documented in Phase 6. Only Phase 7 (finalize plan record)
+> remains.
 
 ## Problem & Approach
 
@@ -129,11 +128,11 @@ a safe first production deploy:
 - [x] Confirm the Supabase project region is close to the target user base (single-region per PRD) to minimize latency for Realtime messaging — this is a manual dashboard check, not scriptable. *(Already confirmed in Phase 0.3 — West EU/Ireland.)*
 
 ### Phase 6 — Rollback & observability procedures
-- [ ] Document rollback procedure: `npx wrangler versions list` → `npx wrangler rollback <VERSION_ID>`.
+- [x] Document rollback procedure: `npx wrangler versions list` → `npx wrangler rollback <VERSION_ID>`. *(Verified 2026-09-20 — `npx wrangler versions list` runs successfully and lists deployed version IDs with timestamps/authors, e.g. the Phase 3 secret-change versions and Phase 5 deploy versions. To roll back, copy the desired `Version ID` and run `npx wrangler rollback <VERSION_ID>`; omitting the ID prompts an interactive picker. Rollback is Worker-code-only and near-instant — it does not rebuild or re-run CI.)*
   - **Edge case:** rollback reverts Worker code only — any Supabase schema migrations applied since the prior version do **not** roll back automatically. If a deploy included a migration, coordinate a manual reverse-migration before/alongside the code rollback.
-- [ ] Document that `npx wrangler tail` (live production log streaming) requires the **paid** Cloudflare plan.
+- [x] Document that `npx wrangler tail` (live production log streaming) requires the **paid** Cloudflare plan. *(Documented 2026-09-20 — this project is on the free plan, so `wrangler tail` / dashboard live-log streaming is unavailable. No live test performed since it would require a plan upgrade.)*
   - **Edge case (free plan):** no built-in way to tail production logs or get failure alerts. Recommended fallback: add a lightweight external error tracker (e.g. Sentry) or an uptime check hitting a Supabase-backed endpoint, so failures surface without needing `wrangler tail`.
-- [ ] Note the CPU-time ceiling (10ms/free plan) as a risk if/when OpenRouter streaming responses are added later; monitor Worker CPU-time metrics and budget for the $5/mo paid plan before that feature ships.
+- [x] Note the CPU-time ceiling (10ms/free plan) as a risk if/when OpenRouter streaming responses are added later; monitor Worker CPU-time metrics and budget for the $5/mo paid plan before that feature ships. *(Documented 2026-09-20 — no action needed now since `OPENROUTER_API_KEY`/streaming is explicitly out of scope for this deployment pass; flagged here so it's revisited when that feature is built.)*
 
 ### Phase 7 — Finalize the deployment plan record
 - [ ] Once Phases 0–6 are actually executed (in a future session), update this file by checking off completed steps and appending an "Outcomes" section noting anything that deviated from plan (e.g., manual deploy used instead of Git integration for the first deploy, any edge case actually hit).
