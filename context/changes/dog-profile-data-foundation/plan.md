@@ -355,11 +355,11 @@ Postgresa dot. enumów).
 
 #### Automated
 
-- [x] 3.1 `supabase test db` — wszystkie testy przechodzą
-- [x] 3.2 `supabase gen types typescript --local` generuje się bez błędów
-- [x] 3.3 `npm run lint` przechodzi
-- [x] 3.4 `npm run build` przechodzi
+- [x] 3.1 `supabase test db` — wszystkie testy przechodzą — 9416905
+- [x] 3.2 `supabase gen types typescript --local` generuje się bez błędów — 9416905
+- [x] 3.3 `npm run lint` przechodzi — 9416905
+- [x] 3.4 `npm run build` przechodzi — 9416905
 
 #### Manual
 
-- [x] 3.5 Przegląd wygenerowanego src/types.ts pod kątem zgodności ze schematem
+- [x] 3.5 Przegląd wygenerowanego src/types.ts pod kątem zgodności ze schematem — 9416905

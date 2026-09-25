@@ -1,7 +1,7 @@
 ---
 change_id: dog-profile-data-foundation
 title: Dog profile data foundation
-status: implementing
+status: implemented
 created: 2026-09-25
 updated: 2026-09-25
 archived_at: null
