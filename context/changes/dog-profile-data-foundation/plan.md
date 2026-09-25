@@ -344,22 +344,22 @@ Postgresa dot. enumów).
 
 #### Automated
 
-- [x] 2.1 `db reset --local` stosuje obie migracje, bucket widoczny w storage.buckets
+- [x] 2.1 `db reset --local` stosuje obie migracje, bucket widoczny w storage.buckets — e0a09ff
 
 #### Manual
 
-- [x] 2.2 Upload do własnej ścieżki działa, do cudzej jest odrzucony
-- [x] 2.3 Publiczny URL zwraca zdjęcie bez sesji
+- [x] 2.2 Upload do własnej ścieżki działa, do cudzej jest odrzucony — e0a09ff
+- [x] 2.3 Publiczny URL zwraca zdjęcie bez sesji — e0a09ff
 
 ### Phase 3: Weryfikacja i typy — testy pgTAP + wygenerowane typy TS
 
 #### Automated
 
-- [ ] 3.1 `supabase test db` — wszystkie testy przechodzą
-- [ ] 3.2 `supabase gen types typescript --local` generuje się bez błędów
-- [ ] 3.3 `npm run lint` przechodzi
-- [ ] 3.4 `npm run build` przechodzi
+- [x] 3.1 `supabase test db` — wszystkie testy przechodzą
+- [x] 3.2 `supabase gen types typescript --local` generuje się bez błędów
+- [x] 3.3 `npm run lint` przechodzi
+- [x] 3.4 `npm run build` przechodzi
 
 #### Manual
 
-- [ ] 3.5 Przegląd wygenerowanego src/types.ts pod kątem zgodności ze schematem
+- [x] 3.5 Przegląd wygenerowanego src/types.ts pod kątem zgodności ze schematem
