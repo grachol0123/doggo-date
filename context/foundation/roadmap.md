@@ -41,7 +41,7 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 
 | ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                    | Status   |
 | ---- | ---------------------------- | ----------------------------------------------------------------------------------- | -------------- | ---------------------------- | -------- |
-| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)     | —              | FR-002                       | in-progress |
+| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)     | —              | FR-002                       | done |
 | S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                      | F-01           | FR-001, FR-002                | proposed |
 | S-02 | browse-and-match             | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy | S-01           | US-01, FR-003, FR-004, FR-005 | proposed |
 | S-03 | first-message                | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem | S-02           | US-01, FR-006                 | proposed |
@@ -71,7 +71,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Warstwa danych jest obecnie całkowicie nieobecna w kodzie; ustalenie wzorca migracji + RLS raz, przy pierwszej tabeli, utrzymuje spójność konwencji (wg AGENTS.md: migracje nazwane `YYYYMMDDHHmmss_opis.sql`, granularne RLS per operację) zanim kolejne trzy tabele (polubienia, matche, wiadomości) zostaną dodane slice-po-slice.
-- **Status:** in-progress
+- **Status:** done
 
 ## Slices
 
@@ -147,4 +147,4 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 
 ## Done
 
-_(brak — `/10x-archive` doda tu wpis, gdy zmiana pasująca do jednego z powyższych ID zostanie zarchiwizowana.)_
+- **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
