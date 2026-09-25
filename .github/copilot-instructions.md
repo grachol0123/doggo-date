@@ -43,48 +43,45 @@ Astro 7 **SSR app** (`output: "server"`) with React 19 islands, Tailwind 4, Supa
 
 <!-- BEGIN @przeprogramowani/10x-cli -->
 
-## Zestaw narzędzi AI 10xDevs - Moduł 2, Lekcja 1
+## Zestaw narzędzi AI 10xDevs — Moduł 2, Lekcja 3
 
-Przejdź od konfiguracji sprint-zero do orkiestracji projektu za pomocą **łańcucha roadmapy**:
+Przed scaleniem przejrzyj kod wygenerowany przez AI za pomocą **łańcucha przeglądu implementacji**:
 
 ```
-(Module 1 foundation docs) -> /10x-roadmap -> backlog-ready roadmap items
+/10x-implement -> /10x-impl-review -> triage -> (/10x-lesson | fix | skip | disagree)
 ```
 
-`/10x-roadmap` jest głównym tematem lekcji. `/10x-new` jest celowo wprowadzane w Module 2, Lesson 2, gdy wybrany element roadmapy staje się folderem zmiany implementacyjnej.
+`/10x-impl-review` jest głównym tematem lekcji. Przegląd jest bramką jakości, a nie poleceniem naprawienia każdego znaleziska.
 
-### Router zadań - Od czego zacząć
+### Router zadań — od czego zacząć
 
 | Umiejętność | Użyj jej, gdy |
 | --- | --- |
-| **Roadmapa (główny temat lekcji)** | |
-| `/10x-roadmap` | Masz `context/foundation/prd.md` oraz bazę projektu ze szkieletem i potrzebujesz roadmapy MVP z podejściem vertical-first. Umiejętność odczytuje PRD, sprawdza bazę kodu, korzysta z dostępnych dokumentów fundamentowych, takich jak `tech-stack.md`, `infrastructure.md` i `deploy-plan.md`, a następnie zapisuje `context/foundation/roadmap.md`. Użyj jej PRZED tworzeniem folderów dla poszczególnych zmian lub planów implementacji. |
-| **Ponownie uruchom wcześniejsze kroki, jeśli to konieczne** | |
-| `/10x-shape` / `/10x-prd` / `/10x-tech-stack-selector` / `/10x-bootstrapper` / `/10x-agents-md` / `/10x-infra-research` | Zebrane z Module 1, aby kontrakty fundamentowe można było poprawić przed sekwencjonowaniem roadmapy. Jeśli generowanie roadmapy ujawni lukę w PRD, popraw PRD, zanim uznasz, że backlog jest gotowy. |
+| **Przegląd kodu (główny temat lekcji)** | |
+| `/10x-impl-review <change-id>` | Zaimplementowałeś kod i chcesz przeprowadzić ustrukturyzowany przegląd przed scaleniem. Umiejętność sprawdza zgodność z planem, dyscyplinę zakresu, bezpieczeństwo i jakość, architekturę, spójność wzorców oraz kryteria sukcesu, a następnie przedstawia znaleziska do triage. |
+| **Rezultat powtarzającej się lekcji** | |
+| `/10x-lesson` | Znalezisko ujawnia powtarzającą się regułę projektu lub wzorzec błędów agenta. Zapisz je w `context/foundation/lessons.md` zamiast traktować jako jednorazową notatkę. |
 
-### Jak łańcuch przekazuje dalej
+### Dyscyplina triage
 
-- `/10x-roadmap` łączy produkt z implementacją. Nie wybiera frameworków, nie projektuje schematów ani nie pisze planu implementacji dla poszczególnych zmian.
-- Wynikiem jest `context/foundation/roadmap.md`: uporządkowane kamienie milowe, vertical slices, ograniczone fundamenty, zależności, niewiadome, ryzyko oraz pola przekazania do backlogu.
-- Elementy roadmapy powinny otrzymać stabilne, czytelne dla człowieka identyfikatory w narzędziach backlogu. Właściwy folder `context/changes/<change-id>/` jest tworzony w Lesson 2 za pomocą `/10x-new`.
+- Severity określa, jak poważne jest znalezisko. Impact określa, jak duże znaczenie ma teraz decyzja.
+- Prawidłowe rezultaty: napraw teraz, napraw inaczej, pomiń, zaakceptuj jako ryzyko, zapisz jako powtarzającą się regułę (`/10x-lesson`), nie zgódź się.
+- Napraw krytyczne znaleziska. Nie poświęcaj godzin na obserwacje o niskim wpływie tylko dlatego, że agent je znalazł.
+- Świadome pomijanie znalezisk o niskim wpływie jest prawidłowym wynikiem przeglądu, a nie zaniedbaniem.
+- Jeśli nie zgadzasz się ze znaleziskiem, zapisz dlaczego. Błędne rozumowanie agenta również jest sygnałem.
 
-### Granice roadmapy
+### Granice przeglądu
 
-- Domyślnie stosuj vertical slices: widoczne dla użytkownika rezultaty obejmujące UI, dane, logikę biznesową i integracje.
-- Praca horyzontalna jest dozwolona wyłącznie jako ograniczony enabler, który wskazuje odblokowywany przez siebie późniejszy pionowy kamień milowy.
-- Unikaj osieroconej pracy horyzontalnej, takiej jak „zbuduj całą bazę danych”, „zbuduj wszystkie endpointy API” lub „zaprojektuj całe UI” przed pierwszym widocznym dla użytkownika przepływem.
-- Roadmapa nie jest estymacją kalendarzową. Nie wymyślaj dat, story points ani velocity sprintu, chyba że użytkownik wyraźnie prosi o osobny artefakt planistyczny.
+- Ta lekcja dotyczy przeglądu zaimplementowanego kodu. Nie tworzy planu, nie wykonuje nowych faz ani nie uczy przeglądu CI.
+- Strategia testowania i bramki jakości są wprowadzane w Module 3.
+- W tej lekcji nie używaj `/10x-contract` jako wyniku triage.
 
-### Ścieżki fundamentów używane przez tę lekcję
+### Ścieżki używane przez tę lekcję
 
-- `context/foundation/prd.md` - wejście
-- `context/foundation/tech-stack.md` - opcjonalne wejście
-- `context/foundation/infrastructure.md` - opcjonalne wejście
-- `context/deployment/deploy-plan.md` - opcjonalne wejście
-- `context/foundation/roadmap.md` - wyjście
-- `context/foundation/lessons.md` - powtarzające się reguły i pułapki
-- `docs/reference/contract-surfaces.md` - rejestr kluczowych nazw
+- `context/changes/<change-id>/plan.md` — oczekiwany kontrakt implementacji
+- `context/changes/<change-id>/reviews/` — wynik przeglądu
+- `context/foundation/lessons.md` — powtarzające się lekcje
 
-Umiejętności nie mogą zapisywać do `context/archive/`. Zarchiwizowane zmiany są niezmienne; jeśli rozstrzygnięta ścieżka docelowa zaczyna się od `context/archive/`, przerwij z komunikatem: "This change is archived. Open a new change with `/10x-new` instead."
+Umiejętności nie mogą zapisywać do `context/archive/`. Zarchiwizowane zmiany są niezmienne; jeśli rozwiązana ścieżka docelowa zaczyna się od `context/archive/`, przerwij z komunikatem: „Ta zmiana jest zarchiwizowana. Zamiast tego otwórz nową zmianę za pomocą `/10x-new`.”
 
 <!-- END @przeprogramowani/10x-cli -->
