@@ -332,24 +332,24 @@ Postgresa dot. enumów).
 
 #### Automated
 
-- [x] 1.1 Migracja `db reset --local` stosuje się bez błędów
-- [x] 1.2 `db lint` nie zgłasza błędów dla nowej migracji
+- [x] 1.1 Migracja `db reset --local` stosuje się bez błędów — a9bbf9f
+- [x] 1.2 `db lint` nie zgłasza błędów dla nowej migracji — a9bbf9f
 
 #### Manual
 
-- [x] 1.3 INSERT z cudzym owner_id odrzucony przez RLS
-- [x] 1.4 SELECT jako inny zalogowany użytkownik zwraca profil
+- [x] 1.3 INSERT z cudzym owner_id odrzucony przez RLS — a9bbf9f
+- [x] 1.4 SELECT jako inny zalogowany użytkownik zwraca profil — a9bbf9f
 
 ### Phase 2: Konfiguracja storage — bucket na zdjęcia + RLS
 
 #### Automated
 
-- [ ] 2.1 `db reset --local` stosuje obie migracje, bucket widoczny w storage.buckets
+- [x] 2.1 `db reset --local` stosuje obie migracje, bucket widoczny w storage.buckets
 
 #### Manual
 
-- [ ] 2.2 Upload do własnej ścieżki działa, do cudzej jest odrzucony
-- [ ] 2.3 Publiczny URL zwraca zdjęcie bez sesji
+- [x] 2.2 Upload do własnej ścieżki działa, do cudzej jest odrzucony
+- [x] 2.3 Publiczny URL zwraca zdjęcie bez sesji
 
 ### Phase 3: Weryfikacja i typy — testy pgTAP + wygenerowane typy TS
 
