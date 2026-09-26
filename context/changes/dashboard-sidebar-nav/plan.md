@@ -225,23 +225,23 @@ stay the same; only their surrounding layout hierarchy changes.
 
 #### Automated
 
-- [x] 1.1 Sidebar.astro exists with dog profile link and sign-out form
-- [x] 1.2 DashboardLayout.astro wraps Layout and renders Sidebar beside slotted main content
+- [x] 1.1 Sidebar.astro exists with dog profile link and sign-out form — 5c97ea3
+- [x] 1.2 DashboardLayout.astro wraps Layout and renders Sidebar beside slotted main content — 5c97ea3
 
 #### Manual
 
-- [x] 1.3 Sidebar reads as a fixed-width glass panel on desktop
-- [x] 1.4 Sidebar stacks above the main content on mobile
+- [x] 1.3 Sidebar reads as a fixed-width glass panel on desktop — 5c97ea3
+- [x] 1.4 Sidebar stacks above the main content on mobile — 5c97ea3
 
 ### Phase 2: Migrate dashboard pages and validate the shell
 
 #### Automated
 
-- [x] 2.1 Dashboard and dog pages import DashboardLayout
-- [x] 2.2 npm run lint passes
-- [x] 2.3 npm run build passes
+- [x] 2.1 Dashboard and dog pages import DashboardLayout — 5c97ea3
+- [x] 2.2 npm run lint passes — 5c97ea3
+- [x] 2.3 npm run build passes — 5c97ea3
 
 #### Manual
 
-- [x] 2.4 Dashboard main panel shows welcome content without duplicate navigation controls
-- [x] 2.5 Dog profile form renders inside the shared dashboard shell
+- [x] 2.4 Dashboard main panel shows welcome content without duplicate navigation controls — 5c97ea3
+- [x] 2.5 Dog profile form renders inside the shared dashboard shell — 5c97ea3
