@@ -47,7 +47,7 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
 
     if (!trimmedName) {
       next.name = "Imię jest wymagane";
-    } else if (trimmedName.length > dogProfileBounds.name.max) {
+    } else if (name.length > dogProfileBounds.name.max) {
       next.name = `Imię może mieć maksymalnie ${dogProfileBounds.name.max} znaków`;
     }
 
