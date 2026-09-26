@@ -1,0 +1,74 @@
+---
+// Temporary visual-gate page for context/changes/ui-dashboard-tokens.
+// Not part of the app; delete after manual verification.
+import Layout from "@/layouts/Layout.astro";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+export const prerender = false;
+---
+
+<Layout title="Kitchen sink">
+  <div class="bg-background grid gap-6 p-8 md:grid-cols-2">
+    <Card>
+      <CardHeader><CardTitle>Default</CardTitle></CardHeader>
+      <CardContent>
+        <Label htmlFor="a">Imię</Label>
+        <Input id="a" placeholder="Imię psa" />
+      </CardContent>
+      <CardFooter><Button>Zapisz profil</Button></CardFooter>
+    </Card>
+
+    <Card>
+      <CardHeader><CardTitle>Focus (tab to input)</CardTitle></CardHeader>
+      <CardContent>
+        <Label htmlFor="b">Wiek</Label>
+        <Input id="b" autofocus placeholder="np. 3" />
+      </CardContent>
+      <CardFooter><Button variant="outline">Powrót do panelu</Button></CardFooter>
+    </Card>
+
+    <Card>
+      <CardHeader><CardTitle>Disabled</CardTitle></CardHeader>
+      <CardContent>
+        <Input disabled value="zablokowane" />
+      </CardContent>
+      <CardFooter><Button disabled>Zapisywanie...</Button></CardFooter>
+    </Card>
+
+    <Card>
+      <CardHeader><CardTitle>Error</CardTitle></CardHeader>
+      <CardContent>
+        <Label htmlFor="c">Imię</Label>
+        <Input id="c" aria-invalid="true" />
+        <p class="text-destructive mt-1 text-xs">Imię jest wymagane</p>
+        <Alert variant="destructive" className="mt-4">
+          <AlertDescription>Nie udało się zapisać profilu psa.</AlertDescription>
+        </Alert>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardHeader><CardTitle>Success</CardTitle></CardHeader>
+      <CardContent>
+        <Alert role="status" className="border-success/30 bg-success/10">
+          <AlertDescription className="text-success">Profil psa został zapisany.</AlertDescription>
+        </Alert>
+      </CardContent>
+    </Card>
+
+    <Card>
+      <CardHeader><CardTitle>Loading</CardTitle></CardHeader>
+      <CardContent>
+        <Button className="w-full" disabled>
+          <span class="flex items-center gap-2">
+            <span class="border-primary-foreground/30 border-t-primary-foreground size-4 animate-spin rounded-full border-2" />
+            Zapisywanie...
+          </span>
+        </Button>
+      </CardContent>
+    </Card>
+  </div>
+</Layout>

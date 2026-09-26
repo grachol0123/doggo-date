@@ -2,6 +2,8 @@
 import Layout from "@/layouts/Layout.astro";
 import DogProfileForm from "@/components/dog/DogProfileForm";
 import { createClient } from "@/lib/supabase";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Dog } from "@/types";
 
 const DOG_PHOTOS_BUCKET = "dog-photos";
@@ -34,33 +36,32 @@ if (user) {
 ---
 
 <Layout title="Mój profil psa">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
-      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
-        Mój profil psa
-      </h1>
-      {pageError ? (
-        <p role="alert" class="rounded-lg border border-red-500/30 bg-red-900/30 px-3 py-2 text-red-300">
-          {pageError}
+  <div class="bg-background flex min-h-screen items-center justify-center p-4">
+    <Card className="w-full max-w-lg">
+      <CardHeader>
+        <CardTitle className="text-foreground text-center text-2xl font-bold">Mój profil psa</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {pageError ? (
+          <Alert variant="destructive" role="alert">
+            <AlertDescription>{pageError}</AlertDescription>
+          </Alert>
+        ) : (
+          <>
+            {saved && !error && (
+              <Alert role="status" className="border-success/30 bg-success/10 mb-4">
+                <AlertDescription className="text-success">Profil psa został zapisany.</AlertDescription>
+              </Alert>
+            )}
+            <DogProfileForm dog={dog} existingPhotoUrl={existingPhotoUrl} serverError={error} client:load />
+          </>
+        )}
+        <p class="text-muted-foreground mt-4 text-center text-sm">
+          <a href="/dashboard" class="text-primary hover:underline">
+            Powrót do panelu
+          </a>
         </p>
-      ) : (
-        <>
-          {saved && !error && (
-            <p
-              role="status"
-              class="mb-4 rounded-lg border border-green-400/30 bg-green-900/30 px-3 py-2 text-green-200"
-            >
-              Profil psa został zapisany.
-            </p>
-          )}
-          <DogProfileForm dog={dog} existingPhotoUrl={existingPhotoUrl} serverError={error} client:load />
-        </>
-      )}
-      <p class="mt-4 text-center text-sm text-blue-100/60">
-        <a href="/dashboard" class="text-purple-300 hover:underline">
-          Powrót do panelu
-        </a>
-      </p>
-    </div>
+      </CardContent>
+    </Card>
   </div>
 </Layout>

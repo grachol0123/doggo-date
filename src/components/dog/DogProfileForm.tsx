@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { PawPrint, Calendar, Dog as DogIcon } from "lucide-react";
-import { FormField } from "@/components/auth/FormField";
-import { ServerError } from "@/components/auth/ServerError";
+import { PawPrint } from "lucide-react";
 import { SubmitButton } from "@/components/auth/SubmitButton";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { dogActivityLevelOptions, dogInterestOptions } from "@/lib/dog-enums";
 import { dogProfileBounds } from "@/lib/schemas/dog-profile";
 import type { Dog } from "@/types";
@@ -100,50 +100,63 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
       onSubmit={handleSubmit}
       noValidate
     >
-      <FormField
-        id="name"
-        label="Imię"
-        required
-        value={name}
-        onChange={(v) => {
-          setName(v);
-          clearError("name");
-        }}
-        placeholder="Imię psa"
-        error={errors.name}
-        icon={<PawPrint className="size-4" />}
-      />
-
-      <FormField
-        id="age_years"
-        type="number"
-        label="Wiek (w latach)"
-        required
-        value={ageYears}
-        onChange={(v) => {
-          setAgeYears(v);
-          clearError("age_years");
-        }}
-        placeholder="np. 3"
-        error={errors.age_years}
-        icon={<Calendar className="size-4" />}
-      />
-
-      <FormField
-        id="breed"
-        label="Rasa"
-        value={breed}
-        onChange={(v) => {
-          setBreed(v);
-          clearError("breed");
-        }}
-        placeholder="np. Labrador"
-        error={errors.breed}
-        icon={<DogIcon className="size-4" />}
-      />
+      <div>
+        <Label htmlFor="name">
+          Imię <span className="text-destructive">*</span>
+        </Label>
+        <Input
+          id="name"
+          name="name"
+          required
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+            clearError("name");
+          }}
+          placeholder="Imię psa"
+          aria-invalid={Boolean(errors.name)}
+        />
+        {errors.name ? <p className="text-destructive mt-1 text-xs">{errors.name}</p> : null}
+      </div>
 
       <div>
-        <Label htmlFor="description" className="mb-1 block text-sm text-blue-100/80">
+        <Label htmlFor="age_years">
+          Wiek (w latach) <span className="text-destructive">*</span>
+        </Label>
+        <Input
+          id="age_years"
+          name="age_years"
+          type="number"
+          required
+          value={ageYears}
+          onChange={(e) => {
+            setAgeYears(e.target.value);
+            clearError("age_years");
+          }}
+          placeholder="np. 3"
+          aria-invalid={Boolean(errors.age_years)}
+        />
+        {errors.age_years ? <p className="text-destructive mt-1 text-xs">{errors.age_years}</p> : null}
+      </div>
+
+      <div>
+        <Label htmlFor="breed">Rasa</Label>
+        <Input
+          id="breed"
+          name="breed"
+          value={breed}
+          onChange={(e) => {
+            setBreed(e.target.value);
+            clearError("breed");
+          }}
+          placeholder="np. Labrador"
+          aria-invalid={Boolean(errors.breed)}
+        />
+        {errors.breed ? <p className="text-destructive mt-1 text-xs">{errors.breed}</p> : null}
+      </div>
+
+      <div>
+        <Label htmlFor="description" className="mb-1 block">
           Opis
         </Label>
         <Textarea
@@ -157,14 +170,14 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
           placeholder="Opowiedz coś o swoim psie..."
           rows={4}
         />
-        {errors.description ? <p className="mt-1 text-xs text-red-300">{errors.description}</p> : null}
+        {errors.description ? <p className="text-destructive mt-1 text-xs">{errors.description}</p> : null}
       </div>
 
       <div>
-        <Label htmlFor="temperament" className="mb-1 block text-sm text-blue-100/80">
+        <Label htmlFor="temperament" className="mb-1 block">
           Temperament (oddzielony przecinkami)
         </Label>
-        <input
+        <Input
           id="temperament"
           name="temperament"
           value={temperament}
@@ -172,12 +185,11 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
             setTemperament(e.target.value);
           }}
           placeholder="np. przyjazny, spokojny, energiczny"
-          className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 focus:ring-2 focus:ring-purple-400 focus:outline-none"
         />
       </div>
 
       <div>
-        <Label className="mb-1 block text-sm text-blue-100/80">Poziom aktywności</Label>
+        <Label className="mb-1 block">Poziom aktywności</Label>
         <Select name="activity_level" value={activityLevel} onValueChange={setActivityLevel}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Wybierz poziom aktywności" />
@@ -193,10 +205,10 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
       </div>
 
       <div>
-        <Label className="mb-2 block text-sm text-blue-100/80">Zainteresowania</Label>
+        <Label className="mb-2 block">Zainteresowania</Label>
         <div className="grid grid-cols-2 gap-2">
           {dogInterestOptions.map((option) => (
-            <label key={option.value} className="flex items-center gap-2 text-sm text-blue-100/80">
+            <label key={option.value} className="text-muted-foreground flex items-center gap-2 text-sm">
               <Checkbox
                 name="interests"
                 value={option.value}
@@ -212,7 +224,7 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
       </div>
 
       <div>
-        <Label htmlFor="photo" className="mb-1 block text-sm text-blue-100/80">
+        <Label htmlFor="photo" className="mb-1 block">
           Zdjęcie
         </Label>
         {(photoPreview ?? existingPhotoUrl) ? (
@@ -228,11 +240,15 @@ export default function DogProfileForm({ dog, existingPhotoUrl, serverError }: P
           type="file"
           accept="image/jpeg,image/png,image/webp"
           onChange={handlePhotoChange}
-          className="w-full text-sm text-blue-100/80 file:mr-3 file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-white"
+          className="text-muted-foreground file:bg-secondary file:text-secondary-foreground w-full text-sm file:mr-3 file:rounded-lg file:border-0 file:px-3 file:py-2"
         />
       </div>
 
-      <ServerError message={serverError} />
+      {serverError ? (
+        <Alert variant="destructive">
+          <AlertDescription>{serverError}</AlertDescription>
+        </Alert>
+      ) : null}
 
       <SubmitButton pendingText="Zapisywanie..." icon={<PawPrint className="size-4" />}>
         Zapisz profil
