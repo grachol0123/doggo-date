@@ -9,6 +9,7 @@ tags: [research, codebase, dogs-table, api-routes, auth-forms, storage, zod]
 status: complete
 last_updated: 2026-09-26
 last_updated_by: Copilot CLI
+last_updated_note: "Follow-up (18:23 CEST): S-01 is now impl_reviewed (all 5 phases committed). Recorded how each Open Question below was actually resolved by the shipped implementation."
 ---
 
 # Research: Contract and conventions needed to plan S-01 dog-profile-crud
@@ -91,3 +92,13 @@ F-01 (`dog-profile-data-foundation`, archived, done) fully delivered the data co
 - Should dog-profile create/edit use the existing redirect+query-param pattern (consistent with auth) or a JSON API (more suited to inline photo upload/preview)? Not resolved by any existing code — a product/UX decision for `/10x-plan`.
 - Which shadcn/ui form primitives (input, textarea, select, multi-select for `interests`) need to be added, and how should the `dog_interest`/`dog_activity_level` enums be labeled in Polish for the UI, given the DB stores English identifiers by design?
 - What is the exact new protected route path for the profile page(s) (e.g., `/dashboard/dog`, `/dog/edit`) that needs adding to `PROTECTED_ROUTES` in `src/middleware.ts`?
+
+## Follow-up (2026-09-26 18:23 CEST): how the shipped implementation resolved the Open Questions
+
+S-01 is now fully implemented (`context/changes/dog-profile-crud/change.md:4` → `status: impl_reviewed`; every step in `plan.md`'s Progress section is checked with a commit sha, `a87fa2c`..`3d0b9ee`). Verified directly against the current code, each of the three Open Questions above was resolved as follows — no question remains open for this change:
+
+- **Redirect+query-param vs JSON API** → resolved as **redirect+query-param**, matching the existing auth convention exactly. `src/pages/api/dogs/save.ts` exports `POST: APIRoute`, reads `context.request.formData()`, and calls `context.redirect(`/dashboard/dog?error=...`)` on every failure path (missing user, validation failure, Supabase error) and a plain `context.redirect("/dashboard/dog")` on success — no JSON response is ever returned. No new architectural pattern was introduced.
+- **shadcn/ui primitives + PL enum labels** → resolved. `src/components/ui/` now additionally contains `input.tsx`, `textarea.tsx`, `select.tsx`, `checkbox.tsx`, `label.tsx` (new since this research's first pass, which only found `button.tsx`). `src/lib/dog-enums.ts` exports `dogActivityLevelOptions` and `dogInterestOptions`, each built by mapping `Constants.public.Enums.dog_activity_level` / `dog_interest` (from `src/types.ts`) through a hand-written `Record<Enum, string>` Polish label map (e.g. `homebody` → "Kanapowiec", `walks` → "Spacery") — confirming the plan's intent that DB values stay English while the UI shows Polish labels.
+- **Route path** → resolved as **`/dashboard/dog`**. `src/middleware.ts:4` now reads `PROTECTED_ROUTES = ["/dashboard", "/dashboard/dog"]` (the second entry is redundant with the existing `startsWith("/dashboard")` prefix match, but was added explicitly per the plan's Phase 3, Change 2 intent of future-proofing against prefix changes). The page itself lives at `src/pages/dashboard/dog.astro`, and the form island at `src/components/dog/DogProfileForm.tsx`.
+
+No further research gaps were identified for `dog-profile-crud` in this pass — the change's own Open Questions are now closed by inspection of the shipped code, not just by plan intent.
