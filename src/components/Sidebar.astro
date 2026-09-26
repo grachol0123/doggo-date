@@ -6,31 +6,19 @@ const { user } = Astro.locals;
 ---
 
 <aside class="w-full md:w-56 md:shrink-0">
-  <div class="flex h-full flex-col rounded-2xl border border-white/10 bg-white/10 p-5 text-white shadow-2xl backdrop-blur-xl">
-    <p class="text-xs uppercase tracking-[0.3em] text-white/50">Dashboard</p>
-    <p class="mt-3 break-all text-sm text-blue-100/80">{user?.email}</p>
+  <div class="bg-card text-card-foreground flex h-full flex-col rounded-2xl border p-5 shadow-2xl">
+    <p class="text-muted-foreground text-xs uppercase tracking-[0.3em]">Dashboard</p>
+    <p class="text-muted-foreground mt-3 break-all text-sm">{user?.email}</p>
 
     <!-- Future nav items (Przeglądaj, Matche) will be added here by later changes. -->
     <nav class="mt-6 flex flex-col gap-3">
-      <a
-        href="/dashboard/dog"
-        class:list={[
-          cn(
-            buttonVariants({ variant: "outline" }),
-            "justify-start border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white dark:border-white/15 dark:bg-white/5 dark:hover:bg-white/10",
-          ),
-        ]}
-      >
+      <a href="/dashboard/dog" class:list={[cn(buttonVariants({ variant: "outline" }), "justify-start")]}>
         Mój profil psa
       </a>
     </nav>
 
     <form method="POST" action="/api/auth/signout" class="mt-6 md:mt-auto">
-      <Button
-        type="submit"
-        variant="outline"
-        className="w-full justify-start border-white/15 bg-white/5 text-white hover:bg-white/10 hover:text-white dark:border-white/15 dark:bg-white/5 dark:hover:bg-white/10"
-      >
+      <Button type="submit" variant="outline" className="w-full justify-start">
         Wyloguj
       </Button>
     </form>
