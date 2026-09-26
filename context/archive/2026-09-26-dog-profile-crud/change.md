@@ -1,10 +1,10 @@
 ---
 change_id: dog-profile-crud
 title: Dog profile crud
-status: impl_reviewed
+status: archived
 created: 2026-09-26
 updated: 2026-09-26
-archived_at: null
+archived_at: 2026-09-26T20:23:56Z
 ---
 
 ## Notes

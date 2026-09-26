@@ -42,7 +42,7 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 | ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status      |
 | ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ----------- |
 | F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
-| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | in-progress |
+| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done        |
 | F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done        |
 | S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | in-progress |
 | S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | proposed    |
@@ -99,7 +99,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Kształt tabeli `dogs` (jedno zdjęcie, opis) ustala kontrakt, z którego korzystają S-02 i S-03; zmiana schematu później oznacza migrację wsteczną.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-02: Właściciel przegląda profile innych psów i tworzy dopasowanie
 
@@ -131,7 +131,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 | Roadmap ID | Change ID                   | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                                           |
 | ---------- | --------------------------- | ---------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
 | F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                   | Run `/10x-plan dog-profile-data-foundation`                                                     |
-| S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                    | impl_reviewed, pending archive                                                                  |
+| S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                    | Archived, done                                                                                  |
 | F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                    | Merged (PR #10), pending archive                                                                |
 | S-02       | browse-and-match            | Owner can browse dogs and create a match                         | yes                   | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
 | S-03       | first-message               | Owner can send/receive real-time messages with a match           | no                    | Blocked until S-02 is done                                                                      |
@@ -164,3 +164,4 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 ## Done
 
 - **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
+- **S-01: Właściciel tworzy i edytuje profil swojego psa** — Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`. Lesson: —.
