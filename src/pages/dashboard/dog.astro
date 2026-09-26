@@ -1,0 +1,66 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import DogProfileForm from "@/components/dog/DogProfileForm";
+import { createClient } from "@/lib/supabase";
+import type { Dog } from "@/types";
+
+const DOG_PHOTOS_BUCKET = "dog-photos";
+
+const { user } = Astro.locals;
+const error = Astro.url.searchParams.get("error");
+const saved = Astro.url.searchParams.get("saved") === "1";
+
+let dog: Dog | null = null;
+let existingPhotoUrl: string | null = null;
+let pageError: string | null = null;
+
+if (user) {
+  const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+  if (supabase) {
+    const { data, error: loadError } = await supabase.from("dogs").select("*").eq("owner_id", user.id).maybeSingle();
+    if (loadError) {
+      pageError = "Nie udało się wczytać profilu psa: " + loadError.message;
+    } else {
+      dog = data;
+      if (dog?.photo_path) {
+        existingPhotoUrl = supabase.storage.from(DOG_PHOTOS_BUCKET).getPublicUrl(dog.photo_path).data.publicUrl;
+      }
+    }
+  } else {
+    pageError = "Połączenie z bazą danych nie jest skonfigurowane.";
+  }
+}
+---
+
+<Layout title="Mój profil psa">
+  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+    <div class="w-full max-w-lg rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
+      <h1 class="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-center text-2xl font-bold text-transparent">
+        Mój profil psa
+      </h1>
+      {pageError ? (
+        <p role="alert" class="rounded-lg border border-red-500/30 bg-red-900/30 px-3 py-2 text-red-300">
+          {pageError}
+        </p>
+      ) : (
+        <>
+          {saved && !error && (
+            <p
+              role="status"
+              class="mb-4 rounded-lg border border-green-400/30 bg-green-900/30 px-3 py-2 text-green-200"
+            >
+              Profil psa został zapisany.
+            </p>
+          )}
+          <DogProfileForm dog={dog} existingPhotoUrl={existingPhotoUrl} serverError={error} client:load />
+        </>
+      )}
+      <p class="mt-4 text-center text-sm text-blue-100/60">
+        <a href="/dashboard" class="text-purple-300 hover:underline">
+          Powrót do panelu
+        </a>
+      </p>
+    </div>
+  </div>
+</Layout>

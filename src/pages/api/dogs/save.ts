@@ -218,5 +218,5 @@ export const POST: APIRoute = async (context) => {
     }
   }
 
-  return context.redirect(DOG_PROFILE_PATH);
+  return context.redirect(`${DOG_PROFILE_PATH}?saved=1`);
 };

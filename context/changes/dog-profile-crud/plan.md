@@ -286,9 +286,9 @@ Not applicable — no schema changes in this plan.
 
 #### Automated
 
-- [x] 2.1 npm run lint passes
-- [x] 2.2 npm run build passes
-- [x] 2.3 src/pages/api/dogs/save.ts exports uppercase POST
+- [x] 2.1 npm run lint passes — bc699c2
+- [x] 2.2 npm run build passes — bc699c2
+- [x] 2.3 src/pages/api/dogs/save.ts exports uppercase POST — bc699c2
 
 #### Manual
 
@@ -301,29 +301,29 @@ Not applicable — no schema changes in this plan.
 
 #### Automated
 
-- [ ] 3.1 npm run lint passes
-- [ ] 3.2 npm run build passes
+- [x] 3.1 npm run lint passes
+- [x] 3.2 npm run build passes
 
 #### Manual
 
-- [ ] 3.3 Visiting /dashboard/dog while signed out redirects to /auth/signin
-- [ ] 3.4 Visiting /dashboard/dog while signed in with no existing dog shows an empty form
-- [ ] 3.5 Visiting /dashboard/dog after saving a profile shows the previously saved values pre-filled
-- [ ] 3.6 The dashboard page shows a working link to /dashboard/dog
+- [x] 3.3 Visiting /dashboard/dog while signed out redirects to /auth/signin
+- [x] 3.4 Visiting /dashboard/dog while signed in with no existing dog shows an empty form
+- [x] 3.5 Visiting /dashboard/dog after saving a profile shows the previously saved values pre-filled
+- [x] 3.6 The dashboard page shows a working link to /dashboard/dog
 
 ### Phase 4: Dog profile form component
 
 #### Automated
 
-- [ ] 4.1 npm run lint passes
-- [ ] 4.2 npm run build passes
+- [x] 4.1 npm run lint passes
+- [x] 4.2 npm run build passes
 
 #### Manual
 
-- [ ] 4.3 All fields round-trip correctly: saved values reappear pre-filled on reload
-- [ ] 4.4 Client-side validation blocks submission and shows inline errors for out-of-bounds values without a network request
-- [ ] 4.5 Selecting a new photo shows a local preview before submitting
-- [ ] 4.6 Multi-select interests and single-select activity level submit and redisplay correctly
+- [x] 4.3 All fields round-trip correctly: saved values reappear pre-filled on reload
+- [x] 4.4 Client-side validation blocks submission and shows inline errors for out-of-bounds values without a network request
+- [x] 4.5 Selecting a new photo shows a local preview before submitting
+- [x] 4.6 Multi-select interests and single-select activity level submit and redisplay correctly
 
 ### Phase 5: Final verification
 

@@ -9,6 +9,7 @@ interface FormFieldProps {
   id: string;
   name?: string;
   label: string;
+  required?: boolean;
   type?: string;
   value: string;
   onChange: (value: string) => void;
@@ -23,6 +24,7 @@ export function FormField({
   id,
   name,
   label,
+  required = false,
   type = "text",
   value,
   onChange,
@@ -36,6 +38,14 @@ export function FormField({
     <div>
       <label htmlFor={id} className="mb-1 block text-sm text-blue-100/80">
         {label}
+        {required && (
+          <>
+            <span aria-hidden="true" className="ml-1 text-red-300">
+              *
+            </span>
+            <span className="sr-only"> (wymagane)</span>
+          </>
+        )}
       </label>
       <div className="relative">
         <span className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/40">{icon}</span>
@@ -43,6 +53,7 @@ export function FormField({
           id={id}
           name={name ?? id}
           type={type}
+          required={required}
           value={value}
           onChange={(e) => {
             onChange(e.target.value);
