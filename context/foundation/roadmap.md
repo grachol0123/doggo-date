@@ -35,17 +35,17 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 
 **S-03: Właściciel wysyła pierwszą wiadomość do dopasowanego właściciela** — to domknięcie jedynej historyjki użytkownika z PRD (US-01): dopiero natychmiastowa wiadomość dowodzi, że mechanizm dopasowania faktycznie prowadzi do połączenia między właścicielami, a nie tylko do listy nazwisk na ekranie.
 
-> Gwiazda przewodnia (ang. *north star*) to najmniejszy kompletny przepływ widoczny dla użytkownika, którego udane dostarczenie dowodzi głównej hipotezy produktu — umieszczony tak wcześnie, jak pozwalają na to jego zależności, ponieważ cała reszta ma znaczenie tylko wtedy, gdy ten przepływ działa.
+> Gwiazda przewodnia (ang. _north star_) to najmniejszy kompletny przepływ widoczny dla użytkownika, którego udane dostarczenie dowodzi głównej hipotezy produktu — umieszczony tak wcześnie, jak pozwalają na to jego zależności, ponieważ cała reszta ma znaczenie tylko wtedy, gdy ten przepływ działa.
 
 ## At a glance
 
-| ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                    | Status   |
-| ---- | ---------------------------- | ----------------------------------------------------------------------------------- | -------------- | ---------------------------- | -------- |
-| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)     | —              | FR-002                       | done |
-| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                      | F-01           | FR-001, FR-002                | in-progress |
-| F-02 | dashboard-sidebar-nav        | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01           | —                              | proposed |
-| S-02 | browse-and-match             | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy | S-01, F-02      | US-01, FR-003, FR-004, FR-005 | proposed |
-| S-03 | first-message                | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem | S-02           | US-01, FR-006                 | proposed |
+| ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status      |
+| ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ----------- |
+| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
+| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | in-progress |
+| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | in-progress |
+| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | proposed    |
+| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | proposed    |
 
 ## Baseline
 
@@ -85,7 +85,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Niski — czysto prezentacyjna zmiana UI, bez zmian schematu ani logiki biznesowej. Ryzyko ograniczone do regresji istniejących linków (profil psa, wylogowanie) podczas przenoszenia ich z `dashboard.astro` do `Sidebar`.
-- **Status:** proposed
+- **Status:** in-progress
 
 ## Slices
 
@@ -128,13 +128,13 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID                   | Suggested issue title                                          | Ready for `/10x-plan` | Notes                                              |
-| ---------- | ---------------------------- | ---------------------------------------------------------------- | --------------------- | --------------------------------------------------- |
-| F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                    | Run `/10x-plan dog-profile-data-foundation`         |
-| S-01       | dog-profile-crud             | Owner can create and edit their dog's profile                    | no                     | impl_reviewed, pending archive                      |
-| F-02       | dashboard-sidebar-nav        | Add sidebar navigation, free up main page for browsing            | yes                    | Run `/10x-plan dashboard-sidebar-nav`; parallel with match-data-foundation |
-| S-02       | browse-and-match             | Owner can browse dogs and create a match                         | yes                    | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
-| S-03       | first-message                | Owner can send/receive real-time messages with a match            | no                     | Blocked until S-02 is done                          |
+| Roadmap ID | Change ID                   | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                                           |
+| ---------- | --------------------------- | ---------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
+| F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                   | Run `/10x-plan dog-profile-data-foundation`                                                     |
+| S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                    | impl_reviewed, pending archive                                                                  |
+| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | yes                   | Run `/10x-plan dashboard-sidebar-nav`; parallel with match-data-foundation                      |
+| S-02       | browse-and-match            | Owner can browse dogs and create a match                         | yes                   | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
+| S-03       | first-message               | Owner can send/receive real-time messages with a match           | no                    | Blocked until S-02 is done                                                                      |
 
 This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Include one row for every `F-NN` and `S-NN`. It should be compact enough to copy into issues, but it must not duplicate the detailed roadmap body.
 
