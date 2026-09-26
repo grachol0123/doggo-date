@@ -1,6 +1,6 @@
 import { fixupPluginRules } from "@eslint/compat";
 import eslint from "@eslint/js";
-import { defineConfig, includeIgnoreFile } from "eslint/config";
+import { defineConfig, globalIgnores, includeIgnoreFile } from "eslint/config";
 import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import eslintPluginAstro from "eslint-plugin-astro";
 import pluginReact from "eslint-plugin-react";
@@ -79,6 +79,13 @@ const scriptsConfig = defineConfig({
 
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
+  globalIgnores([
+    ".github/skills/10x-plan/scripts/metadata-guard.mjs",
+    ".github/skills/10x-plan/scripts/metadata-guard.test.mjs",
+    ".github/skills/10x-research/scripts/metadata-guard.mjs",
+    ".github/skills/10x-research/scripts/prose-json-check.mjs",
+    ".github/skills/10x-research/scripts/prose-json-check.test.mjs",
+  ]),
   baseConfig,
   reactConfig,
   eslintPluginAstro.configs["flat/recommended"],

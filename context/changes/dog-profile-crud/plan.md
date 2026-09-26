@@ -292,47 +292,47 @@ Not applicable — no schema changes in this plan.
 
 #### Manual
 
-- [ ] 2.4 Submitting the form with valid data as a signed-in user with no existing dog creates a dogs row visible in Supabase Studio, owned by the correct auth.uid()
-- [ ] 2.5 Submitting again with edits updates the same row (no duplicate row, no unique-constraint violation)
-- [ ] 2.6 Uploading a new photo removes the previously uploaded object from the dog-photos bucket
-- [ ] 2.7 Submitting invalid data (e.g. name >100 chars) redirects back with a visible error and does not write to the database
+- [x] 2.4 Submitting the form with valid data as a signed-in user with no existing dog creates a dogs row visible in Supabase Studio, owned by the correct auth.uid()
+- [x] 2.5 Submitting again with edits updates the same row (no duplicate row, no unique-constraint violation)
+- [x] 2.6 Uploading a new photo removes the previously uploaded object from the dog-photos bucket
+- [x] 2.7 Submitting invalid data (e.g. name >100 chars) redirects back with a visible error and does not write to the database
 
 ### Phase 3: Protected dog profile page
 
 #### Automated
 
-- [x] 3.1 npm run lint passes
-- [x] 3.2 npm run build passes
+- [x] 3.1 npm run lint passes — c791714
+- [x] 3.2 npm run build passes — c791714
 
 #### Manual
 
-- [x] 3.3 Visiting /dashboard/dog while signed out redirects to /auth/signin
-- [x] 3.4 Visiting /dashboard/dog while signed in with no existing dog shows an empty form
-- [x] 3.5 Visiting /dashboard/dog after saving a profile shows the previously saved values pre-filled
-- [x] 3.6 The dashboard page shows a working link to /dashboard/dog
+- [x] 3.3 Visiting /dashboard/dog while signed out redirects to /auth/signin — c791714
+- [x] 3.4 Visiting /dashboard/dog while signed in with no existing dog shows an empty form — c791714
+- [x] 3.5 Visiting /dashboard/dog after saving a profile shows the previously saved values pre-filled — c791714
+- [x] 3.6 The dashboard page shows a working link to /dashboard/dog — c791714
 
 ### Phase 4: Dog profile form component
 
 #### Automated
 
-- [x] 4.1 npm run lint passes
-- [x] 4.2 npm run build passes
+- [x] 4.1 npm run lint passes — c791714
+- [x] 4.2 npm run build passes — c791714
 
 #### Manual
 
-- [x] 4.3 All fields round-trip correctly: saved values reappear pre-filled on reload
-- [x] 4.4 Client-side validation blocks submission and shows inline errors for out-of-bounds values without a network request
-- [x] 4.5 Selecting a new photo shows a local preview before submitting
-- [x] 4.6 Multi-select interests and single-select activity level submit and redisplay correctly
+- [x] 4.3 All fields round-trip correctly: saved values reappear pre-filled on reload — c791714
+- [x] 4.4 Client-side validation blocks submission and shows inline errors for out-of-bounds values without a network request — c791714
+- [x] 4.5 Selecting a new photo shows a local preview before submitting — c791714
+- [x] 4.6 Multi-select interests and single-select activity level submit and redisplay correctly — c791714
 
 ### Phase 5: Final verification
 
 #### Automated
 
-- [ ] 5.1 npm run lint passes with zero errors
-- [ ] 5.2 npm run build passes
+- [x] 5.1 npm run lint passes with zero errors
+- [x] 5.2 npm run build passes
 
 #### Manual
 
-- [ ] 5.3 Full flow: sign in → visit /dashboard/dog (empty) → create profile with a photo → reload (values + photo persist) → edit fields and replace the photo → reload (new values + new photo persist, old photo object no longer in the bucket)
-- [ ] 5.4 No regressions in the existing auth flow (npm run smoke still passes against a running server)
+- [x] 5.3 Full flow: sign in → visit /dashboard/dog (empty) → create profile with a photo → reload (values + photo persist) → edit fields and replace the photo → reload (new values + new photo persist, old photo object no longer in the bucket)
+- [x] 5.4 No regressions in the existing auth flow (npm run smoke still passes against a running server)
