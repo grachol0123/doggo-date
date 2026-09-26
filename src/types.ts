@@ -75,6 +75,51 @@ export type Database = {
         };
         Relationships: [];
       };
+      swipes: {
+        Row: {
+          actor_dog_id: string;
+          created_at: string;
+          decision: Database["public"]["Enums"]["swipe_decision"];
+          id: string;
+          target_dog_id: string;
+        };
+        Insert: {
+          actor_dog_id: string;
+          created_at?: string;
+          decision: Database["public"]["Enums"]["swipe_decision"];
+          id?: string;
+          target_dog_id: string;
+        };
+        Update: {
+          actor_dog_id?: string;
+          created_at?: string;
+          decision?: Database["public"]["Enums"]["swipe_decision"];
+          id?: string;
+          target_dog_id?: string;
+        };
+        Relationships: [];
+      };
+      matches: {
+        Row: {
+          created_at: string;
+          dog_a_id: string;
+          dog_b_id: string;
+          id: string;
+        };
+        Insert: {
+          created_at?: string;
+          dog_a_id: string;
+          dog_b_id: string;
+          id?: string;
+        };
+        Update: {
+          created_at?: string;
+          dog_a_id?: string;
+          dog_b_id?: string;
+          id?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -95,6 +140,7 @@ export type Database = {
         | "hiking"
         | "camping"
         | "car_rides";
+      swipe_decision: "like" | "pass";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -228,8 +274,11 @@ export const Constants = {
         "camping",
         "car_rides",
       ],
+      swipe_decision: ["like", "pass"],
     },
   },
 } as const;
 
 export type Dog = Database["public"]["Tables"]["dogs"]["Row"];
+export type Swipe = Database["public"]["Tables"]["swipes"]["Row"];
+export type Match = Database["public"]["Tables"]["matches"]["Row"];
