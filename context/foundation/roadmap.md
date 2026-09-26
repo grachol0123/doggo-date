@@ -3,7 +3,7 @@ project: "Doggo Date"
 version: 1
 status: draft
 created: 2026-09-22
-updated: 2026-09-25
+updated: 2026-09-26
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -42,8 +42,9 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 | ID   | Change ID                   | Outcome (user can …)                                                              | Prerequisites | PRD refs                    | Status   |
 | ---- | ---------------------------- | ----------------------------------------------------------------------------------- | -------------- | ---------------------------- | -------- |
 | F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)     | —              | FR-002                       | done |
-| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                      | F-01           | FR-001, FR-002                | proposed |
-| S-02 | browse-and-match             | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy | S-01           | US-01, FR-003, FR-004, FR-005 | proposed |
+| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                      | F-01           | FR-001, FR-002                | in-progress |
+| F-02 | dashboard-sidebar-nav        | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01           | —                              | proposed |
+| S-02 | browse-and-match             | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy | S-01, F-02      | US-01, FR-003, FR-004, FR-005 | proposed |
 | S-03 | first-message                | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem | S-02           | US-01, FR-006                 | proposed |
 
 ## Baseline
@@ -73,6 +74,19 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Risk:** Warstwa danych jest obecnie całkowicie nieobecna w kodzie; ustalenie wzorca migracji + RLS raz, przy pierwszej tabeli, utrzymuje spójność konwencji (wg AGENTS.md: migracje nazwane `YYYYMMDDHHmmss_opis.sql`, granularne RLS per operację) zanim kolejne trzy tabele (polubienia, matche, wiadomości) zostaną dodane slice-po-slice.
 - **Status:** done
 
+### F-02: Sidebar nawigacyjny dashboardu
+
+- **Outcome:** (foundation) treść dashboardu (powitanie, link do profilu psa, wylogowanie) przenosi się do bocznego panelu nawigacyjnego (`Sidebar`), zwalniając stronę główną `/dashboard` pod przyszły widok przeglądania psów (S-02, browse-dogs). Nie jest to samo w sobie widoczne jako nowa funkcja użytkownika — porządkuje architekturę UI przed dodaniem kolejnych ekranów domenowych (przeglądanie, matche).
+- **Change ID:** dashboard-sidebar-nav
+- **PRD refs:** — (architektura UI, nie osobne FR)
+- **Unlocks:** S-02 (browse-and-match) — a dokładniej jego pod-zmianę `browse-dogs`
+- **Prerequisites:** S-01 (dog-profile-crud, impl_reviewed) — sidebar linkuje do `/dashboard/dog`
+- **Parallel with:** match-data-foundation (pod-zmiana S-02, brak współdzielonych plików)
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Niski — czysto prezentacyjna zmiana UI, bez zmian schematu ani logiki biznesowej. Ryzyko ograniczone do regresji istniejących linków (profil psa, wylogowanie) podczas przenoszenia ich z `dashboard.astro` do `Sidebar`.
+- **Status:** proposed
+
 ## Slices
 
 ### S-01: Właściciel tworzy i edytuje profil swojego psa
@@ -85,19 +99,20 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Kształt tabeli `dogs` (jedno zdjęcie, opis) ustala kontrakt, z którego korzystają S-02 i S-03; zmiana schematu później oznacza migrację wsteczną.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-02: Właściciel przegląda profile innych psów i tworzy dopasowanie
 
 - **Outcome:** właściciel przegląda profile innych psów (swipe, bez filtrów), a przy obustronnym polubieniu powstaje match widoczny natychmiast na liście matchy.
 - **Change ID:** browse-and-match
 - **PRD refs:** US-01, FR-003, FR-004, FR-005
-- **Prerequisites:** S-01; zewnętrzny stan: co najmniej kilka zasilonych profili psów do przeglądania w testach
+- **Prerequisites:** S-01; F-02 (dashboard-sidebar-nav); zewnętrzny stan: co najmniej kilka zasilonych profili psów do przeglądania w testach
 - **Parallel with:** —
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Reguła sortowania (najpierw najnowsze profile, potem trafność dopasowania) i logika „nie pokazuj ponownie już ocenionych profili” to główna logika biznesowa MVP — błąd tu bezpośrednio narusza NFR dot. płynności przeglądania (<1s, zawsze inny nieoceniony profil).
+- **Risk:** Reguła sortowania (najpierw najnowsze profile, potem trafność dopasowania — zdefiniowana jako liczba wspólnych `interests`) i logika „nie pokazuj ponownie już ocenionych profili” to główna logika biznesowa MVP — błąd tu bezpośrednio narusza NFR dot. płynności przeglądania (<1s, zawsze inny nieoceniony profil). Tworzenie matcha przy równoczesnym obustronnym polubieniu wymaga trigger'a DB (atomowość), nie logiki aplikacyjnej.
 - **Status:** proposed
+- **Implementation split:** ta zmiana jest realizowana jako 3 osobne foldery zmian, wykonywane po kolei: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger), `browse-dogs` (API przeglądania/swipe + strona główna), `matches-list` (API + strona listy matchy). `dashboard-sidebar-nav` (F-02) jest prerekwizytem UI, realizowanym równolegle na osobnym branchu.
 
 ### S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem
 
@@ -116,8 +131,9 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 | Roadmap ID | Change ID                   | Suggested issue title                                          | Ready for `/10x-plan` | Notes                                              |
 | ---------- | ---------------------------- | ---------------------------------------------------------------- | --------------------- | --------------------------------------------------- |
 | F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                    | Run `/10x-plan dog-profile-data-foundation`         |
-| S-01       | dog-profile-crud             | Owner can create and edit their dog's profile                    | no                     | Blocked until F-01 is done                          |
-| S-02       | browse-and-match             | Owner can browse dogs and create a match                         | no                     | Blocked until S-01 is done                          |
+| S-01       | dog-profile-crud             | Owner can create and edit their dog's profile                    | no                     | impl_reviewed, pending archive                      |
+| F-02       | dashboard-sidebar-nav        | Add sidebar navigation, free up main page for browsing            | yes                    | Run `/10x-plan dashboard-sidebar-nav`; parallel with match-data-foundation |
+| S-02       | browse-and-match             | Owner can browse dogs and create a match                         | yes                    | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
 | S-03       | first-message                | Owner can send/receive real-time messages with a match            | no                     | Blocked until S-02 is done                          |
 
 This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Include one row for every `F-NN` and `S-NN`. It should be compact enough to copy into issues, but it must not duplicate the detailed roadmap body.
