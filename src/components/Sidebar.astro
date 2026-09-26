@@ -1,0 +1,26 @@
+---
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const { user } = Astro.locals;
+---
+
+<aside class="w-full md:w-56 md:shrink-0">
+  <div class="bg-card text-card-foreground flex h-full flex-col rounded-2xl border p-5 shadow-2xl">
+    <p class="text-muted-foreground text-xs uppercase tracking-[0.3em]">Dashboard</p>
+    <p class="text-muted-foreground mt-3 break-all text-sm">{user?.email}</p>
+
+    <!-- Future nav items (Przeglądaj, Matche) will be added here by later changes. -->
+    <nav class="mt-6 flex flex-col gap-3">
+      <a href="/dashboard/dog" class:list={[cn(buttonVariants({ variant: "outline" }), "justify-start")]}>
+        Mój profil psa
+      </a>
+    </nav>
+
+    <form method="POST" action="/api/auth/signout" class="mt-6 md:mt-auto">
+      <Button type="submit" variant="outline" className="w-full justify-start">
+        Wyloguj
+      </Button>
+    </form>
+  </div>
+</aside>

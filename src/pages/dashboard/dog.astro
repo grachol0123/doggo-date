@@ -1,6 +1,6 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import DogProfileForm from "@/components/dog/DogProfileForm";
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
 import { createClient } from "@/lib/supabase";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -35,11 +35,11 @@ if (user) {
 }
 ---
 
-<Layout title="Mój profil psa">
-  <div class="bg-background flex min-h-screen items-center justify-center p-4">
-    <Card className="w-full max-w-lg">
+<DashboardLayout title="Mój profil psa">
+  <div class="flex min-h-full justify-center">
+    <Card className="w-full max-w-3xl">
       <CardHeader>
-        <CardTitle className="text-foreground text-center text-2xl font-bold">Mój profil psa</CardTitle>
+        <CardTitle className="text-center text-2xl font-bold">Mój profil psa</CardTitle>
       </CardHeader>
       <CardContent>
         {pageError ? (
@@ -64,4 +64,4 @@ if (user) {
       </CardContent>
     </Card>
   </div>
-</Layout>
+</DashboardLayout>
