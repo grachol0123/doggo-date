@@ -292,10 +292,10 @@ Not applicable — no schema changes in this plan.
 
 #### Manual
 
-- [x] 2.4 Submitting the form with valid data as a signed-in user with no existing dog creates a dogs row visible in Supabase Studio, owned by the correct auth.uid()
-- [x] 2.5 Submitting again with edits updates the same row (no duplicate row, no unique-constraint violation)
-- [x] 2.6 Uploading a new photo removes the previously uploaded object from the dog-photos bucket
-- [x] 2.7 Submitting invalid data (e.g. name >100 chars) redirects back with a visible error and does not write to the database
+- [x] 2.4 Submitting the form with valid data as a signed-in user with no existing dog creates a dogs row visible in Supabase Studio, owned by the correct auth.uid() — 3d0b9ee
+- [x] 2.5 Submitting again with edits updates the same row (no duplicate row, no unique-constraint violation) — 3d0b9ee
+- [x] 2.6 Uploading a new photo removes the previously uploaded object from the dog-photos bucket — 3d0b9ee
+- [x] 2.7 Submitting invalid data (e.g. name >100 chars) redirects back with a visible error and does not write to the database — 3d0b9ee
 
 ### Phase 3: Protected dog profile page
 
@@ -329,10 +329,10 @@ Not applicable — no schema changes in this plan.
 
 #### Automated
 
-- [x] 5.1 npm run lint passes with zero errors
-- [x] 5.2 npm run build passes
+- [x] 5.1 npm run lint passes with zero errors — 3d0b9ee
+- [x] 5.2 npm run build passes — 3d0b9ee
 
 #### Manual
 
-- [x] 5.3 Full flow: sign in → visit /dashboard/dog (empty) → create profile with a photo → reload (values + photo persist) → edit fields and replace the photo → reload (new values + new photo persist, old photo object no longer in the bucket)
-- [x] 5.4 No regressions in the existing auth flow (npm run smoke still passes against a running server)
+- [x] 5.3 Full flow: sign in → visit /dashboard/dog (empty) → create profile with a photo → reload (values + photo persist) → edit fields and replace the photo → reload (new values + new photo persist, old photo object no longer in the bucket) — 3d0b9ee
+- [x] 5.4 No regressions in the existing auth flow (npm run smoke still passes against a running server) — 3d0b9ee
