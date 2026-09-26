@@ -43,7 +43,7 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 | ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ----------- |
 | F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
 | S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | in-progress |
-| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | in-progress |
+| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done        |
 | S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | in-progress |
 | S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | proposed    |
 
@@ -85,7 +85,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Niski — czysto prezentacyjna zmiana UI, bez zmian schematu ani logiki biznesowej. Ryzyko ograniczone do regresji istniejących linków (profil psa, wylogowanie) podczas przenoszenia ich z `dashboard.astro` do `Sidebar`.
-- **Status:** in-progress
+- **Status:** done
 
 ## Slices
 
@@ -112,7 +112,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Unknowns:** —
 - **Risk:** Reguła sortowania (najpierw najnowsze profile, potem trafność dopasowania — zdefiniowana jako liczba wspólnych `interests`) i logika „nie pokazuj ponownie już ocenionych profili” to główna logika biznesowa MVP — błąd tu bezpośrednio narusza NFR dot. płynności przeglądania (<1s, zawsze inny nieoceniony profil). Tworzenie matcha przy równoczesnym obustronnym polubieniu wymaga trigger'a DB (atomowość), nie logiki aplikacyjnej.
 - **Status:** in-progress
-- **Implementation split:** ta zmiana jest realizowana jako 3 osobne foldery zmian, wykonywane po kolei: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy gotowe, weryfikacja DB zablokowana brakiem lokalnej instancji Supabase/Docker), `browse-dogs` (API przeglądania/swipe + strona główna), `matches-list` (API + strona listy matchy). `dashboard-sidebar-nav` (F-02) — zmergowany do `develop` przez PR #10.
+- **Implementation split:** ta zmiana jest realizowana jako 3 osobne foldery zmian, wykonywane po kolei: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy gotowe, weryfikacja DB zablokowana brakiem lokalnej instancji Supabase/Docker), `browse-dogs` (API przeglądania/swipe + strona główna — następny krok), `matches-list` (API + strona listy matchy). `dashboard-sidebar-nav` (F-02) — **zmergowany do `develop`** (PR #10), gotowy jako prerekwizyt UI dla `browse-dogs`.
 
 ### S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem
 
@@ -132,7 +132,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 | ---------- | --------------------------- | ---------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
 | F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                   | Run `/10x-plan dog-profile-data-foundation`                                                     |
 | S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                    | impl_reviewed, pending archive                                                                  |
-| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | yes                   | Run `/10x-plan dashboard-sidebar-nav`; parallel with match-data-foundation                      |
+| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                    | Merged (PR #10), pending archive                                                                |
 | S-02       | browse-and-match            | Owner can browse dogs and create a match                         | yes                   | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
 | S-03       | first-message               | Owner can send/receive real-time messages with a match           | no                    | Blocked until S-02 is done                                                                      |
 
