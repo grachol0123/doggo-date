@@ -278,17 +278,17 @@ Not applicable — no schema changes in this plan.
 
 #### Automated
 
-- [x] 1.1 npm run lint passes
-- [x] 1.2 npm run build passes
-- [x] 1.3 zod appears in package.json dependencies and resolves (npm ls zod exits 0)
+- [x] 1.1 npm run lint passes — a87fa2c
+- [x] 1.2 npm run build passes — a87fa2c
+- [x] 1.3 zod appears in package.json dependencies and resolves (npm ls zod exits 0) — a87fa2c
 
 ### Phase 2: API route for saving the dog profile
 
 #### Automated
 
-- [ ] 2.1 npm run lint passes
-- [ ] 2.2 npm run build passes
-- [ ] 2.3 src/pages/api/dogs/save.ts exports uppercase POST
+- [x] 2.1 npm run lint passes
+- [x] 2.2 npm run build passes
+- [x] 2.3 src/pages/api/dogs/save.ts exports uppercase POST
 
 #### Manual
 
