@@ -221,30 +221,30 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 1.1 npm run lint passes
-- [x] 1.2 npm run build passes
-- [x] 1.3 npm run build resolves Dog/Swipe imports without error
+- [x] 1.1 npm run lint passes — 2c7cbaa
+- [x] 1.2 npm run build passes — 2c7cbaa
+- [x] 1.3 npm run build resolves Dog/Swipe imports without error — 2c7cbaa
 
 #### Manual
 
-- [x] 1.4 Next-candidate never returns an already-swiped or own dog id
-- [x] 1.5 Owner with no dogs row gets no_own_dog
-- [x] 1.6 Owner who swiped all candidates gets no_candidates
-- [x] 1.7 Candidates returned newest-first with shared-interest tie-break
+- [x] 1.4 Next-candidate never returns an already-swiped or own dog id — 2c7cbaa
+- [x] 1.5 Owner with no dogs row gets no_own_dog — 2c7cbaa
+- [x] 1.6 Owner who swiped all candidates gets no_candidates — 2c7cbaa
+- [x] 1.7 Candidates returned newest-first with shared-interest tie-break — 2c7cbaa
 
 ### Phase 2: Swipe API (record decision + report match)
 
 #### Automated
 
-- [ ] 2.1 npm run lint passes
-- [ ] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes
+- [x] 2.2 npm run build passes
 
 #### Manual
 
-- [ ] 2.3 Mutual like returns matched: true on the completing swipe, false on the first
-- [ ] 2.4 Pass never returns matched: true
-- [ ] 2.5 Duplicate swipe returns already_swiped, not a 500
-- [ ] 2.6 Self-swipe is rejected as a handled error, not a 500
+- [x] 2.3 Mutual like returns matched: true on the completing swipe, false on the first
+- [x] 2.4 Pass never returns matched: true
+- [x] 2.5 Duplicate swipe returns already_swiped, not a 500
+- [x] 2.6 Self-swipe is rejected as a handled error, not a 500
 
 ### Phase 3: Main-page browse UI
 
