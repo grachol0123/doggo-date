@@ -266,11 +266,11 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 4.1 npm run lint passes with zero errors
-- [x] 4.2 npm run build passes
-- [x] 4.3 npm run smoke passes against a running server
+- [x] 4.1 npm run lint passes with zero errors — e459ea8
+- [x] 4.2 npm run build passes — e459ea8
+- [x] 4.3 npm run smoke passes against a running server — e459ea8
 
 #### Manual
 
-- [x] 4.4 Full manual scenarios re-run together in one session
-- [x] 4.5 No regression to /dashboard/dog or sidebar nav
+- [x] 4.4 Full manual scenarios re-run together in one session — e459ea8
+- [x] 4.5 No regression to /dashboard/dog or sidebar nav — e459ea8
