@@ -250,27 +250,27 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 3.1 npm run lint passes
-- [x] 3.2 npm run build passes
+- [x] 3.1 npm run lint passes — 6495344
+- [x] 3.2 npm run build passes — 6495344
 
 #### Manual
 
-- [x] 3.3 Candidate card loads within a perceptible instant of visiting /dashboard
-- [x] 3.4 Swipe buttons advance without full page reload and never repeat a swiped dog
-- [x] 3.5 Match banner shows on the completing mutual-like swipe
-- [x] 3.6 Empty state shows after exhausting all candidates
-- [x] 3.7 No-own-dog prompt shows instead of a crash
-- [x] 3.8 Network failure shows inline error + retry, retry succeeds after recovery
+- [x] 3.3 Candidate card loads within a perceptible instant of visiting /dashboard — 6495344
+- [x] 3.4 Swipe buttons advance without full page reload and never repeat a swiped dog — 6495344
+- [x] 3.5 Match banner shows on the completing mutual-like swipe — 6495344
+- [x] 3.6 Empty state shows after exhausting all candidates — 6495344
+- [x] 3.7 No-own-dog prompt shows instead of a crash — 6495344
+- [x] 3.8 Network failure shows inline error + retry, retry succeeds after recovery — 6495344
 
 ### Phase 4: Final verification
 
 #### Automated
 
-- [ ] 4.1 npm run lint passes with zero errors
-- [ ] 4.2 npm run build passes
-- [ ] 4.3 npm run smoke passes against a running server
+- [x] 4.1 npm run lint passes with zero errors
+- [x] 4.2 npm run build passes
+- [x] 4.3 npm run smoke passes against a running server
 
 #### Manual
 
-- [ ] 4.4 Full manual scenarios re-run together in one session
-- [ ] 4.5 No regression to /dashboard/dog or sidebar nav
+- [x] 4.4 Full manual scenarios re-run together in one session
+- [x] 4.5 No regression to /dashboard/dog or sidebar nav
