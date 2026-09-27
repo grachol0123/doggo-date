@@ -236,31 +236,31 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 2.1 npm run lint passes
-- [x] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes — 120a149
+- [x] 2.2 npm run build passes — 120a149
 
 #### Manual
 
-- [x] 2.3 Mutual like returns matched: true on the completing swipe, false on the first
-- [x] 2.4 Pass never returns matched: true
-- [x] 2.5 Duplicate swipe returns already_swiped, not a 500
-- [x] 2.6 Self-swipe is rejected as a handled error, not a 500
+- [x] 2.3 Mutual like returns matched: true on the completing swipe, false on the first — 120a149
+- [x] 2.4 Pass never returns matched: true — 120a149
+- [x] 2.5 Duplicate swipe returns already_swiped, not a 500 — 120a149
+- [x] 2.6 Self-swipe is rejected as a handled error, not a 500 — 120a149
 
 ### Phase 3: Main-page browse UI
 
 #### Automated
 
-- [ ] 3.1 npm run lint passes
-- [ ] 3.2 npm run build passes
+- [x] 3.1 npm run lint passes
+- [x] 3.2 npm run build passes
 
 #### Manual
 
-- [ ] 3.3 Candidate card loads within a perceptible instant of visiting /dashboard
-- [ ] 3.4 Swipe buttons advance without full page reload and never repeat a swiped dog
-- [ ] 3.5 Match banner shows on the completing mutual-like swipe
-- [ ] 3.6 Empty state shows after exhausting all candidates
-- [ ] 3.7 No-own-dog prompt shows instead of a crash
-- [ ] 3.8 Network failure shows inline error + retry, retry succeeds after recovery
+- [x] 3.3 Candidate card loads within a perceptible instant of visiting /dashboard
+- [x] 3.4 Swipe buttons advance without full page reload and never repeat a swiped dog
+- [x] 3.5 Match banner shows on the completing mutual-like swipe
+- [x] 3.6 Empty state shows after exhausting all candidates
+- [x] 3.7 No-own-dog prompt shows instead of a crash
+- [x] 3.8 Network failure shows inline error + retry, retry succeeds after recovery
 
 ### Phase 4: Final verification
 

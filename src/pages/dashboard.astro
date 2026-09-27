@@ -1,21 +1,8 @@
 ---
+import BrowseDogs from "@/components/dog/BrowseDogs";
 import DashboardLayout from "@/layouts/DashboardLayout.astro";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
-const { user } = Astro.locals;
 ---
 
 <DashboardLayout title="Dashboard">
-  <Card>
-    <CardHeader>
-      <p class="text-muted-foreground text-xs uppercase tracking-[0.3em]">Panel właściciela</p>
-      <h1 class="mt-3 text-3xl font-bold">Dashboard</h1>
-    </CardHeader>
-    <CardContent>
-      <p>
-        Welcome, <span class="font-semibold">{user?.email}</span>
-      </p>
-      <p class="text-muted-foreground mt-2 text-sm">This page is only for authenticated users.</p>
-    </CardContent>
-  </Card>
+  <BrowseDogs client:load />
 </DashboardLayout>
