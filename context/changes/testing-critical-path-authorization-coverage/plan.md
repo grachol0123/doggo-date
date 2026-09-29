@@ -436,22 +436,22 @@ same as every other migration; no manual migration step is required.
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly (`npx supabase db reset`)
-- [x] 1.2 Existing pgTAP suite still passes (`npx supabase test db`)
+- [x] 1.1 Migration applies cleanly (`npx supabase db reset`) — 01721dc
+- [x] 1.2 Existing pgTAP suite still passes (`npx supabase test db`) — 01721dc
 
 #### Manual
 
-- [ ] 1.3 Review fixture account/dog shape against Phase 3 script expectations
+- [x] 1.3 Review fixture account/dog shape against Phase 3 script expectations
 
 ### Phase 2: pgTAP RLS coverage
 
 #### Automated
 
-- [ ] 2.1 All pgTAP suites pass (`npx supabase test db`)
+- [x] 2.1 All pgTAP suites pass (`npx supabase test db`)
 
 #### Manual
 
-- [ ] 2.2 Confirm each new assertion's expected outcome (silent filter vs. thrown error) matches its policy type
+- [x] 2.2 Confirm each new assertion's expected outcome (silent filter vs. thrown error) matches its policy type
 
 ### Phase 3: API-level authorization script + CI wiring
 

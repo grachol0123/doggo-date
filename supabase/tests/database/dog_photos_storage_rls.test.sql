@@ -3,7 +3,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, auth, storage, extensions;
 
-select plan(2);
+select plan(4);
 
 delete from auth.users
 where id in (
@@ -87,6 +87,49 @@ select throws_ok(
   '42501',
   null,
   'Owner cannot insert an object into another user''s prefix'
+);
+
+select set_config(
+  'request.jwt.claims',
+  json_build_object(
+    'sub',
+    '66666666-6666-4666-8666-666666666666',
+    'role',
+    'authenticated'
+  )::text,
+  true
+);
+set local role authenticated;
+
+select results_eq(
+  $$
+    with attempted as (
+      update storage.objects
+      set name = '66666666-6666-4666-8666-666666666666/hijacked.jpg'
+      where bucket_id = 'dog-photos'
+        and name = '55555555-5555-4555-8555-555555555555/phase3-storage-rls-test.jpg'
+      returning 1
+    )
+    select count(*)::bigint
+    from attempted
+  $$,
+  array[0::bigint],
+  'Owner cannot update another user''s dog-photos object'
+);
+
+-- storage.objects has a built-in protect_delete() trigger blocking ANY direct
+-- SQL DELETE (regardless of RLS ownership match), forcing use of the Storage
+-- API instead. This is a hard error, not the RLS-filtered silent 0-row result
+-- used for update above — assert throws_ok, not results_eq.
+select throws_ok(
+  $$
+    delete from storage.objects
+    where bucket_id = 'dog-photos'
+      and name = '55555555-5555-4555-8555-555555555555/phase3-storage-rls-test.jpg'
+  $$,
+  null,
+  'Direct deletion from storage tables is not allowed. Use the Storage API instead.',
+  'Owner cannot delete another user''s dog-photos object (direct SQL delete is blocked entirely)'
 );
 
 select * from finish();

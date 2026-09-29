@@ -3,7 +3,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set search_path = public, auth, storage, extensions;
 
-select plan(8);
+select plan(10);
 
 delete from public.dogs
 where owner_id in (
@@ -122,6 +122,35 @@ select set_config(
   true
 );
 set local role authenticated;
+
+select results_eq(
+  $$
+    with attempted as (
+      update public.dogs
+      set name = 'Hijacked'
+      where owner_id = '33333333-3333-4333-8333-333333333333'::uuid
+      returning 1
+    )
+    select count(*)::bigint
+    from attempted
+  $$,
+  array[0::bigint],
+  'Authenticated user cannot update another owner''s dog profile'
+);
+
+select results_eq(
+  $$
+    with attempted as (
+      delete from public.dogs
+      where owner_id = '33333333-3333-4333-8333-333333333333'::uuid
+      returning 1
+    )
+    select count(*)::bigint
+    from attempted
+  $$,
+  array[0::bigint],
+  'Authenticated user cannot delete another owner''s dog profile'
+);
 
 select throws_ok(
   $$
