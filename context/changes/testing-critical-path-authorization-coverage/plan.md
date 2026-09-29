@@ -447,25 +447,25 @@ same as every other migration; no manual migration step is required.
 
 #### Automated
 
-- [x] 2.1 All pgTAP suites pass (`npx supabase test db`)
+- [x] 2.1 All pgTAP suites pass (`npx supabase test db`) — eacf1de
 
 #### Manual
 
-- [x] 2.2 Confirm each new assertion's expected outcome (silent filter vs. thrown error) matches its policy type
+- [x] 2.2 Confirm each new assertion's expected outcome (silent filter vs. thrown error) matches its policy type — eacf1de
 
 ### Phase 3: API-level authorization script + CI wiring
 
 #### Automated
 
-- [ ] 3.1 Lint passes (`npm run lint`)
-- [ ] 3.2 Build succeeds (`npm run build`)
-- [ ] 3.3 New script passes locally (`npm run test:authz`)
-- [ ] 3.4 CI `smoke` job passes with the new step included
+- [x] 3.1 Lint passes (`npm run lint`)
+- [x] 3.2 Build succeeds (`npm run build`)
+- [x] 3.3 New script passes locally (`npm run test:authz`)
+- [x] 3.4 CI `smoke` job passes with the new step included
 
 #### Manual
 
-- [ ] 3.5 Review CI workflow diff for correct step ordering and env var usage
-- [ ] 3.6 Manually sanity-check one authenticated flow in a browser against the script's assertions
+- [x] 3.5 Review CI workflow diff for correct step ordering and env var usage
+- [x] 3.6 Manually sanity-check one authenticated flow in a browser against the script's assertions
 
 ### Phase 4: Update test-plan cookbook
 

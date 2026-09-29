@@ -68,6 +68,11 @@ jobs:
           BASE_URL: http://localhost:4321
         run: npm run smoke
 
+      - name: Run authz test
+        env:
+          BASE_URL: http://localhost:4321
+        run: npm run test:authz
+
       - name: Stop local Supabase
         if: always()
         run: supabase stop
