@@ -2,8 +2,30 @@
 change_id: testing-critical-path-authorization-coverage
 reviewed: 2026-10-02
 scope: full plan (Phases 1-4)
-verdict: NEEDS ATTENTION
+verdict: APPROVED (with 2 open LOW follow-ups, commit c3dc228)
 ---
+
+## Resolution (commit `c3dc228`)
+
+- **#1 CRITICAL — fixed.** Fixture seeding moved from a versioned migration
+  into `supabase/seed.sql`, which `[db.seed]` in `config.toml` loads only
+  on `supabase db reset` and is never applied by `supabase db push` to a
+  linked remote project.
+- **#2 HIGH — reclassified, not a bug.** Re-examination found an inline
+  code comment in `dog_photos_storage_rls.test.sql` explaining that
+  `storage.objects` has a built-in `protect_delete()` trigger that
+  hard-blocks *any* direct SQL `DELETE` regardless of RLS/ownership — the
+  implementer correctly adapted to this real Supabase behavior; `throws_ok`
+  is the right assertion there, not row-count. No code change made.
+- **#3 MEDIUM — fixed.** §6.2 cookbook now explicitly documents the
+  `protect_delete()` exception instead of implying both UPDATE and DELETE
+  in that file follow the same row-count pattern.
+- **#4 MEDIUM — fixed.** Added a "Run pgTAP database tests" (`supabase test
+  db`) CI step in the `smoke` job; updated test-plan.md §3/§4/§5 to reflect
+  the gate now being enforced in CI (brings forward rollout Phase 4
+  "Quality-gates wiring" from `not started` to `complete`).
+- **#5 LOW, #6 LOW — left open**, per user triage choice; not addressed in
+  this pass.
 
 # Implementation Review — testing-critical-path-authorization-coverage
 
