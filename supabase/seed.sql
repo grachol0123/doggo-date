@@ -1,3 +1,8 @@
+-- Local/CI-only seed data. Loaded by `supabase db reset` per [db.seed] in config.toml —
+-- NEVER applied by `supabase db push` to a linked remote project, unlike files under
+-- supabase/migrations/. Keep any fixture that creates real auth.users accounts with
+-- known passwords here, not in a timestamped migration.
+--
 -- Seed two dedicated authz test accounts/dogs for the Phase 3 HTTP authorization script.
 -- Kept separate from the gen1..gen20 demo-QA seed so automated fixtures stay stable and explicit.
 --

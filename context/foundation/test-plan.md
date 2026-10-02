@@ -73,10 +73,10 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|---|---|---|---|---|---|
-| 1 | Critical-path authorization coverage | Prove unauthenticated/cross-user access is blocked across existing and near-term dog/match data surfaces | #1, #5 | integration | implementing | `context/changes/testing-critical-path-authorization-coverage/` |
+| 1 | Critical-path authorization coverage | Prove unauthenticated/cross-user access is blocked across existing and near-term dog/match data surfaces | #1, #5 | integration | complete | `context/changes/testing-critical-path-authorization-coverage/` |
 | 2 | Browse & match correctness | Prove mutual-like match creation and browse ordering/no-repeat rules hold for the in-progress `browse-and-match` slice | #2, #3 | integration | not started | — |
 | 3 | Real-time messaging privacy & delivery | Prove message delivery is instant and scoped to matched pairs only, once `first-message` (S-03) is built | #4 | integration + e2e/manual smoke | not started | — |
-| 4 | Quality-gates wiring | Wire `supabase test db` (pgTAP) into CI so RLS regressions block merges, not just local runs | cross-cutting | gates | not started | — |
+| 4 | Quality-gates wiring | Wire `supabase test db` (pgTAP) into CI so RLS regressions block merges, not just local runs | cross-cutting | gates | complete | wired directly into `.github/workflows/ci.yml` `smoke` job during Phase 1's impl review (no dedicated change folder opened) |
 
 **Status vocabulary** (fixed — parser literals): `not started` → `change opened` → `researched` → `planned` → `implementing` → `complete`.
 
@@ -87,7 +87,7 @@ The classic test base for this project. AI-native tools (if any) carry a
 
 | Layer | Tool | Version | Notes |
 |---|---|---|---|
-| unit + integration (DB/RLS) | pgTAP via `supabase test db` | Supabase CLI ^2.23.4 | Already used for `dogs` table + storage RLS; not yet run in CI (see §3 Phase 4) |
+| unit + integration (DB/RLS) | pgTAP via `supabase test db` | Supabase CLI ^2.23.4 | Used for `dogs`/`swipes`/`matches` tables + storage RLS; now run in CI (`.github/workflows/ci.yml` `smoke` job) |
 | unit + integration (app/API) | none yet | — | see §3 Phase 1/2 |
 | API mocking | none yet | — | see §3 Phase 1/2 |
 | e2e | none yet | — | see §3 Phase 3 |
@@ -111,7 +111,7 @@ phase lands; before that, the gate is `planned`.
 | lint + typecheck | local + CI (`.github/workflows/ci.yml` `lint-and-build`) | required | syntactic / type drift |
 | build | local + CI | required | build breakage |
 | smoke test (auth flow) | CI (`.github/workflows/ci.yml` `smoke`) | required | auth-flow regressions |
-| pgTAP DB/RLS tests | local only today | required after §3 Phase 1 (wired into CI by §3 Phase 4) | RLS/constraint regressions |
+| pgTAP DB/RLS tests | CI (`.github/workflows/ci.yml` `smoke` job) | required | RLS/constraint regressions |
 | integration tests (browse/match) | local, added by §3 Phase 2 | required after §3 Phase 2 | matching/ordering logic regressions |
 | e2e / manual smoke (messaging) | added by §3 Phase 3 | required after §3 Phase 3 | real-time delivery + privacy regressions |
 
@@ -139,8 +139,15 @@ the relevant rollout phase ships; before that, the sub-section reads
   row-count / unchanged-state (re-select the row and prove it is
   unaffected), not `throws_ok`. Only `INSERT` (and any `WITH CHECK`
   failure) raises `42501` and is a valid `throws_ok` target. See the
-  cross-owner UPDATE/DELETE assertions in `dogs_rls.test.sql` and
-  `dog_photos_storage_rls.test.sql` for the row-count pattern.
+  cross-owner UPDATE/DELETE assertions in `dogs_rls.test.sql` and the
+  cross-owner UPDATE assertion in `dog_photos_storage_rls.test.sql` for the
+  row-count pattern. **Exception**: `storage.objects` has a built-in
+  `protect_delete()` trigger that hard-blocks *any* direct SQL `DELETE`
+  (own-row or cross-owner alike) regardless of RLS — that case is a
+  legitimate `throws_ok` target, documented inline in
+  `dog_photos_storage_rls.test.sql`. Don't assume every storage mutation
+  follows the silent-filter rule; check whether a trigger enforces a hard
+  error first.
 
 ### 6.3 Adding an e2e test
 

@@ -46,6 +46,9 @@ jobs:
       - name: Start local Supabase
         run: supabase start
 
+      - name: Run pgTAP database tests
+        run: supabase test db
+
       - name: Write local Supabase credentials to .dev.vars
         run: |
           supabase status -o env \
