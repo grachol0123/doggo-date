@@ -9,10 +9,7 @@
   "files": {
     "skills": {
       "10x-tdd": {
-        "files": [
-          "SKILL.md",
-          "references/progress-format.md"
-        ],
+        "files": ["SKILL.md", "references/progress-format.md"],
         "contentHashes": {
           "SKILL.md": "98b28d8681b467349128a500c777d2d063ec6c5c8aea647ad02ecdea831eeb42",
           "references/progress-format.md": "01259753af620e2bfcaa04fb34d732d2efcb6fc172f8cf062f24870fe2248642"
@@ -37,9 +34,7 @@
         }
       }
     },
-    "prompts": [
-      "m3l2-ad-hoc-testing.md"
-    ],
+    "prompts": ["m3l2-ad-hoc-testing.md"],
     "configs": [],
     "promptHashes": {
       "m3l2-ad-hoc-testing.md": "6a4509b6b90d3ea9229d19dbec77aea0c6812d0d706144006f9465e195f5387f"
@@ -51,15 +46,10 @@
       "appliedAt": "2026-10-02T19:16:35.387Z",
       "skills": {
         "10x-tdd": {
-          "files": [
-            "SKILL.md",
-            "references/progress-format.md"
-          ]
+          "files": ["SKILL.md", "references/progress-format.md"]
         }
       },
-      "prompts": [
-        "m3l2-ad-hoc-testing.md"
-      ],
+      "prompts": ["m3l2-ad-hoc-testing.md"],
       "configs": []
     },
     "m3l3": {

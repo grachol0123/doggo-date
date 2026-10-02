@@ -49,6 +49,7 @@ użytkownika, ale odblokowuje S-01 (CRUD profilu psa).
 ## Desired End State
 
 Po ukończeniu tego planu:
+
 - W lokalnej (i docelowo produkcyjnej) bazie Supabase istnieje tabela `dogs`
   z polami podstawowymi i rozszerzonymi, CHECK constraints i RLS.
 - Istnieje publiczny bucket storage `dog-photos` z RLS ograniczającym zapis
@@ -100,6 +101,7 @@ przy zachowaniu zamkniętej listy. Wartości enum są po angielsku (identyfikato
 techniczne); tłumaczenia na język polski (i inne) dodaje warstwa frontendowa.
 
 **Contract**:
+
 - `CREATE TYPE dog_activity_level AS ENUM ('homebody', 'walker', 'runner');`
   (wartości po angielsku — tłumaczenia na PL/inne języki dodane na
   frontendzie, nie w bazie)
@@ -180,6 +182,7 @@ Analysis) — pozwala to napisać politykę RLS bez dodatkowego zapytania do
 tabeli `dogs`.
 
 **Contract**:
+
 - `insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types) values ('dog-photos', 'dog-photos', true, 5242880, array['image/jpeg','image/png','image/webp']) on conflict (id) do nothing;`
 - Polityki na `storage.objects` (bucket_id = 'dog-photos'):
   - `dog_photos_public_read`: `FOR SELECT USING (bucket_id = 'dog-photos')`

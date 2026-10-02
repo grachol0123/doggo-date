@@ -2,6 +2,7 @@
 name: 10x-tdd
 description: Drive an approved plan from context/changes/<change-id>/plan.md phase by phase, test-first, through red→green→refactor — only for TDD'able phases not yet implemented; everything else routes to /10x-implement. Use when the user says "tdd", "test-first", "red green refactor", or wants to execute a plan via TDD.
 ---
+
 # 10x TDD — Realizacja planu test-first
 
 Prowadzisz zatwierdzony plan techniczny od `context/changes/<change-id>/plan.md` do ukończenia **po jednej fazie naraz, test-first**. Ta umiejętność ma zastosowanie tylko wtedy, gdy implementacja produkcyjna fazy jeszcze nie istnieje. Dla każdej kwalifikującej się fazy uruchamiasz klasyczną pętlę:
@@ -84,7 +85,7 @@ This skill assumes test infrastructure already exists; it won't set it up. Optio
 
 7. **Znajdź punkt początkowy**: przeskanuj `## Progress` — pierwsze `- [ ]` w kolejności dokumentu wskazuje, od czego zaczynasz. Jeśli przekazano argument `phase N`, przejdź do pierwszego `- [ ]` pod `### Phase N:`.
 
-> **Konwencja schowka.** Wszędzie, gdzie ta umiejętność mówi *copy `X` to the clipboard*, prześlij dokładny ciąg `X` do schowka platformy — spróbuj `pbcopy` (macOS), następnie `clip.exe` (Windows/WSL), potem `xclip -selection clipboard` (Linux), a jeśli żadne z nich nie istnieje, przejdź dalej po cichu. Następnie wyświetl skopiowane polecenie w osobnej linii z przyrostkiem `(✓ copied)`.
+> **Konwencja schowka.** Wszędzie, gdzie ta umiejętność mówi _copy `X` to the clipboard_, prześlij dokładny ciąg `X` do schowka platformy — spróbuj `pbcopy` (macOS), następnie `clip.exe` (Windows/WSL), potem `xclip -selection clipboard` (Linux), a jeśli żadne z nich nie istnieje, przejdź dalej po cichu. Następnie wyświetl skopiowane polecenie w osobnej linii z przyrostkiem `(✓ copied)`.
 
 ---
 
@@ -123,20 +124,20 @@ Jeśli implementacja jest nieobecna, przejdź do kontroli możliwości TDD.
 
 Po potwierdzeniu braku implementacji zdecyduj, czy faza może być **sensownie prowadzona przez test kończący się niepowodzeniem**. Faza nadaje się do TDD, gdy istnieje **obserwowalny wynik, który można asertywnie sprawdzić, zanim kod powstanie**.
 
-| Nadaje się do TDD — prowadź ją tutaj | Nie nadaje się do TDD — przekieruj do `/10x-implement` |
-|---|---|
-| Czyste funkcje, transformacje danych, parsery, walidatory | Czysty scaffolding: tworzenie katalogów, plików konfiguracyjnych, edycje `package.json`/manifestu |
-| Maszyny stanów / reduktory / obliczanie flag | Wiring i infrastruktura: pliki CI, Dockerfile, konfiguracja env, konfiguracja wdrożenia |
-| Kontrakty żądanie API → odpowiedź (status, kształt, auth, bramkowanie) | Dopracowanie wizualne / stylowania bez ścieżki automatycznej asercji w stacku |
-| Logika biznesowa z jasnymi wejściami/wyjściami | Eksploracyjne spike'i, w których kontrakt nie jest jeszcze znany |
-| Przepływy integracyjne przez mockowalne granice (DB/KV/HTTP) | Dokumentacja, komentarze, edycje wyłącznie treści |
-| Poprawki błędów (najpierw napisz reprodukcję kończącą się niepowodzeniem) | Cienki glue, w którym test tylko powtarzałby implementację (tautologiczny) |
+| Nadaje się do TDD — prowadź ją tutaj                                      | Nie nadaje się do TDD — przekieruj do `/10x-implement`                                            |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Czyste funkcje, transformacje danych, parsery, walidatory                 | Czysty scaffolding: tworzenie katalogów, plików konfiguracyjnych, edycje `package.json`/manifestu |
+| Maszyny stanów / reduktory / obliczanie flag                              | Wiring i infrastruktura: pliki CI, Dockerfile, konfiguracja env, konfiguracja wdrożenia           |
+| Kontrakty żądanie API → odpowiedź (status, kształt, auth, bramkowanie)    | Dopracowanie wizualne / stylowania bez ścieżki automatycznej asercji w stacku                     |
+| Logika biznesowa z jasnymi wejściami/wyjściami                            | Eksploracyjne spike'i, w których kontrakt nie jest jeszcze znany                                  |
+| Przepływy integracyjne przez mockowalne granice (DB/KV/HTTP)              | Dokumentacja, komentarze, edycje wyłącznie treści                                                 |
+| Poprawki błędów (najpierw napisz reprodukcję kończącą się niepowodzeniem) | Cienki glue, w którym test tylko powtarzałby implementację (tautologiczny)                        |
 
 **Jak stosować kontrolę możliwości TDD:**
 
 - Jeśli implementacja jest nieobecna, a faza **wyraźnie nadaje się do TDD**, stwierdź to w jednym zdaniu i przejdź do pętli red-green-refactor.
 - Jeśli faza **wyraźnie nie nadaje się do TDD**, wykonaj **przekierowanie** (poniżej).
-- Jeśli jest **mieszana lub niejednoznaczna** (np. faza, która tworzy scaffolding konfiguracji *i* dodaje walidator z rzeczywistą logiką), zapytaj użytkownika:
+- Jeśli jest **mieszana lub niejednoznaczna** (np. faza, która tworzy scaffolding konfiguracji _i_ dodaje walidator z rzeczywistą logiką), zapytaj użytkownika:
 
   Zapytaj użytkownika: „Phase [N] is partly scaffolding, partly logic. How should I drive it?”
 
@@ -148,7 +149,7 @@ Po potwierdzeniu braku implementacji zdecyduj, czy faza może być **sensownie p
 
 ### Przekierowanie fazy nienadającej się do TDD do `/10x-implement`
 
-Podaj *dlaczego* faza nie pasuje (jedno lub dwa zdania, oparte na powyższej tabeli), a następnie zapytaj użytkownika:
+Podaj _dlaczego_ faza nie pasuje (jedno lub dwa zdania, oparte na powyższej tabeli), a następnie zapytaj użytkownika:
 
 Zapytaj użytkownika: „Phase [N] isn't a good test-first fit. How do you want to handle it?”
 
@@ -213,7 +214,7 @@ Gdy wszystkie wiersze `#### Automated` w `### Phase N:` będą `[x]`, uruchom ry
 
 > **Twardy niezmiennik — commit tylko na zielono.** Nigdy nie proponuj, nie stage'uj ani nie twórz commitu, gdy jakikolwiek test w zakresie jest RED, pominięty w celu upozorowania zaliczenia lub w inny sposób uszkodzony. Commit jest proponowany **dopiero po utrzymaniu stanu GREEN (lub REFACTOR) i przejściu pełnego zestawu**. Krok RED jest tymczasowym punktem kontrolnym, który pokazujesz użytkownikowi, nigdy granicą commitu. Jeśli zestaw jest czerwony na końcu fazy, napraw kod, aż będzie zielony — nie przechodź do kroku 1 rytuału z testami kończącymi się niepowodzeniem.
 
-Utrzymuj **zbiór zmodyfikowanych plików** przez całą fazę: każdy plik, który modyfikujesz lub tworzysz (testy *i* kod produkcyjny), trafia do niego, plus `context/changes/<change-id>/plan.md` (zawsze — edytujesz jego Progress). W **pierwszej fazie** zmiany również zainicjuj go wszystkimi nieśledzonymi/zmodyfikowanymi plikami wewnątrz `context/changes/<change-id>/` (`change.md`, `research.md` itd.). Zbiór **resetuje się na każdej granicy fazy**.
+Utrzymuj **zbiór zmodyfikowanych plików** przez całą fazę: każdy plik, który modyfikujesz lub tworzysz (testy _i_ kod produkcyjny), trafia do niego, plus `context/changes/<change-id>/plan.md` (zawsze — edytujesz jego Progress). W **pierwszej fazie** zmiany również zainicjuj go wszystkimi nieśledzonymi/zmodyfikowanymi plikami wewnątrz `context/changes/<change-id>/` (`change.md`, `research.md` itd.). Zbiór **resetuje się na każdej granicy fazy**.
 
 1. **Uruchom pełny zestaw** (nie tylko pojedyncze pliki) i potwierdź zielony wynik. Napraw wszelkie problemy międzyfazowe przed commitem.
 
@@ -232,7 +233,7 @@ Please perform the manual verification steps from the plan:
 Let me know when manual testing is complete so I can commit.
 ```
 
-   W **ostatniej fazie** zbierz także wszystkie nadal oczekujące wiersze `#### Manual` z wcześniejszych faz (informacyjnie; bramka nadal tylko wstrzymuje, nie blokuje twardo).
+W **ostatniej fazie** zbierz także wszystkie nadal oczekujące wiersze `#### Manual` z wcześniejszych faz (informacyjnie; bramka nadal tylko wstrzymuje, nie blokuje twardo).
 
 3. **Wykryj niepowiązane brudne ścieżki.** Uruchom `git status --porcelain`; przetnij z ścieżkami **poza** zbiorem zmodyfikowanych plików. Jeśli jakiekolwiek istnieją, przedstaw je i zapytaj użytkownika, czy commitować tylko zaplanowany zbiór (zalecane), stage'ować wszystko czy przerwać. Jeśli nie ma żadnych, pomiń.
 
@@ -299,7 +300,7 @@ Summary:
 - Files changed: [key files]
 ```
 
-   Następnie zapytaj użytkownika, czy uruchomić `/10x-impl-review <change-id>` (przegląd całego planu), czy pominąć.
+Następnie zapytaj użytkownika, czy uruchomić `/10x-impl-review <change-id>` (przegląd całego planu), czy pominąć.
 
 ---
 

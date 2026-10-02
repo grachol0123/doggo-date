@@ -16,24 +16,26 @@ An owner who has created their dog's profile lands on `/dashboard` and sees one 
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) |
-| --- | --- | --- |
-| API pattern | JSON fetch endpoints (no page reload) | Meets the PRD NFR of <1s per next-profile load; the existing formData→redirect pattern can't. |
-| No-own-dog handling | Inline prompt + link to `/dashboard/dog` | Simple, keeps the owner on `/dashboard` with clear next action. |
-| Empty state | Static "no more profiles" message, no polling | Matches MVP scope; avoids background polling complexity. |
-| Match feedback | Inline "To dopasowanie!" banner on the completing swipe | Satisfies PRD "match visible immediately" without waiting for the (not-yet-built) matches list. |
-| Next-profile loading | Fetch one candidate at a time | Simplest implementation; dataset size (seeded ~20 dogs) keeps this well under the 1s budget. |
-| Swipe error handling | Inline error + retry, candidate stays put | Avoids silently dropping a user's swipe decision on a transient network failure. |
-| Candidate ordering | Computed in the API route (TypeScript), not a Postgres RPC | No RPC precedent exists in this repo; dataset is small enough that server-side sort is simple and fast enough. |
+| Decision             | Choice                                                     | Why (1 sentence)                                                                                               |
+| -------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| API pattern          | JSON fetch endpoints (no page reload)                      | Meets the PRD NFR of <1s per next-profile load; the existing formData→redirect pattern can't.                  |
+| No-own-dog handling  | Inline prompt + link to `/dashboard/dog`                   | Simple, keeps the owner on `/dashboard` with clear next action.                                                |
+| Empty state          | Static "no more profiles" message, no polling              | Matches MVP scope; avoids background polling complexity.                                                       |
+| Match feedback       | Inline "To dopasowanie!" banner on the completing swipe    | Satisfies PRD "match visible immediately" without waiting for the (not-yet-built) matches list.                |
+| Next-profile loading | Fetch one candidate at a time                              | Simplest implementation; dataset size (seeded ~20 dogs) keeps this well under the 1s budget.                   |
+| Swipe error handling | Inline error + retry, candidate stays put                  | Avoids silently dropping a user's swipe decision on a transient network failure.                               |
+| Candidate ordering   | Computed in the API route (TypeScript), not a Postgres RPC | No RPC precedent exists in this repo; dataset is small enough that server-side sort is simple and fast enough. |
 
 ## Scope
 
 **In scope:**
+
 - `GET /api/dogs/next-candidate` — next unrated dog for the current owner
 - `POST /api/swipes` — record like/pass, report whether it created a match
 - `BrowseDogs` React island wired into `/dashboard`, covering loading/candidate/empty/no-profile/error states
 
 **Out of scope:**
+
 - Matches list page/API (next sub-change, `matches-list`)
 - Realtime/WebSocket updates (reserved for S-03)
 - Swipe gestures/drag, filters, unmatch — all confirmed out of scope for MVP
@@ -44,12 +46,12 @@ Two new Astro JSON API routes resolve the caller's own `dogs` row server-side (s
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Browse API | `GET /api/dogs/next-candidate` with correct ordering/exclusions | Getting the "already rated" exclusion and tie-break logic right against real seed data |
-| 2. Swipe API | `POST /api/swipes` recording decisions + match detection | Race/duplicate handling (unique constraint) surfaced as a clean response, not a 500 |
-| 3. Main-page UI | `BrowseDogs` island wired into `/dashboard` | Covering all 5 UI states (loading/candidate/empty/no-profile/error) without dead ends |
-| 4. Final verification | End-to-end confirmation + no regressions | Manual DB-level verification depends on a reachable Supabase instance (local or remote) |
+| Phase                 | What it delivers                                                | Key risk                                                                                |
+| --------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| 1. Browse API         | `GET /api/dogs/next-candidate` with correct ordering/exclusions | Getting the "already rated" exclusion and tie-break logic right against real seed data  |
+| 2. Swipe API          | `POST /api/swipes` recording decisions + match detection        | Race/duplicate handling (unique constraint) surfaced as a clean response, not a 500     |
+| 3. Main-page UI       | `BrowseDogs` island wired into `/dashboard`                     | Covering all 5 UI states (loading/candidate/empty/no-profile/error) without dead ends   |
+| 4. Final verification | End-to-end confirmation + no regressions                        | Manual DB-level verification depends on a reachable Supabase instance (local or remote) |
 
 **Prerequisites:** `match-data-foundation` (impl_reviewed, done), `dashboard-sidebar-nav` (F-02, done/merged), seeded test dog profiles (already present).
 **Estimated effort:** ~1-2 sessions across 4 phases.

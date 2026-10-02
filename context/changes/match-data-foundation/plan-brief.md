@@ -12,28 +12,30 @@ First of 3 sub-changes implementing roadmap S-02 (`browse-and-match`, see `conte
 
 ## Desired End State
 
-Two new RLS-protected tables exist: `swipes` (immutable like/pass decisions, insertable/readable only by the swipe's own actor) and `matches` (immutable pairs, readable by either matched owner, insertable *only* by a DB trigger — never directly by the API). Inserting a mutual `like` (in either order, including near-simultaneously) always produces exactly one `matches` row; a one-sided like or a `pass` never does.
+Two new RLS-protected tables exist: `swipes` (immutable like/pass decisions, insertable/readable only by the swipe's own actor) and `matches` (immutable pairs, readable by either matched owner, insertable _only_ by a DB trigger — never directly by the API). Inserting a mutual `like` (in either order, including near-simultaneously) always produces exactly one `matches` row; a one-sided like or a `pass` never does.
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-| --- | --- | --- | --- |
-| Match creation mechanism | DB trigger (`security definer`) on `swipes` insert | Atomic — no race window between checking for a reverse like and inserting the match, unlike app-level check-then-insert | Plan (locked earlier in conversation) |
-| Swipe/match keys | `dog_id`, not `owner_id` | Mirrors `dogs`' own FK surface; `owner_id` is already unique per dog so no information is lost | Plan |
-| Match row shape | `dog_a_id < dog_b_id` canonical order + unique constraint | Prevents duplicate/reversed match rows for the same pair without app-level dedup logic | Plan |
-| Unmatch/undo swipe | Not supported (immutable rows, no update/delete RLS policy) | Confirmed out of scope for MVP (roadmap Parked section) | Plan |
-| Match visibility | No realtime; matches list will query on page load | Realtime is reserved for S-03 (messages) per PRD/NFR — confirmed earlier in this conversation | Plan |
-| `src/types.ts` update | Hand-mirrored, not CLI-generated | No local Supabase/Docker instance available in this session; F-01/S-01 set this precedent already | Plan |
+| Decision                 | Choice                                                      | Why (1 sentence)                                                                                                        | Source                                |
+| ------------------------ | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Match creation mechanism | DB trigger (`security definer`) on `swipes` insert          | Atomic — no race window between checking for a reverse like and inserting the match, unlike app-level check-then-insert | Plan (locked earlier in conversation) |
+| Swipe/match keys         | `dog_id`, not `owner_id`                                    | Mirrors `dogs`' own FK surface; `owner_id` is already unique per dog so no information is lost                          | Plan                                  |
+| Match row shape          | `dog_a_id < dog_b_id` canonical order + unique constraint   | Prevents duplicate/reversed match rows for the same pair without app-level dedup logic                                  | Plan                                  |
+| Unmatch/undo swipe       | Not supported (immutable rows, no update/delete RLS policy) | Confirmed out of scope for MVP (roadmap Parked section)                                                                 | Plan                                  |
+| Match visibility         | No realtime; matches list will query on page load           | Realtime is reserved for S-03 (messages) per PRD/NFR — confirmed earlier in this conversation                           | Plan                                  |
+| `src/types.ts` update    | Hand-mirrored, not CLI-generated                            | No local Supabase/Docker instance available in this session; F-01/S-01 set this precedent already                       | Plan                                  |
 
 ## Scope
 
 **In scope:**
+
 - `swipes` table + RLS (select/insert own only)
 - `matches` table + RLS (select for either participant, no direct write)
 - `create_match_on_mutual_like()` trigger function + trigger
 - Manual `src/types.ts` additions (`Swipe`, `Match`, `swipe_decision` enum)
 
 **Out of scope:**
+
 - Browse/swipe API and UI (`browse-dogs`)
 - Matches list API and UI (`matches-list`)
 - Unmatch, undo-swipe, or any mutation after initial insert
@@ -46,11 +48,11 @@ Single migration file, structured exactly like the F-01 `dogs` migration (enum �
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Swipes and matches schema | Migration: enum, 2 tables, RLS, trigger | Trigger must be `security definer` or it can't see the other owner's swipe row to detect a mutual like |
-| 2. Type definitions | `src/types.ts` additions mirroring `dogs` | Manual types could drift from actual DB if migration SQL changes later without re-sync |
-| 3. Final verification | Lint/build + manual RLS/trigger verification | None beyond standard verification |
+| Phase                        | What it delivers                             | Key risk                                                                                               |
+| ---------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 1. Swipes and matches schema | Migration: enum, 2 tables, RLS, trigger      | Trigger must be `security definer` or it can't see the other owner's swipe row to detect a mutual like |
+| 2. Type definitions          | `src/types.ts` additions mirroring `dogs`    | Manual types could drift from actual DB if migration SQL changes later without re-sync                 |
+| 3. Final verification        | Lint/build + manual RLS/trigger verification | None beyond standard verification                                                                      |
 
 **Prerequisites:** F-01 (`dogs` table) — already done.
 **Estimated effort:** ~1 session, single migration + type file.

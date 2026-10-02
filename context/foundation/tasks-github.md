@@ -4,6 +4,7 @@
 > Wszystkie 7 issues jest otwartych, brak zamkniętych.
 
 ## Milestone: M-1 — Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość
+
 **Issue:** [#5](https://github.com/grachol0123/doggo-date/issues/5) · **Milestone ID:** `first-match-and-message`
 
 **Intent:** Dostarczyć najmniejszy kompletny przepływ end-to-end: właściciel zakłada profil psa → przegląda inne psy → tworzy dopasowanie → wymienia pierwszą wiadomość z innym właścicielem.
@@ -11,13 +12,14 @@
 **North star 🌟:** #4 — Właściciel wysyła pierwszą wiadomość do dopasowanego właściciela.
 
 ### Baseline (2026-09-22)
-| Obszar | Status |
-|---|---|
-| Frontend | partial — szkielet Astro+React, brak UI domenowego |
-| Backend/API | partial — tylko endpointy auth |
-| Data | absent — brak migracji Supabase |
-| Auth | present — pełny scaffold email+hasło |
-| Deploy/infra | present — Cloudflare Workers + CI, wdrożone |
+
+| Obszar        | Status                                                  |
+| ------------- | ------------------------------------------------------- |
+| Frontend      | partial — szkielet Astro+React, brak UI domenowego      |
+| Backend/API   | partial — tylko endpointy auth                          |
+| Data          | absent — brak migracji Supabase                         |
+| Auth          | present — pełny scaffold email+hasło                    |
+| Deploy/infra  | present — Cloudflare Workers + CI, wdrożone             |
 | Observability | partial — podstawowe Workers Logs, brak error trackingu |
 
 ### Zadania (kolejność zależności)

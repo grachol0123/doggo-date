@@ -18,12 +18,12 @@ If you can browse, re-check the payload field, exit-code table and timeout defau
 
 ## Config locations
 
-| File | Scope |
-| --- | --- |
-| `~/.claude/settings.json` | All your projects |
-| `.claude/settings.json` | This project, committed with `.claude/hooks/` |
-| `.claude/settings.local.json` | This project, local only (gitignored) |
-| Managed policy settings | Organisation, admin-controlled |
+| File                                                     | Scope                                         |
+| -------------------------------------------------------- | --------------------------------------------- |
+| `~/.claude/settings.json`                                | All your projects                             |
+| `.claude/settings.json`                                  | This project, committed with `.claude/hooks/` |
+| `.claude/settings.local.json`                            | This project, local only (gitignored)         |
+| Managed policy settings                                  | Organisation, admin-controlled                |
 | Plugin `hooks/hooks.json`, skill or subagent frontmatter | While the plugin / skill / subagent is active |
 
 Hooks from different levels **merge**; they do not replace each other. Shape:
@@ -31,9 +31,7 @@ Hooks from different levels **merge**; they do not replace each other. Shape:
 ```json
 {
   "hooks": {
-    "PostToolUse": [
-      { "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "...", "timeout": 30 }] }
-    ]
+    "PostToolUse": [{ "matcher": "Write|Edit", "hooks": [{ "type": "command", "command": "...", "timeout": 30 }] }]
   }
 }
 ```
@@ -51,11 +49,11 @@ JSON on stdin. `PostToolUse` fields include `session_id`, `cwd`, `hook_event_nam
 
 ## Signal channel — what reaches the agent
 
-| Exit code | PostToolUse | Stop |
-| --- | --- | --- |
-| `0` | Success. stdout goes to the debug log only; stderr is never seen by Claude | Agent stops normally |
-| `2` | **stderr is shown to Claude** next to the tool result (the edit already happened) | **Agent does not stop**; stderr is the reason it keeps working |
-| other (incl. `1`) | Non-blocking error: the user sees "hook error" in the transcript, **Claude sees nothing** | Same |
+| Exit code         | PostToolUse                                                                               | Stop                                                           |
+| ----------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `0`               | Success. stdout goes to the debug log only; stderr is never seen by Claude                | Agent stops normally                                           |
+| `2`               | **stderr is shown to Claude** next to the tool result (the edit already happened)         | **Agent does not stop**; stderr is the reason it keeps working |
+| other (incl. `1`) | Non-blocking error: the user sees "hook error" in the transcript, **Claude sees nothing** | Same                                                           |
 
 Most linters and test runners exit `1` and print to stdout, so a raw `npx eslint .` hook reaches nobody. Scripts must redirect output to stderr (`>&2`) and turn any failure into `exit 2`.
 
@@ -122,6 +120,7 @@ Stop block cap: after **8** consecutive blocks Claude Code ends the turn anyway 
 `.claude/hooks/lint-edited-file.sh` — lint only the edited file:
 
 <!-- proof: lint-edited-file.sh -->
+
 ```bash
 #!/usr/bin/env bash
 # PostToolUse (Write|Edit): lint the file the agent just edited.
@@ -149,6 +148,7 @@ exit 0
 `.claude/hooks/end-of-turn.sh` — at end of turn: lint and related tests for every changed file, then a whole-project typecheck; one retry:
 
 <!-- proof: end-of-turn.sh -->
+
 ```bash
 #!/usr/bin/env bash
 # Stop: sweep everything this turn changed before the agent finishes, one retry.
@@ -216,6 +216,7 @@ exit 0
 `.claude/hooks/related-tests.sh` — tests that depend on the edited file (optional, per edit):
 
 <!-- proof: related-tests.sh -->
+
 ```bash
 #!/usr/bin/env bash
 # PostToolUse (Write|Edit): run the tests related to the edited file.

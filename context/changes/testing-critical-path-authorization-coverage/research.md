@@ -48,7 +48,7 @@ storage paths stay non-sequential/non-guessable with owner-scoped writes?
   of a 401 (src/pages/api/dogs/save.ts:154-157). This is a real branch
   divergence a Phase-1 test must cover explicitly for `dogs/save`, since
   "expect 401" would be the wrong assertion for that one endpoint.
-- `src/middleware.ts` only redirects unauthenticated *page* requests whose
+- `src/middleware.ts` only redirects unauthenticated _page_ requests whose
   path starts with `/dashboard` or `/dashboard/dog` (src/middleware.ts:4).
   None of the three API paths (`/api/swipes`, `/api/dogs/save`,
   `/api/dogs/next-candidate`) are in `PROTECTED_ROUTES`, so the middleware
@@ -98,7 +98,7 @@ storage paths stay non-sequential/non-guessable with owner-scoped writes?
   the path is non-sequential and not derivable from any counter; this
   matches the risk #5 "must challenge" bar (no sequential ID is ever used).
   Storage RLS scopes write/update/delete to `(storage.foldername(name))[1] =
-  auth.uid()::text` (supabase/migrations/20260925233126_create_dog_photos_bucket.sql:16-38),
+auth.uid()::text` (supabase/migrations/20260925233126_create_dog_photos_bucket.sql:16-38),
   and the bucket is `public: true` with a public-read policy with no owner
   check at all (same file, lines 1-13) — public read is the already-accepted
   MVP trade-off cited in `context/archive/2026-09-25-dog-profile-data-foundation/plan.md:44-47`
@@ -144,8 +144,7 @@ storage paths stay non-sequential/non-guessable with owner-scoped writes?
   `/auth/signin` rather than returning JSON/401. Looks up the existing dog
   row scoped to `owner_id = user.id` (lines 166-172) before deciding
   insert-vs-update, so it can only ever mutate the caller's own row.
-  Builds the photo path as `${user.id}/${crypto.randomUUID()}.${ext}` (line
-  170) only when a new photo file is present.
+  Builds the photo path as `${user.id}/${crypto.randomUUID()}.${ext}` (line 170) only when a new photo file is present.
 - `src/pages/api/dogs/next-candidate.ts` — `GET`, `prerender = false`. Auth
   check at lines 27-29 (401 `{status:"unauthenticated"}`). Resolves caller's
   own dog by `owner_id`, excludes dogs already swiped by that dog, then
@@ -155,7 +154,7 @@ storage paths stay non-sequential/non-guessable with owner-scoped writes?
   at this commit (only `swipes/index.ts`, `dogs/save.ts`,
   `dogs/next-candidate.ts`, and the three `auth/*` routes were found by
   `src/pages/api/**/*.ts`). Any Phase-1 test scoped to "future
-  matches/messages entry points" must therefore test the *RLS* layer only
+  matches/messages entry points" must therefore test the _RLS_ layer only
   (there is no API surface yet to test at the HTTP layer for those two
   tables).
 
@@ -182,16 +181,16 @@ storage paths stay non-sequential/non-guessable with owner-scoped writes?
 Source: `supabase/migrations/20260925231055_create_dogs_table.sql`,
 `supabase/migrations/20260926200000_create_swipes_and_matches.sql`.
 
-| Table | Policy | Command | Rule |
-|---|---|---|---|
-| `dogs` | `dogs_select_authenticated` | SELECT | `to authenticated using (true)` — any authenticated user, any row (by design; browse) |
-| `dogs` | `dogs_insert_own` | INSERT | `with check (auth.uid() = owner_id)` |
-| `dogs` | `dogs_update_own` | UPDATE | `using/with check (auth.uid() = owner_id)` |
-| `dogs` | `dogs_delete_own` | DELETE | `using (auth.uid() = owner_id)` |
-| `swipes` | `swipes_select_own` | SELECT | requires a `dogs` row where `d.id = actor_dog_id and d.owner_id = auth.uid()` |
-| `swipes` | `swipes_insert_own` | INSERT | same ownership check on `actor_dog_id` |
-| `matches` | `matches_select_participant` | SELECT | requires `auth.uid()` to own `dog_a_id` or `dog_b_id` |
-| `matches` | *(none)* | INSERT/UPDATE/DELETE | no policy exists → default-deny for `authenticated`/`anon`; only path is the `security definer` trigger |
+| Table     | Policy                       | Command              | Rule                                                                                                    |
+| --------- | ---------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------- |
+| `dogs`    | `dogs_select_authenticated`  | SELECT               | `to authenticated using (true)` — any authenticated user, any row (by design; browse)                   |
+| `dogs`    | `dogs_insert_own`            | INSERT               | `with check (auth.uid() = owner_id)`                                                                    |
+| `dogs`    | `dogs_update_own`            | UPDATE               | `using/with check (auth.uid() = owner_id)`                                                              |
+| `dogs`    | `dogs_delete_own`            | DELETE               | `using (auth.uid() = owner_id)`                                                                         |
+| `swipes`  | `swipes_select_own`          | SELECT               | requires a `dogs` row where `d.id = actor_dog_id and d.owner_id = auth.uid()`                           |
+| `swipes`  | `swipes_insert_own`          | INSERT               | same ownership check on `actor_dog_id`                                                                  |
+| `matches` | `matches_select_participant` | SELECT               | requires `auth.uid()` to own `dog_a_id` or `dog_b_id`                                                   |
+| `matches` | _(none)_                     | INSERT/UPDATE/DELETE | no policy exists → default-deny for `authenticated`/`anon`; only path is the `security definer` trigger |
 
 No `anon`-role policy exists on any of these three tables, so unauthenticated
 Postgres-role access is denied by RLS default; this is a DB-level guarantee
@@ -219,19 +218,19 @@ Source: `supabase/migrations/20260925233126_create_dog_photos_bucket.sql`.
 
 ### Existing test coverage vs. gaps
 
-| Area | Existing test | Gap for Phase 1 |
-|---|---|---|
-| `dogs` insert cross-owner | `dogs_rls.test.sql:105-111` (`throws_ok` 42501) | none — covered |
-| `dogs` update/delete cross-owner | — | not covered — no pgTAP assertion for UPDATE/DELETE by a non-owner |
-| `dogs` anon-role access | — | not covered — no unauthenticated-role assertion exists |
-| `swipes` cross-owner select/insert | — | not covered — no pgTAP file for `swipes` at all |
-| `matches` direct insert/update/delete attempt | — | not covered — no pgTAP file for `matches` at all |
-| API-level auth check (`swipes`, `next-candidate`) | — | not covered — no HTTP-level test exists for any API route in this repo |
-| API-level auth check (`dogs/save` redirect branch) | — | not covered, and behaviorally distinct (redirect, not 401) from the other two routes |
-| Storage insert cross-owner | `dog_photos_storage_rls.test.sql:33-64` (`lives_ok` + `throws_ok` 42501) | none — covered |
-| Storage update/delete cross-owner | — | not covered — policies exist (lines 25-38) but no assertion exercises them |
-| Storage path non-sequential/non-guessable assertion | — | not directly asserted by any test; only inferable by reading `save.ts:170` |
-| App-level test runner/HTTP client for API routes | — | does not exist in `package.json` — must be selected as part of Phase 1 scope |
+| Area                                                | Existing test                                                            | Gap for Phase 1                                                                      |
+| --------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `dogs` insert cross-owner                           | `dogs_rls.test.sql:105-111` (`throws_ok` 42501)                          | none — covered                                                                       |
+| `dogs` update/delete cross-owner                    | —                                                                        | not covered — no pgTAP assertion for UPDATE/DELETE by a non-owner                    |
+| `dogs` anon-role access                             | —                                                                        | not covered — no unauthenticated-role assertion exists                               |
+| `swipes` cross-owner select/insert                  | —                                                                        | not covered — no pgTAP file for `swipes` at all                                      |
+| `matches` direct insert/update/delete attempt       | —                                                                        | not covered — no pgTAP file for `matches` at all                                     |
+| API-level auth check (`swipes`, `next-candidate`)   | —                                                                        | not covered — no HTTP-level test exists for any API route in this repo               |
+| API-level auth check (`dogs/save` redirect branch)  | —                                                                        | not covered, and behaviorally distinct (redirect, not 401) from the other two routes |
+| Storage insert cross-owner                          | `dog_photos_storage_rls.test.sql:33-64` (`lives_ok` + `throws_ok` 42501) | none — covered                                                                       |
+| Storage update/delete cross-owner                   | —                                                                        | not covered — policies exist (lines 25-38) but no assertion exercises them           |
+| Storage path non-sequential/non-guessable assertion | —                                                                        | not directly asserted by any test; only inferable by reading `save.ts:170`           |
+| App-level test runner/HTTP client for API routes    | —                                                                        | does not exist in `package.json` — must be selected as part of Phase 1 scope         |
 
 ## Code References
 
@@ -272,7 +271,7 @@ Source: `supabase/migrations/20260925233126_create_dog_photos_bucket.sql`.
   with no direct-write policy for any client role — this is the load-bearing
   mechanism preventing a forged match row via direct insert; a Phase-1 test
   proving "an authenticated user cannot directly insert/update a match" is
-  testing the *absence* of a policy, which pgTAP can assert as `throws_ok`
+  testing the _absence_ of a policy, which pgTAP can assert as `throws_ok`
   with a permission-denied code the same way the existing `dogs` cross-owner
   test does.
 - Storage path privacy relies entirely on `crypto.randomUUID()` being

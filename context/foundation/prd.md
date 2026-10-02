@@ -30,12 +30,15 @@ Dopasowanie działa na dwóch poziomach: mogą łączyć się w pary psy (np. do
 ## Success Criteria
 
 ### Primary
+
 - 1000 zarejestrowanych psów i 500 aktywnych użytkowników w ciągu pierwszych 3 miesięcy.
 
 ### Secondary
+
 - Wzrost liczby dopasowań i wiadomości wysyłanych między właścicielami psów w czasie; pozytywne opinie użytkowników na temat funkcjonalności i użyteczności platformy.
 
 ### Guardrails
+
 - Wskaźnik retencji ≥ 50% użytkowników powracających po pierwszym miesiącu.
 - Dane profilowe (zdjęcia, opisy) nie są udostępniane bez zgody użytkownika.
 
@@ -48,6 +51,7 @@ Dopasowanie działa na dwóch poziomach: mogą łączyć się w pary psy (np. do
 - **Then** powstaje match widoczny na liście matchy, a właściciel może wysłać wiadomość tekstową do drugiego właściciela
 
 #### Acceptance Criteria
+
 - Match powstaje wyłącznie przy obustronnym polubieniu (nie przy jednostronnym).
 - Lista matchy jest widoczna natychmiast po powstaniu matcha.
 - Wiadomość tekstowa dociera do drugiego właściciela natychmiast, bez potrzeby odświeżania widoku, za pośrednictwem połączenia WebSocket.

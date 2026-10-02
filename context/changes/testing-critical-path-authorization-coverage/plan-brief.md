@@ -29,17 +29,18 @@ owner-scoped, running locally and in CI's existing `smoke` job.
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-| --- | --- | --- | --- |
-| API test tooling | Extend `scripts/smoke.mjs`'s zero-dependency fetch/cookie-jar pattern | Matches existing project convention; avoids adding a test framework dependency | Plan |
-| Test fixtures | New dedicated migration (2 accounts + dogs), not the `gen1..20` demo seed | Keeps automated-test fixtures decoupled from manual-QA seed data | Plan |
-| `dogs/save.ts` auth response | Test current redirect-not-401 behavior as-is | Not a bug to fix in this phase — scope stays test-only | Plan |
-| pgTAP scope | Minimal: only what risks #1/#5 name (dogs UPDATE/DELETE, swipes, matches, storage UPDATE/DELETE) | No anon-role DB tests — unauthenticated coverage lives at the HTTP layer instead | Plan |
-| CI wiring | Add `test:authz` step to the existing `smoke` job now | Reuses the job's already-running local Supabase + preview server; pgTAP-into-CI stays deferred to rollout Phase 4 | Plan |
+| Decision                     | Choice                                                                                           | Why (1 sentence)                                                                                                  | Source |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ------ |
+| API test tooling             | Extend `scripts/smoke.mjs`'s zero-dependency fetch/cookie-jar pattern                            | Matches existing project convention; avoids adding a test framework dependency                                    | Plan   |
+| Test fixtures                | New dedicated migration (2 accounts + dogs), not the `gen1..20` demo seed                        | Keeps automated-test fixtures decoupled from manual-QA seed data                                                  | Plan   |
+| `dogs/save.ts` auth response | Test current redirect-not-401 behavior as-is                                                     | Not a bug to fix in this phase — scope stays test-only                                                            | Plan   |
+| pgTAP scope                  | Minimal: only what risks #1/#5 name (dogs UPDATE/DELETE, swipes, matches, storage UPDATE/DELETE) | No anon-role DB tests — unauthenticated coverage lives at the HTTP layer instead                                  | Plan   |
+| CI wiring                    | Add `test:authz` step to the existing `smoke` job now                                            | Reuses the job's already-running local Supabase + preview server; pgTAP-into-CI stays deferred to rollout Phase 4 | Plan   |
 
 ## Scope
 
 **In scope:**
+
 - New pgTAP assertions: `dogs` UPDATE/DELETE cross-owner, new `swipes_rls.test.sql`, new `matches_rls.test.sql`, storage UPDATE/DELETE cross-owner
 - New `scripts/authz-test.mjs` HTTP-level authorization test + `npm run test:authz`
 - New dedicated fixture migration for the two script accounts
@@ -47,6 +48,7 @@ owner-scoped, running locally and in CI's existing `smoke` job.
 - `context/foundation/test-plan.md` §6.2/§6.4 cookbook updates
 
 **Out of scope:**
+
 - `matches`/`messages` API routes (don't exist yet)
 - Playwright/vitest or any new test framework
 - Normalizing `dogs/save.ts`'s redirect-vs-401 inconsistency
@@ -65,12 +67,12 @@ alongside the existing smoke test.
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Authz test fixtures | Dedicated migration: 2 accounts + dogs for HTTP-level tests | Migration shape must match what Phase 3's script expects |
-| 2. pgTAP RLS coverage | Extended/new pgTAP files closing all named RLS gaps | UPDATE/DELETE RLS violations don't throw — must assert row-count, not errors |
-| 3. API-level authz script + CI wiring | `scripts/authz-test.mjs`, `test:authz` npm script, CI step | No forgeable ownership parameter exists on these routes — ownership proof is an after-the-fact state check, not a rejected-forged-ID check |
-| 4. Update test-plan cookbook | §6.2/§6.4 filled in with the new patterns | None — documentation only |
+| Phase                                 | What it delivers                                            | Key risk                                                                                                                                   |
+| ------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1. Authz test fixtures                | Dedicated migration: 2 accounts + dogs for HTTP-level tests | Migration shape must match what Phase 3's script expects                                                                                   |
+| 2. pgTAP RLS coverage                 | Extended/new pgTAP files closing all named RLS gaps         | UPDATE/DELETE RLS violations don't throw — must assert row-count, not errors                                                               |
+| 3. API-level authz script + CI wiring | `scripts/authz-test.mjs`, `test:authz` npm script, CI step  | No forgeable ownership parameter exists on these routes — ownership proof is an after-the-fact state check, not a rejected-forged-ID check |
+| 4. Update test-plan cookbook          | §6.2/§6.4 filled in with the new patterns                   | None — documentation only                                                                                                                  |
 
 **Prerequisites:** Local Supabase CLI available (`npx supabase`); no new dependencies to install.
 **Estimated effort:** ~1 session across 4 phases (mostly SQL + one new script).
@@ -99,4 +101,4 @@ alongside the existing smoke test.
 - `dog-photos` storage write/update/delete stay owner-scoped, including the
   previously-untested UPDATE/DELETE cases.
 - All of the above are provable locally (`npx supabase test db`, `npm run
-  test:authz`) and in CI.
+test:authz`) and in CI.
