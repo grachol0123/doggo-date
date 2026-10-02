@@ -74,7 +74,7 @@ const scriptsConfig = defineConfig({
   // Zero-dependency utility scripts outside the TS project (tsconfig's "**/*"
   // excludes dot-directories by default, so agent-hook scripts never belong
   // to it): skip type-aware parsing instead of erroring on every lint run.
-  files: ["scripts/**/*.mjs", ".github/hooks/**/*.mjs", ".codex/hooks/**/*.mjs"],
+  files: ["scripts/**/*.mjs", ".github/hooks/**/*.mjs"],
   extends: [tseslint.configs.disableTypeChecked],
   languageOptions: { globals: { console: true, process: true, fetch: true, URLSearchParams: true } },
   rules: { "no-console": "off" },
