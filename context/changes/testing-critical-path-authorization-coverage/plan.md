@@ -457,21 +457,21 @@ same as every other migration; no manual migration step is required.
 
 #### Automated
 
-- [x] 3.1 Lint passes (`npm run lint`)
-- [x] 3.2 Build succeeds (`npm run build`)
-- [x] 3.3 New script passes locally (`npm run test:authz`)
-- [x] 3.4 CI `smoke` job passes with the new step included
+- [x] 3.1 Lint passes (`npm run lint`) — 294f8d5
+- [x] 3.2 Build succeeds (`npm run build`) — 294f8d5
+- [x] 3.3 New script passes locally (`npm run test:authz`) — 294f8d5
+- [x] 3.4 CI `smoke` job passes with the new step included — 294f8d5
 
 #### Manual
 
-- [x] 3.5 Review CI workflow diff for correct step ordering and env var usage
-- [x] 3.6 Manually sanity-check one authenticated flow in a browser against the script's assertions
+- [x] 3.5 Review CI workflow diff for correct step ordering and env var usage — 294f8d5
+- [x] 3.6 Manually sanity-check one authenticated flow in a browser against the script's assertions — 294f8d5
 
 ### Phase 4: Update test-plan cookbook
 
 #### Automated
 
-- [ ] 4.1 File remains valid Markdown (visual diff review)
+- [x] 4.1 File remains valid Markdown (visual diff review)
 
 #### Manual
 
