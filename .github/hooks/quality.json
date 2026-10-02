@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "postToolUse": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/lint-edited-file.mjs",
+        "timeoutSec": 30
+      }
+    ],
+    "agentStop": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/end-of-turn.mjs",
+        "timeoutSec": 120
+      }
+    ]
+  }
+}
