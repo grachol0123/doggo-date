@@ -1,9 +1,9 @@
 ---
 change_id: testing-critical-path-authorization-coverage
 title: Rollout Phase 1 - critical-path authorization coverage
-status: implementing
+status: implemented
 created: 2026-09-29
-updated: 2026-09-29
+updated: 2026-10-02
 archived_at: null
 ---
 

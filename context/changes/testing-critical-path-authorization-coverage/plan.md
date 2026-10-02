@@ -471,8 +471,8 @@ same as every other migration; no manual migration step is required.
 
 #### Automated
 
-- [x] 4.1 File remains valid Markdown (visual diff review)
+- [x] 4.1 File remains valid Markdown (visual diff review) — 23e61fa
 
 #### Manual
 
-- [ ] 4.2 Confirm §6.2/§6.4 entries reference the actual files/paths created in Phases 1-3
+- [x] 4.2 Confirm §6.2/§6.4 entries reference the actual files/paths created in Phases 1-3 — 23e61fa
