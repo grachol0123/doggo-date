@@ -21,14 +21,14 @@ The project is already wired for Cloudflare (`@astrojs/cloudflare` adapter confi
 
 No hard filter applied this run: the developer confirmed the app does not need to host persistent server-side connections itself (interview Q1 = no — Supabase Realtime handles WebSockets externally). All six candidate platforms remained eligible for scoring.
 
-| Platform | CLI-first | Managed/Serverless | Agent-readable docs | Stable deploy API | MCP/Integration | Raw score |
-|---|---|---|---|---|---|---|
-| **Cloudflare** | Pass | Pass | Pass | Pass | Pass | **10/10** |
-| Railway | Pass | Pass | Pass | Partial | Pass | 9/10 |
-| Netlify | Pass | Pass | Partial | Partial | Pass | 8/10 |
-| Fly.io | Pass | Pass | Pass | Partial | Partial | 8/10 |
-| Render | Pass | Pass | Partial | Partial | Partial | 7/10 |
-| Vercel | Pass | Pass | Fail | Partial | Partial | 6/10 |
+| Platform       | CLI-first | Managed/Serverless | Agent-readable docs | Stable deploy API | MCP/Integration | Raw score |
+| -------------- | --------- | ------------------ | ------------------- | ----------------- | --------------- | --------- |
+| **Cloudflare** | Pass      | Pass               | Pass                | Pass              | Pass            | **10/10** |
+| Railway        | Pass      | Pass               | Pass                | Partial           | Pass            | 9/10      |
+| Netlify        | Pass      | Pass               | Partial             | Partial           | Pass            | 8/10      |
+| Fly.io         | Pass      | Pass               | Pass                | Partial           | Partial         | 8/10      |
+| Render         | Pass      | Pass               | Partial             | Partial           | Partial         | 7/10      |
+| Vercel         | Pass      | Pass               | Fail                | Partial           | Partial         | 6/10      |
 
 Notes per platform:
 
@@ -86,14 +86,14 @@ The team deployed Doggo Date on Cloudflare Workers' free plan, assuming that bec
 
 > **Resolution status (2026-09-20):** see `context/changes/deployment/deployment-plan.md` for how each risk below was actually addressed during the production deploy (Phases 0–6), including two bugs found and fixed that aren't in this original register: a stale `wrangler.jsonc` Worker `name` mismatch (Phase 2) and a Supabase CLI `--override-name` field-path error in CI (Phase 4).
 
-| Risk | Source | Likelihood | Impact | Mitigation |
-|---|---|---|---|---|
-| Cross-region latency between the Worker's edge node and Supabase's fixed database region undercuts "instant" message delivery (NFR/FR-006) | Devil's advocate / Pre-mortem | M | M | Pick/confirm a Supabase project region close to the target user base (single region per interview Q4); measure round-trip latency with `npm run smoke` against the deployed URL before relying on "instant" messaging in the PRD. |
-| `wrangler tail` (live log tailing) requires the paid plan, leaving no built-in way to debug production issues on the free plan | Devil's advocate / Pre-mortem | M | M | Budget for the $5/mo paid plan early if production debugging is expected, or add an external logging/error-tracking service (e.g. Sentry) that doesn't depend on Worker log tailing. |
-| Missing `nodejs_compat` flag silently breaks Supabase calls at runtime | Devil's advocate / Pre-mortem | M | H | Pin `compatibility_date` and `compatibility_flags: ["nodejs_compat"]` explicitly in `wrangler.jsonc`; add a smoke test (`npm run smoke`) that exercises a Supabase-backed endpoint after every deploy. |
-| Free plan has no built-in alerting for silent failures | Unknown unknowns | M | M | Add lightweight external monitoring (e.g. Sentry or an uptime check hitting a Supabase-backed endpoint) before relying on the free plan in production. |
-| CPU-time limit (10ms free) hit during OpenRouter streaming responses | Devil's advocate | L | M | Monitor Worker CPU-time metrics; budget for the $5/mo paid plan (30M CPU-ms included) before/at first traffic spike rather than mid-incident. |
-| `tech-stack.md` says `deployment_target: cloudflare-pages` while the project is actually configured for the `@astrojs/cloudflare` Workers adapter — Cloudflare is steering new projects away from Pages | Unknown unknowns | L | L | Reconcile the deployment-target label in `tech-stack.md` with the actual Workers-based setup so future contributors/agents don't assume Pages-specific behavior. |
+| Risk                                                                                                                                                                                                    | Source                        | Likelihood | Impact | Mitigation                                                                                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cross-region latency between the Worker's edge node and Supabase's fixed database region undercuts "instant" message delivery (NFR/FR-006)                                                              | Devil's advocate / Pre-mortem | M          | M      | Pick/confirm a Supabase project region close to the target user base (single region per interview Q4); measure round-trip latency with `npm run smoke` against the deployed URL before relying on "instant" messaging in the PRD. |
+| `wrangler tail` (live log tailing) requires the paid plan, leaving no built-in way to debug production issues on the free plan                                                                          | Devil's advocate / Pre-mortem | M          | M      | Budget for the $5/mo paid plan early if production debugging is expected, or add an external logging/error-tracking service (e.g. Sentry) that doesn't depend on Worker log tailing.                                              |
+| Missing `nodejs_compat` flag silently breaks Supabase calls at runtime                                                                                                                                  | Devil's advocate / Pre-mortem | M          | H      | Pin `compatibility_date` and `compatibility_flags: ["nodejs_compat"]` explicitly in `wrangler.jsonc`; add a smoke test (`npm run smoke`) that exercises a Supabase-backed endpoint after every deploy.                            |
+| Free plan has no built-in alerting for silent failures                                                                                                                                                  | Unknown unknowns              | M          | M      | Add lightweight external monitoring (e.g. Sentry or an uptime check hitting a Supabase-backed endpoint) before relying on the free plan in production.                                                                            |
+| CPU-time limit (10ms free) hit during OpenRouter streaming responses                                                                                                                                    | Devil's advocate              | L          | M      | Monitor Worker CPU-time metrics; budget for the $5/mo paid plan (30M CPU-ms included) before/at first traffic spike rather than mid-incident.                                                                                     |
+| `tech-stack.md` says `deployment_target: cloudflare-pages` while the project is actually configured for the `@astrojs/cloudflare` Workers adapter — Cloudflare is steering new projects away from Pages | Unknown unknowns              | L          | L      | Reconcile the deployment-target label in `tech-stack.md` with the actual Workers-based setup so future contributors/agents don't assume Pages-specific behavior.                                                                  |
 
 ## Getting Started
 
@@ -107,6 +107,7 @@ The team deployed Doggo Date on Cloudflare Workers' free plan, assuming that bec
 ## Out of Scope
 
 The following were not evaluated in this research:
+
 - Docker image configuration
 - CI/CD pipeline setup
 - Production-scale architecture (multi-region, HA, DR)

@@ -17,6 +17,7 @@ atomically creates a match on mutual like. No API or UI in this change —
 those are `browse-dogs` and `matches-list`.
 
 Design decisions already made (see `browse-and-match/change.md`):
+
 - Match creation via DB trigger on `swipes` insert (atomic, no app-level race).
 - No unmatch/unlike in MVP.
 - `dogs.owner_id` is unique (one dog per owner) — swipes/matches key off `dog_id`,

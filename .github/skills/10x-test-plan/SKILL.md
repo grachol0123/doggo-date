@@ -8,9 +8,10 @@ description: >
   strategy", "phased test rollout", "QA spec", "stwórz plan testów",
   "strategia jakości". Use AFTER /10x-prd and /10x-roadmap. Brownfield only.
 ---
+
 # Plan testów 10x — Stanowy orkiestrator wdrożenia etapowego
 
-Ta umiejętność zapisuje i zarządza `context/foundation/test-plan.md` jako **strategią wdrożenia etapowego**, a następnie uruchamia po jednym etapie wdrożenia w łańcuchu 10x change/research/plan/implement. Przewodnik zaczyna jako *projekt* etapów — każdy etap ostatecznie otwiera własny folder `context/changes/<change-id>/` i wypełnia sekcje cookbooka (§6) w miarę dostarczania. Umiejętność jest **stanowa**: przy każdym wywołaniu ponownie wyprowadza aktualny stan, sprawdzając, które artefakty istnieją, i wznawia od następnego oczekującego etapu wdrożenia. **Nie** wymusza powrotu do `/10x-test-plan` po każdym dalszym etapie. Po otwarciu zmiany wdrożeniowej obowiązuje ustalony proces research → plan → implement: po każdej głównej fazie zasugeruj następne naturalne polecenie, chyba że istnieje wyraźna blokada, korekta lub decyzja należąca z powrotem do `/10x-test-plan`.
+Ta umiejętność zapisuje i zarządza `context/foundation/test-plan.md` jako **strategią wdrożenia etapowego**, a następnie uruchamia po jednym etapie wdrożenia w łańcuchu 10x change/research/plan/implement. Przewodnik zaczyna jako _projekt_ etapów — każdy etap ostatecznie otwiera własny folder `context/changes/<change-id>/` i wypełnia sekcje cookbooka (§6) w miarę dostarczania. Umiejętność jest **stanowa**: przy każdym wywołaniu ponownie wyprowadza aktualny stan, sprawdzając, które artefakty istnieją, i wznawia od następnego oczekującego etapu wdrożenia. **Nie** wymusza powrotu do `/10x-test-plan` po każdym dalszym etapie. Po otwarciu zmiany wdrożeniowej obowiązuje ustalony proces research → plan → implement: po każdej głównej fazie zasugeruj następne naturalne polecenie, chyba że istnieje wyraźna blokada, korekta lub decyzja należąca z powrotem do `/10x-test-plan`.
 
 `$ARGUMENTS`:
 
@@ -45,13 +46,13 @@ Każde przekazanie jest punktem **STOP** dla tej umiejętności. Użytkownik wyk
 
 Trzy reguły, których przestrzega każde wywołanie; wszystkie trzy trafiają do §1 artefaktu.
 
-1. **Koszt × sygnał.** Każdy test dodany przez wdrożenie — klasyczny lub AI-native — musi odpowiadać na jedno pytanie: *jaki jest najtańszy test dający rzeczywisty sygnał dla tego ryzyka?* Nie eskaluj do e2e, ponieważ „wydaje się bezpieczniej”; nie nakładaj modelu vision na deterministyczny diff, który już wykrywa regresję. Przekaż to do `/10x-plan` dla każdego etapu wdrożenia.
+1. **Koszt × sygnał.** Każdy test dodany przez wdrożenie — klasyczny lub AI-native — musi odpowiadać na jedno pytanie: _jaki jest najtańszy test dający rzeczywisty sygnał dla tego ryzyka?_ Nie eskaluj do e2e, ponieważ „wydaje się bezpieczniej”; nie nakładaj modelu vision na deterministyczny diff, który już wykrywa regresję. Przekaż to do `/10x-plan` dla każdego etapu wdrożenia.
 
 2. **Obawy użytkownika są dowodem.** Ryzyka, których zespół doświadczył, mają taką samą wagę jak linie PRD lub dane o hot-spotach.
 
-3. **Sygnał, nie wiedza.** Ta umiejętność czyta kod bazowy dla *sygnału* — churn hot-spotów, profil bazy testów, znacznik projektu, język/framework. Nie czyta dla *wiedzy* — grafu wywołań, schematów, tłumaczenia błędów, tego, która linia jest właścicielem awarii. Mapa ryzyk §2 cytuje dowody (linie PRD, odpowiedzi z wywiadu, katalogi hot-spotów); nigdy nie twierdzi, że plik jest „miejscem występowania awarii”. Tym punktem zakotwiczenia jest wynik `/10x-research`, tworzony podczas każdego etapu wdrożenia. Umiejętność jest **autorem specyfikacji QA i oponentem**, a nie audytorem kodu.
+3. **Sygnał, nie wiedza.** Ta umiejętność czyta kod bazowy dla _sygnału_ — churn hot-spotów, profil bazy testów, znacznik projektu, język/framework. Nie czyta dla _wiedzy_ — grafu wywołań, schematów, tłumaczenia błędów, tego, która linia jest właścicielem awarii. Mapa ryzyk §2 cytuje dowody (linie PRD, odpowiedzi z wywiadu, katalogi hot-spotów); nigdy nie twierdzi, że plik jest „miejscem występowania awarii”. Tym punktem zakotwiczenia jest wynik `/10x-research`, tworzony podczas każdego etapu wdrożenia. Umiejętność jest **autorem specyfikacji QA i oponentem**, a nie audytorem kodu.
 
-   Konsekwencja operacyjna: gdy skan hot-spotów ujawnia `src/lib/foo/` jako czołowy katalog, §2 może cytować „katalog hot-spot `src/lib/foo/` — 12 commitów/30d” jako *dowód prawdopodobieństwa*. NIE może cytować „anchor: `src/lib/foo/bar.ts`” — graf wywołań wewnątrz tego katalogu jest niezweryfikowany, dopóki nie zostanie uruchomiony research.
+   Konsekwencja operacyjna: gdy skan hot-spotów ujawnia `src/lib/foo/` jako czołowy katalog, §2 może cytować „katalog hot-spot `src/lib/foo/` — 12 commitów/30d” jako _dowód prawdopodobieństwa_. NIE może cytować „anchor: `src/lib/foo/bar.ts`” — graf wywołań wewnątrz tego katalogu jest niezweryfikowany, dopóki nie zostanie uruchomiony research.
 
 ## Kiedy używać, kiedy pominąć
 
@@ -65,12 +66,12 @@ Trzy reguły, których przestrzega każde wywołanie; wszystkie trzy trafiają d
 
 ## Relacja z innymi umiejętnościami
 
-| Umiejętność | Rola |
-|--------------------|----------------------------------------------------------------------------------------|
-| `/10x-shape`, `/10x-prd`, `/10x-roadmap` | Wcześniejsze. Tworzą PRD/roadmapę wykorzystywane przez odkrywanie. |
-| `/10x-stack-assess` | Wcześniejsza (brownfield). Identyfikuje istniejącą bazę testów. |
+| Umiejętność                                                   | Rola                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/10x-shape`, `/10x-prd`, `/10x-roadmap`                      | Wcześniejsze. Tworzą PRD/roadmapę wykorzystywane przez odkrywanie.                                                                                                                                                                                                                                                                                                                                               |
+| `/10x-stack-assess`                                           | Wcześniejsza (brownfield). Identyfikuje istniejącą bazę testów.                                                                                                                                                                                                                                                                                                                                                  |
 | `/10x-new` → `/10x-research` → `/10x-plan` → `/10x-implement` | Łańcuch dalszy, wywoływany raz na etap wdrożenia. `/10x-test-plan` uruchamia łańcuch; po każdej głównej fazie aktywna umiejętność dalsza sugeruje następne naturalne polecenie w ustalonym procesie research → plan → implement, chyba że jest zablokowana. `/10x-research` jest **powierzchnią ekstrakcji wiedzy** — czyta kod, śledzi grafy wywołań i tworzy kotwice plik:linia, które ten plan celowo pomija. |
-| `/10x-tdd` | Równorzędna. Czyta cookbook (§6) przy dodawaniu pojedynczego testu. |
+| `/10x-tdd`                                                    | Równorzędna. Czyta cookbook (§6) przy dodawaniu pojedynczego testu.                                                                                                                                                                                                                                                                                                                                              |
 
 ---
 
@@ -118,16 +119,16 @@ Czytaj to, co istnieje; nie wymyślaj. Dla każdego wejścia zapisz ścieżkę p
 
 Jawne ścieżki z `$ARGUMENTS` są **zawsze czytane**, niezależnie od miejsca, w którym się znajdują. Poniższe wartości domyślne są przeszukiwane tylko wtedy, gdy nie zostały już podane przez argumenty.
 
-| Źródło | Domyślna ścieżka | Co wyodrębnić |
-|---|---|---|
-| Dokumenty podobne do PRD | `context/foundation/prd.md` + ścieżki podane argumentami | Użytkownicy, główne przepływy, non-goals, reguły biznesowe, zależności, metryka sukcesu |
-| Roadmapa | `context/foundation/roadmap.md` + roadmapa podana argumentami | Nadchodzące slice'y, co jest „następne” (podnosi prawdopodobieństwo) |
-| Zarchiwizowane slice'y | `context/archive/*/plan.md` + plany slice'ów podane argumentami | Co jest już zaimplementowane (bieżąca powierzchnia ryzyka) |
-| Stos technologiczny | `context/foundation/tech-stack.md` + notatka stosu podana argumentami, LUB wykrycie przez manifest | Język, framework, runtime, używany już runner testów |
-| Briefy / notatki zakresu | tylko podane argumentami — brak stałej wartości domyślnej | Ograniczenia, non-goals, wskazówki ryzyka, które nigdy nie trafiły do PRD |
-| Istniejący AGENTS.md / plik konfiguracji AI projektu (AGENTS.md) | korzeń repo | Twarde reguły i konwencje ograniczające wybory testowe |
-| Istniejąca konfiguracja testowania | `vitest.config.*`, `jest.config.*`, `playwright.config.*`, `pytest.ini`, itd. | Istniejąca infrastruktura testowa |
-| Narzędzia MCP sesji | bieżąca lista narzędzi hosta/sesji | MCP dokumentacji/wyszukiwania, które mogą ugruntować rekomendacje zależne od stosu |
+| Źródło                                                           | Domyślna ścieżka                                                                                   | Co wyodrębnić                                                                           |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Dokumenty podobne do PRD                                         | `context/foundation/prd.md` + ścieżki podane argumentami                                           | Użytkownicy, główne przepływy, non-goals, reguły biznesowe, zależności, metryka sukcesu |
+| Roadmapa                                                         | `context/foundation/roadmap.md` + roadmapa podana argumentami                                      | Nadchodzące slice'y, co jest „następne” (podnosi prawdopodobieństwo)                    |
+| Zarchiwizowane slice'y                                           | `context/archive/*/plan.md` + plany slice'ów podane argumentami                                    | Co jest już zaimplementowane (bieżąca powierzchnia ryzyka)                              |
+| Stos technologiczny                                              | `context/foundation/tech-stack.md` + notatka stosu podana argumentami, LUB wykrycie przez manifest | Język, framework, runtime, używany już runner testów                                    |
+| Briefy / notatki zakresu                                         | tylko podane argumentami — brak stałej wartości domyślnej                                          | Ograniczenia, non-goals, wskazówki ryzyka, które nigdy nie trafiły do PRD               |
+| Istniejący AGENTS.md / plik konfiguracji AI projektu (AGENTS.md) | korzeń repo                                                                                        | Twarde reguły i konwencje ograniczające wybory testowe                                  |
+| Istniejąca konfiguracja testowania                               | `vitest.config.*`, `jest.config.*`, `playwright.config.*`, `pytest.ini`, itd.                      | Istniejąca infrastruktura testowa                                                       |
+| Narzędzia MCP sesji                                              | bieżąca lista narzędzi hosta/sesji                                                                 | MCP dokumentacji/wyszukiwania, które mogą ugruntować rekomendacje zależne od stosu      |
 
 ### Czytaj źródła
 
@@ -176,6 +177,7 @@ Zachowaj krótką notatkę `Stack grounding tools` dla §4 i briefu początkoweg
 
 ```markdown
 **Stack grounding tools (current session):**
+
 - Docs: <Context7 / framework docs MCP / none> — <what was checked or why skipped>; checked: <YYYY-MM-DD>
 - Search: <Exa.ai / web search MCP / none> — <what was checked or why skipped>; checked: <YYYY-MM-DD>
 - Runtime/browser: <Playwright MCP / browser tool / none> — <possible use, or "not used">; checked: <YYYY-MM-DD>
@@ -217,7 +219,7 @@ Podsumuj wejścia użytkownikowi w ≤12 linii: `path → classified-type → 1-
 
 ## Faza 2 — Wywiad z użytkownikiem (tylko gdy przewodnika brakuje)
 
-Faza 1 ujawnia, co mówią dokumenty. Faza 2 ujawnia, co wie użytkownik, a czego dokumenty nigdy nie uchwycą: przeszłe incydenty, intuicyjne obawy, obszary, które zmienia bez pewności, oraz jawne instrukcje, czego *nie* testować. Traktuj odpowiedzi z taką samą wagą jak linie PRD lub dane hot-spotów — ryzyko zakotwiczone w „użytkownik obawia się Y, awaria pojawiłaby się w `<file>`” jest ugruntowane, o ile plik wytrzyma weryfikację podczas researchu.
+Faza 1 ujawnia, co mówią dokumenty. Faza 2 ujawnia, co wie użytkownik, a czego dokumenty nigdy nie uchwycą: przeszłe incydenty, intuicyjne obawy, obszary, które zmienia bez pewności, oraz jawne instrukcje, czego _nie_ testować. Traktuj odpowiedzi z taką samą wagą jak linie PRD lub dane hot-spotów — ryzyko zakotwiczone w „użytkownik obawia się Y, awaria pojawiłaby się w `<file>`” jest ugruntowane, o ile plik wytrzyma weryfikację podczas researchu.
 
 Pomiń wywiad tylko, jeśli użytkownik wyraźnie o to prosi. Ostrzeż raz, że wdrożenia oparte wyłącznie na dokumentach odzwierciedlają wszystko, co podkreśla PRD, a to rzadko jest tym, czego zespół faktycznie obawia się zepsuć.
 
@@ -246,7 +248,7 @@ Każde poniższe pytanie zawiera przykładowe odpowiedzi. Przeczytaj je użytkow
    - np. „Routing Cloudflare Worker — działa lokalnie, psuje się na prodzie.”
    - np. „Skrypt uploadu R2 — uruchamiam go i się modlę.”
 
-4. **„Co dziś wydaje się niedostatecznie przetestowane i po cichu cię martwi?”** *(patrz warunkowe przepisanie poniżej, jeśli profil bazy testów to `none`)*
+4. **„Co dziś wydaje się niedostatecznie przetestowane i po cichu cię martwi?”** _(patrz warunkowe przepisanie poniżej, jeśli profil bazy testów to `none`)_
    - np. „Ścieżka retry webhooka — mamy jeden test happy-path i to wszystko.”
    - np. „Error boundaries — istnieją, ale nigdy nie widziałem ich uruchomionych w teście.”
    - np. „Wszystko, co dotyka pieniędzy — coverage jest niski, a wpływ jest poważny.”
@@ -263,8 +265,8 @@ Jeśli odpowiedź użytkownika na jedno pytanie w pełni obejmuje następne, uzn
 Profil bazy testów z Fazy 1 określa, jak (albo czy) zadać Q4:
 
 - **`meaningful`** — zadaj Q4 zgodnie z zapisem. Użytkownik ma testy; „niedostatecznie przetestowane” jest spójnym pojęciem.
-- **`sparse`** — przeformułuj: *„Masz pewne testy w `<area>`, ale większość kodu bazowego jest pusta. Gdzie jest luka, która najbardziej cię przeraża?”* i podaj te same przykłady.
-- **`none`** — **pomiń Q4**. Nie istnieje nic, co byłoby niedostatecznie przetestowane *względem czegoś*. Powiedz użytkownikowi wyraźnie: *„Pomijam pytanie o 'niedostateczne przetestowanie' — nie istnieje jeszcze znaczący suite, więc odpowiedzią byłoby 'wszystko'. Faza 1 wdrożenia uruchomi runner testów.”* Nie licz tego jako pominięcia zainicjowanego przez użytkownika względem progu przerwania.
+- **`sparse`** — przeformułuj: _„Masz pewne testy w `<area>`, ale większość kodu bazowego jest pusta. Gdzie jest luka, która najbardziej cię przeraża?”_ i podaj te same przykłady.
+- **`none`** — **pomiń Q4**. Nie istnieje nic, co byłoby niedostatecznie przetestowane _względem czegoś_. Powiedz użytkownikowi wyraźnie: _„Pomijam pytanie o 'niedostateczne przetestowanie' — nie istnieje jeszcze znaczący suite, więc odpowiedzią byłoby 'wszystko'. Faza 1 wdrożenia uruchomi runner testów.”_ Nie licz tego jako pominięcia zainicjowanego przez użytkownika względem progu przerwania.
 
 **Opcjonalne naprowadzenie przy Q3.** Jeśli skan hot-spotów stworzył użyteczną listę, a odpowiedź użytkownika na Q3 jest niejasna, pokaż 3 czołowe katalogi hot-spotów i zapytaj, czy któryś z nich pasuje. Nigdy nie zaczynaj od listy; nigdy nie pozwól jej nadpisać jasnej odpowiedzi werbalnej.
 
@@ -275,13 +277,13 @@ Zachowaj odpowiedzi jako strukturalną notatkę (w pamięci; przekazywaną do br
 ```markdown
 **User-stated concerns (Phase 2 interview):**
 
-| # | Question | User answer (paraphrase OK) | Implied risk(s)                            |
-|---|----------|------------------------------|---------------------------------------------|
-| 1 | Worries most         | "Paid user gets a 403 instead of their content." | API gating regression on lesson endpoint |
-| 2 | Burned before        | "Catalog build silently dropped lessons last month." | Strict ref resolution at build time |
-| 3 | Change without confidence | (skipped) | — |
-| 4 | Under-tested today   | "The webhook retry path." | Billing webhook idempotency |
-| 5 | Do NOT spend on      | "Internal admin tools — we trust the small set of users." | Negative space note |
+| #   | Question                  | User answer (paraphrase OK)                               | Implied risk(s)                          |
+| --- | ------------------------- | --------------------------------------------------------- | ---------------------------------------- |
+| 1   | Worries most              | "Paid user gets a 403 instead of their content."          | API gating regression on lesson endpoint |
+| 2   | Burned before             | "Catalog build silently dropped lessons last month."      | Strict ref resolution at build time      |
+| 3   | Change without confidence | (skipped)                                                 | —                                        |
+| 4   | Under-tested today        | "The webhook retry path."                                 | Billing webhook idempotency              |
+| 5   | Do NOT spend on           | "Internal admin tools — we trust the small set of users." | Negative space note                      |
 ```
 
 ## Faza 3 — Synteza briefu początkowego (tylko gdy przewodnika brakuje)
@@ -292,10 +294,15 @@ Tylko w pamięci. Brief napędza Fazę 4 i jest źródłem prawdy dla struktury 
 # Seed Brief (in-memory)
 
 ## 1. Top risks (5–7): | # | Risk (failure scenario) | Impact | Likelihood | Source(s) — evidence, not anchors |
+
 ## 2. Hot-spots (top 5 files + top 5 directories, scope list) — used as likelihood evidence, not as failure-location anchors
+
 ## 3. User-stated concerns (verbatim from Phase 2)
+
 ## 4. Stack notes (detected test infra, or "none yet"; include Stack grounding tools checked in current session)
+
 ## 5. Risk response guidance: | Risk # | What would prove protection | Must challenge | Context needed | Likely cheapest layer | Anti-pattern to avoid |
+
 ## 6. Proposed rollout phases (3–5): | # | Phase name | Goal | Risks covered | Test types | Order rationale |
 ```
 
@@ -319,7 +326,7 @@ Jeśli ryzyko nie może stworzyć tego wiersza, nie jest wystarczająco wykonaln
 
 Jeśli produkt ma uwierzytelnianie, płatności lub akceptuje jakiekolwiek dane wejściowe użytkownika, ryzyka top-N muszą zawierać przynajmniej jeden **scenariusz nadużycia** — happy path wyklucza atakującego, więc prawie nigdy nie wypływają one samodzielnie z wywiadu Fazy 2. Przed sfinalizowaniem briefu sprawdź zestaw ryzyk względem tych klas i dodaj wiersz, gdy produkt rzeczywiście eksponuje daną powierzchnię:
 
-- **Autoryzacja/dostęp** — kontrole IDOR i własności: czy endpoint weryfikuje, że *ten zasób należy do ciebie*, a nie tylko że *jesteś zalogowany*?
+- **Autoryzacja/dostęp** — kontrole IDOR i własności: czy endpoint weryfikuje, że _ten zasób należy do ciebie_, a nie tylko że _jesteś zalogowany_?
 - **Niezaufane dane wejściowe** — injection i zgodność walidacji po stronie serwera (serwer nie może ufać klientowi).
 - **Wyciek sekretów/PII** — klucze, tokeny lub dane osobowe wydostające się do logów, treści błędów lub bundle front-endu.
 - **Nadużycie zasobów** — obejście rate-limit, kosztowne operacje w pętli, masowe wywoływanie efektów ubocznych (np. zalew magic-linków).
@@ -334,9 +341,9 @@ Oceń obie osie w zgrubnej skali High / Medium / Low (zobacz `references/test-pl
 
 Przed pokazaniem briefu użytkownikowi przejdź przez każde ryzyko top-N i zastosuj perspektywę konsultanta QA. Trzy kontrole dla każdego ryzyka:
 
-1. **„Czy to jest defekt, czy opisuję implementację?”** Jeśli złamanie ryzyka wymagałoby najpierw *dodania* zabezpieczenia (np. „brak ścieżki fallback”, gdy fallback nie istnieje), ryzyko jest spekulatywne — odrzuć je lub przeformułuj tak, aby testowało to, co *istnieje* (np. „ścieżka awarii ujawnia czysty 5xx, nie udaje sukcesu, nie zapisuje do bazy danych”). Spekulatywne ryzyka, które przetrwają do §2, zmuszają `/10x-research` do wymyślania kodu pod test albo zgłoszenia ryzyka do rewizji; oba warianty marnują cykl.
+1. **„Czy to jest defekt, czy opisuję implementację?”** Jeśli złamanie ryzyka wymagałoby najpierw _dodania_ zabezpieczenia (np. „brak ścieżki fallback”, gdy fallback nie istnieje), ryzyko jest spekulatywne — odrzuć je lub przeformułuj tak, aby testowało to, co _istnieje_ (np. „ścieżka awarii ujawnia czysty 5xx, nie udaje sukcesu, nie zapisuje do bazy danych”). Spekulatywne ryzyka, które przetrwają do §2, zmuszają `/10x-research` do wymyślania kodu pod test albo zgłoszenia ryzyka do rewizji; oba warianty marnują cykl.
 
-2. **„Czy ten wiersz cytuje plik jako kotwicę?”** Usuń wszystko w kolumnie Source, co wygląda jak `src/foo/bar.ts:42` lub `<module>` (konkretny symbol). Zastąp to dowodem, który *podniósł* ryzyko — wywiad Q#, linia PRD, **katalog** hot-spot. Jeśli po usunięciu nie ma żadnego dowodu, ryzyko nie ma źródła i musi zostać odrzucone albo wsparte prawdziwym cytowaniem wywiadu/PRD.
+2. **„Czy ten wiersz cytuje plik jako kotwicę?”** Usuń wszystko w kolumnie Source, co wygląda jak `src/foo/bar.ts:42` lub `<module>` (konkretny symbol). Zastąp to dowodem, który _podniósł_ ryzyko — wywiad Q#, linia PRD, **katalog** hot-spot. Jeśli po usunięciu nie ma żadnego dowodu, ryzyko nie ma źródła i musi zostać odrzucone albo wsparte prawdziwym cytowaniem wywiadu/PRD.
 
 3. **„Czy rekomendowana odpowiedź wykryłaby prawdziwą regresję, czy tylko zwiększyłaby coverage?”** Odrzuć wskazówki odpowiedzi mówiące wyłącznie „dodaj testy unit”, „pokryj moduł”, „testuj happy path” lub „asertuj bieżący output”. Prawidłowa odpowiedź nazywa zachowanie/tryb awarii, kontekst, który `/10x-research` musi zweryfikować, oraz co najmniej jeden antywzorzec do uniknięcia. Najbardziej niebezpiecznym antywzorcem dla testów pisanych przez AI jest **problem wyroczni**: asercja, której oczekiwana wartość została pobrana z implementacji pod testem, zamiast z niezależnego źródła (wymagań, kontraktu, wywiadu). Taki test jest tautologiczny — przepuszcza bieżące zachowanie, w tym bieżące błędy, i nigdy nie może nie przejść z właściwego powodu. Formułuj komórkę „What would prove protection” jako zachowanie użytkownika/biznesowe właśnie po to, aby test dalszy pobierał swoją wyrocznię z ryzyka, nie z kodu, który czyta.
 
@@ -452,6 +459,7 @@ Po pojawieniu się `research.md` i przed przedstawieniem Handoff C przeczytaj no
 Jeśli występuje któreś z nich, zapytaj użytkownika:
 
 > Research wykazał korekty do §2 planu testów:
+>
 > - [wypisz każde ustalenie w jednej linii]
 >
 > Przenieść teraz do §2 `context/foundation/test-plan.md` (tylko kolumna Source, sformułowanie ryzyka lub Risk Response Guidance — nigdy nie dodaje kotwic plików), czy odroczyć do `--refresh`?
@@ -581,7 +589,7 @@ Uruchamiany, gdy użytkownik wywoła `/10x-test-plan --refresh`, lub gdy przewod
 
 ## Interaktywne prompty — niezależne od hosta
 
-Gdy ta umiejętność mówi *„zapytaj użytkownika”*, użyj dowolnego narzędzia interaktywnego pytań udostępnianego przez hosta (np. `ask_question`, `request_user_input`). Przed pierwszym krokiem interaktywnym przeskanuj dostępne narzędzia pod kątem narzędzia z parametrem `question` oraz polem `options`/`choices`; użyj pierwszego dopasowania. Jeśli żadne nie istnieje, przejdź awaryjnie do zwykłej wiadomości konwersacyjnej z oznaczonymi opcjami.
+Gdy ta umiejętność mówi _„zapytaj użytkownika”_, użyj dowolnego narzędzia interaktywnego pytań udostępnianego przez hosta (np. `ask_question`, `request_user_input`). Przed pierwszym krokiem interaktywnym przeskanuj dostępne narzędzia pod kątem narzędzia z parametrem `question` oraz polem `options`/`choices`; użyj pierwszego dopasowania. Jeśli żadne nie istnieje, przejdź awaryjnie do zwykłej wiadomości konwersacyjnej z oznaczonymi opcjami.
 
 ## Wszystkie fazy ukończone
 

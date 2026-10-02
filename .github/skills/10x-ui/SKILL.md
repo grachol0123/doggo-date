@@ -12,6 +12,7 @@ description: >
   generator for a view that does not exist yet, not a component catalog, not a
   Playwright course.
 ---
+
 # 10x-ui — kontrakt systemu projektowego dla jednej zmiany wizualnej
 
 Interfejs UI to zwykła zmiana 10x. Nie otwieraj czatu vibes w wątku CRUD i nie zaczynaj
@@ -61,11 +62,11 @@ problemów UI w tym repozytorium.
    plik(i) zasad dla agenta (plik konfiguracji AI projektu (AGENTS.md),
    `AGENTS.md`, `.cursor/rules/*`, `.windsurfrules`, `copilot-instructions.md`) i uruchom poniższe skanowanie
    wartości zakodowanych na sztywno na plikach widoku. Zgłoś liczby — wskazują, który wariant kontraktu obowiązuje.
-3. **Przekaż do `/10x-research`** brief audytu z sekcji *Audyt* poniżej; skopiuj
+3. **Przekaż do `/10x-research`** brief audytu z sekcji _Audyt_ poniżej; skopiuj
    polecenie do schowka. Zarzuty trafiają do `research.md` pod `## Charges`.
 
 > **Schowek.** Przekaż dokładne polecenie potokiem do `pbcopy` / `clip.exe` / `xclip -selection
-> clipboard` / `Set-Clipboard`, po cichu użyj fallbacku, jeśli żadne nie istnieje, a następnie wypisz je w osobnej
+clipboard` / `Set-Clipboard`, po cichu użyj fallbacku, jeśli żadne nie istnieje, a następnie wypisz je w osobnej
 > linii z sufiksem `(✓ copied)`.
 
 ## Router
@@ -79,7 +80,7 @@ problemów UI w tym repozytorium.
    desktopie i przy jednej szerokości mobilnej oraz ponowne uruchomienie skanowania wartości zakodowanych na sztywno na widoku.
 5. **Bramka wizualna** — kitchen sink lub `toHaveScreenshot` na tym jednym widoku.
 6. **Zostaw zabezpieczenie** — regułę (oraz, jeśli repozytorium ma linter, kontrolę), która utrzymuje następnego
-   agenta przy kontrakcie. Zobacz *Utrwal zmianę*.
+   agenta przy kontrakcie. Zobacz _Utrwal zmianę_.
 7. `/10x-impl-review` — ustalenia UI domyślnie nie są „pomijane jako kosmetyczne”. Następnie pętla przeglądu.
 
 ## Audyt: trzy kategorie zarzutów
@@ -100,15 +101,15 @@ Przeczytaj również plik(i) zasad dla agenta pod kątem instrukcji UI. Reguła,
 jednorazowych wartości (np. „używaj wartości arbitralnych, takich jak `w-[123px]`, dla precyzyjnych projektów”) jest
 zarzutem dotyczącym przypadkowej architektury: to dlatego widoki się rozjechały i to cofnie poprawkę.
 
-| Kategoria | Jak wygląda | Dowód do zapisania | Typowa poprawka |
-| --- | --- | --- | --- |
-| **Brakujące tokeny** | literały kolorów w widoku — hex/rgb/oklch, a w Tailwind **klasy palety** (`bg-blue-900`, `text-purple-200`, `from-indigo-900`) i wartości arbitralne (`p-[13px]`); trzy odcienie tego samego „primary”; odstępy wymyślane osobno dla każdego pliku | plik:linia literału oraz token, który powinien go pokryć | przenieś wartość do źródła tokenów tego repozytorium i odwołaj się do niej przez rolę (`bg-primary`, `text-muted-foreground` w wariancie Tailwind) |
-| **Brakujący współdzielony komponent** | drugi `Button` zbudowany z `div`+klas, karta kopiująca kartę DS, kopiowane-wklejane pole formularza | plik:linia duplikatu oraz komponent, który przesłania (lub ten, który należy dodać) | zaimportuj właściwy komponent albo dodaj go przez własną ścieżkę stosu (np. `npx shadcn add <name>`) |
-| **Przypadkowa architektura** | ekran odzwierciedla kolejność dodawania funkcji: nieuwierzytelniona trasa zwracająca surowy JSON, modal będący stroną, zakładka „settings” zawierająca cztery niepowiązane rzeczy, reguła agenta zachęcająca do jednorazowych stylów | ścieżka trasy/komponentu/reguły oraz to, co widzi użytkownik, gdy trafia tam w ten sposób | popraw punkt wejścia (guard, redirect, layout) albo regułę, nie kolor |
+| Kategoria                             | Jak wygląda                                                                                                                                                                                                                                        | Dowód do zapisania                                                                        | Typowa poprawka                                                                                                                                    |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Brakujące tokeny**                  | literały kolorów w widoku — hex/rgb/oklch, a w Tailwind **klasy palety** (`bg-blue-900`, `text-purple-200`, `from-indigo-900`) i wartości arbitralne (`p-[13px]`); trzy odcienie tego samego „primary”; odstępy wymyślane osobno dla każdego pliku | plik:linia literału oraz token, który powinien go pokryć                                  | przenieś wartość do źródła tokenów tego repozytorium i odwołaj się do niej przez rolę (`bg-primary`, `text-muted-foreground` w wariancie Tailwind) |
+| **Brakujący współdzielony komponent** | drugi `Button` zbudowany z `div`+klas, karta kopiująca kartę DS, kopiowane-wklejane pole formularza                                                                                                                                                | plik:linia duplikatu oraz komponent, który przesłania (lub ten, który należy dodać)       | zaimportuj właściwy komponent albo dodaj go przez własną ścieżkę stosu (np. `npx shadcn add <name>`)                                               |
+| **Przypadkowa architektura**          | ekran odzwierciedla kolejność dodawania funkcji: nieuwierzytelniona trasa zwracająca surowy JSON, modal będący stroną, zakładka „settings” zawierająca cztery niepowiązane rzeczy, reguła agenta zachęcająca do jednorazowych stylów               | ścieżka trasy/komponentu/reguły oraz to, co widzi użytkownik, gdy trafia tam w ten sposób | popraw punkt wejścia (guard, redirect, layout) albo regułę, nie kolor                                                                              |
 
 Trzecia kategoria jest najtrudniejsza do zauważenia na zrzucie ekranu i najłatwiejsza do pominięcia. Zapytaj
-wprost: *co dzieje się, jeśli ktoś trafi na ten widok po wylogowaniu, bez danych albo bezpośrednio
-z linku?*
+wprost: _co dzieje się, jeśli ktoś trafi na ten widok po wylogowaniu, bez danych albo bezpośrednio
+z linku?_
 
 Zarzuty, których plan nie adresuje, pozostają w `## Charges` oznaczone jako **deferred** z uzasadnieniem —
 nie są usuwane.
@@ -137,12 +138,12 @@ Kontrakt ma dwie połowy i żadna nie wskazuje narzędzia:
 
 Bez obu agent na każdym widoku na nowo wynajduje prymitywy. Z obiema ma miejsce, gdzie może szukać.
 
-| Stos | Gdzie żyją wartości | Gdzie żyją komponenty |
-| --- | --- | --- |
-| **Tailwind v4 + shadcn/ui** (wariant kursu) | `:root` / `.dark` w CSS, publikowane przez `@theme` / `@theme inline` | skopiowane do repozytorium, zwykle `src/components/ui` |
-| **CSS Modules / zwykłe zmienne CSS** | plik zmiennych (`:root`, często `theme.css` / `variables.css`) | katalog współdzielonych komponentów, importowany przez ścieżkę |
-| **CSS-in-JS z motywem** (styled-components, vanilla-extract, Panda) | obiekt motywu lub plik tokenów `.css.ts` | stylizowane prymitywy eksportowane z jednego modułu |
-| **Biblioteka komponentów z motywem** (MUI, Chakra, Mantine) | obiekt motywu/konfiguracji biblioteki, rozszerzony w twoim kodzie | komponenty biblioteki, opakowane lokalnie tam, gdzie je dostosowujesz |
+| Stos                                                                | Gdzie żyją wartości                                                   | Gdzie żyją komponenty                                                 |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| **Tailwind v4 + shadcn/ui** (wariant kursu)                         | `:root` / `.dark` w CSS, publikowane przez `@theme` / `@theme inline` | skopiowane do repozytorium, zwykle `src/components/ui`                |
+| **CSS Modules / zwykłe zmienne CSS**                                | plik zmiennych (`:root`, często `theme.css` / `variables.css`)        | katalog współdzielonych komponentów, importowany przez ścieżkę        |
+| **CSS-in-JS z motywem** (styled-components, vanilla-extract, Panda) | obiekt motywu lub plik tokenów `.css.ts`                              | stylizowane prymitywy eksportowane z jednego modułu                   |
+| **Biblioteka komponentów z motywem** (MUI, Chakra, Mantine)         | obiekt motywu/konfiguracji biblioteki, rozszerzony w twoim kodzie     | komponenty biblioteki, opakowane lokalnie tam, gdzie je dostosowujesz |
 
 Szczegół Tailwind: `:root` / `.dark` przechowują **wartości**, `@theme inline` **publikuje** je jako
 `--color-*`, a dopiero wtedy istnieje `bg-primary`. Surowe kolory wpisane bezpośrednio do
@@ -177,15 +178,15 @@ jest już skonfigurowany) w wariancie kursu. Nie wymagaj `mcp init`, aby ukończ
 Faza stanów jest ukończona, gdy każda komórka jest **pokazana** (w kitchen sink) lub oznaczona jako
 **N/A z uzasadnieniem** — nie wtedy, gdy szczęśliwa ścieżka wygląda dobrze.
 
-| Stan | Co sprawdzić |
-| --- | --- |
-| default | zbudowany wyłącznie z tokenów i komponentów repozytorium |
-| hover | widoczna zmiana, sterowana tokenami |
+| Stan          | Co sprawdzić                                                                                               |
+| ------------- | ---------------------------------------------------------------------------------------------------------- |
+| default       | zbudowany wyłącznie z tokenów i komponentów repozytorium                                                   |
+| hover         | widoczna zmiana, sterowana tokenami                                                                        |
 | focus-visible | fokus klawiatury widoczny na każdej kontrolce; własny token (`--ring` w shadcn), nie domyślny przeglądarki |
-| disabled | wygląda i zachowuje się jak wyłączony, nadal jest czytelny |
-| error | komunikat obok pola/akcji, token `destructive`, nie sam kolor |
-| empty | brak danych: prawdziwy stan pusty, nie pusta ramka ani surowy JSON |
-| loading | skeleton lub spinner; brak skoku layoutu po nadejściu danych |
+| disabled      | wygląda i zachowuje się jak wyłączony, nadal jest czytelny                                                 |
+| error         | komunikat obok pola/akcji, token `destructive`, nie sam kolor                                              |
+| empty         | brak danych: prawdziwy stan pusty, nie pusta ramka ani surowy JSON                                         |
+| loading       | skeleton lub spinner; brak skoku layoutu po nadejściu danych                                               |
 
 `disabled`, `error` i `focus-visible` odchodzą od siebie jako pierwsze, ponieważ nic na szczęśliwej ścieżce
 ich nie ćwiczy. Przesunięcie akcentu nie przesuwa tokenu fokusu — sprawdź go osobno.
@@ -264,15 +265,15 @@ opisz stany tekstowo, zachowaj bramkę zrzutów ekranu w CI.
 
 ## Awarie do odrzucenia
 
-| Zapach | Zrób to zamiast tego |
-| --- | --- |
-| Domyślny fioletowo/niebieski gradient „AI landing” | Najpierw zmień `--primary` / tokeny motywu |
-| Nowy prymityw `div`+CSS kopiujący komponent DS | Zaimportuj właściwy komponent |
-| Zakładka „Selected”, która jest tylko CSS i nie można jej kliknąć | Podłącz stan |
-| Nieuwierzytelnione wejście lub wejście w stanie pustym, które wyrzuca surowy JSON / pustą ramkę | Popraw punkt wejścia; to zarzut architektoniczny |
-| `shadcn init` (lub odpowiednik) w repozytorium, które już dostarcza tokeny i komponenty | Rozszerz pierwszy system |
-| Aktualizowanie baseline'u zrzutu ekranu, aby CI było zielone | Wyjaśnij różnicę wizualną; aktualizuj tylko, jeśli jest zamierzona |
-| „Napraw design” jako jedno zadanie agenta w wątku CRUD | Nowy folder zmiany, audyt, plan, bramka |
+| Zapach                                                                                          | Zrób to zamiast tego                                               |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Domyślny fioletowo/niebieski gradient „AI landing”                                              | Najpierw zmień `--primary` / tokeny motywu                         |
+| Nowy prymityw `div`+CSS kopiujący komponent DS                                                  | Zaimportuj właściwy komponent                                      |
+| Zakładka „Selected”, która jest tylko CSS i nie można jej kliknąć                               | Podłącz stan                                                       |
+| Nieuwierzytelnione wejście lub wejście w stanie pustym, które wyrzuca surowy JSON / pustą ramkę | Popraw punkt wejścia; to zarzut architektoniczny                   |
+| `shadcn init` (lub odpowiednik) w repozytorium, które już dostarcza tokeny i komponenty         | Rozszerz pierwszy system                                           |
+| Aktualizowanie baseline'u zrzutu ekranu, aby CI było zielone                                    | Wyjaśnij różnicę wizualną; aktualizuj tylko, jeśli jest zamierzona |
+| „Napraw design” jako jedno zadanie agenta w wątku CRUD                                          | Nowy folder zmiany, audyt, plan, bramka                            |
 
 ## Playbooki
 

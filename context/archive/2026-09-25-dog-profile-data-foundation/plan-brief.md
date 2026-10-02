@@ -25,26 +25,27 @@ S-01.
 
 ## Key Decisions Made
 
-| Decision                         | Choice                                            | Why (1 sentence)                                                                 | Source |
-| --------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------- | ------ |
-| Typ pola wiek                     | `age_years` integer                                | Prostsze niż birth_date, wystarczające na MVP                                       | Plan   |
-| Psy na właściciela                 | Jeden (unique `owner_id`)                           | PRD mówi o "profilu psa" w liczbie pojedynczej                                      | Plan   |
-| Zakres RLS SELECT                  | Wszyscy zalogowani                                  | S-02 (przeglądanie) potrzebuje odczytu cudzych profili — unika migracji wstecznej   | Plan   |
-| Widoczność bucketu zdjęć           | Publiczny (public read)                             | S-02 musi wyświetlać cudze zdjęcia bez generowania signed URL per rekord            | Plan   |
-| Limity zdjęcia                     | 5MB, jpeg/png/webp                                  | Chroni koszty/nadużycia storage                                                     | Plan   |
-| Usunięcie konta właściciela        | `ON DELETE CASCADE`                                 | Unika osieroconych rekordów psa                                                     | Plan   |
-| Limit długości opisu               | 500 znaków (CHECK)                                  | Chroni UI list/kart przed nadmiernie długim tekstem                                 | Plan   |
-| Strategia typów TS                 | Generowane (`supabase gen types`)                   | Źródło prawdy = schemat SQL, brak ręcznego dryfu                                     | Plan   |
-| Weryfikacja RLS                    | Automatyczne testy pgTAP                            | Trwałe zabezpieczenie przed regresją przy przyszłych migracjach (matches, messages)  | Plan   |
-| Rasa (`breed`)                     | Wolny tekst                                         | Brak słownika ras w PRD; słownik to nadmiarowa złożoność na MVP                     | Plan   |
-| Charakter (`temperament`)          | `text[]`                                            | Wielowartościowa cecha, spójna z `interests`                                         | Plan   |
-| Poziom aktywności                  | Natywny enum Postgres (3 wartości, EN: homebody/walker/runner) | Zamknięta lista wymuszona przez bazę; tłumaczenia na frontendzie             | Plan   |
-| Zainteresowania (`interests`)      | Enum (10 wartości, EN) jako tablica `dog_interest[]`| Zamknięta lista + wiele wyborów; identyfikatory EN, tłumaczenia na frontendzie | Plan   |
-| Wymagalność nowych pól             | Opcjonalne (NULL dozwolony)                         | Poza pierwotnym zakresem FR-002, nie blokują flow US-01                             | Plan   |
+| Decision                      | Choice                                                         | Why (1 sentence)                                                                    | Source |
+| ----------------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------ |
+| Typ pola wiek                 | `age_years` integer                                            | Prostsze niż birth_date, wystarczające na MVP                                       | Plan   |
+| Psy na właściciela            | Jeden (unique `owner_id`)                                      | PRD mówi o "profilu psa" w liczbie pojedynczej                                      | Plan   |
+| Zakres RLS SELECT             | Wszyscy zalogowani                                             | S-02 (przeglądanie) potrzebuje odczytu cudzych profili — unika migracji wstecznej   | Plan   |
+| Widoczność bucketu zdjęć      | Publiczny (public read)                                        | S-02 musi wyświetlać cudze zdjęcia bez generowania signed URL per rekord            | Plan   |
+| Limity zdjęcia                | 5MB, jpeg/png/webp                                             | Chroni koszty/nadużycia storage                                                     | Plan   |
+| Usunięcie konta właściciela   | `ON DELETE CASCADE`                                            | Unika osieroconych rekordów psa                                                     | Plan   |
+| Limit długości opisu          | 500 znaków (CHECK)                                             | Chroni UI list/kart przed nadmiernie długim tekstem                                 | Plan   |
+| Strategia typów TS            | Generowane (`supabase gen types`)                              | Źródło prawdy = schemat SQL, brak ręcznego dryfu                                    | Plan   |
+| Weryfikacja RLS               | Automatyczne testy pgTAP                                       | Trwałe zabezpieczenie przed regresją przy przyszłych migracjach (matches, messages) | Plan   |
+| Rasa (`breed`)                | Wolny tekst                                                    | Brak słownika ras w PRD; słownik to nadmiarowa złożoność na MVP                     | Plan   |
+| Charakter (`temperament`)     | `text[]`                                                       | Wielowartościowa cecha, spójna z `interests`                                        | Plan   |
+| Poziom aktywności             | Natywny enum Postgres (3 wartości, EN: homebody/walker/runner) | Zamknięta lista wymuszona przez bazę; tłumaczenia na frontendzie                    | Plan   |
+| Zainteresowania (`interests`) | Enum (10 wartości, EN) jako tablica `dog_interest[]`           | Zamknięta lista + wiele wyborów; identyfikatory EN, tłumaczenia na frontendzie      | Plan   |
+| Wymagalność nowych pól        | Opcjonalne (NULL dozwolony)                                    | Poza pierwotnym zakresem FR-002, nie blokują flow US-01                             | Plan   |
 
 ## Scope
 
 **In scope:**
+
 - Tabela `dogs` (podstawowe + rozszerzone pola), enumy `dog_activity_level` i `dog_interest`
 - RLS na `dogs` (SELECT: authenticated, write: owner)
 - Bucket storage `dog-photos` + RLS na `storage.objects`
@@ -52,6 +53,7 @@ S-01.
 - Wygenerowane typy TS w `src/types.ts`
 
 **Out of scope:**
+
 - UI tworzenia/edycji profilu (S-01)
 - Logika matchowania, polubień, wiadomości
 - Słownik ras, filtrowanie po nowych polach
@@ -67,11 +69,11 @@ faza weryfikacyjna nad wynikiem faz 1-2.
 
 ## Phases at a Glance
 
-| Phase                         | What it delivers                                     | Key risk                                                    |
-| ------------------------------ | ------------------------------------------------------ | -------------------------------------------------------------- |
-| 1. Migracja schematu bazy       | Enumy + tabela `dogs` + RLS na danych                   | Zły zakres SELECT RLS złamałby S-02 wstecznie                   |
-| 2. Konfiguracja storage         | Bucket `dog-photos` + RLS na `storage.objects`          | Zła konwencja ścieżki uniemożliwi RLS bez dodatkowego zapytania |
-| 3. Weryfikacja i typy           | Testy pgTAP + `src/types.ts`                            | Brak testów oznacza ciche regresje RLS w przyszłych migracjach  |
+| Phase                     | What it delivers                               | Key risk                                                        |
+| ------------------------- | ---------------------------------------------- | --------------------------------------------------------------- |
+| 1. Migracja schematu bazy | Enumy + tabela `dogs` + RLS na danych          | Zły zakres SELECT RLS złamałby S-02 wstecznie                   |
+| 2. Konfiguracja storage   | Bucket `dog-photos` + RLS na `storage.objects` | Zła konwencja ścieżki uniemożliwi RLS bez dodatkowego zapytania |
+| 3. Weryfikacja i typy     | Testy pgTAP + `src/types.ts`                   | Brak testów oznacza ciche regresje RLS w przyszłych migracjach  |
 
 **Prerequisites:** Lokalny Supabase CLI + Docker uruchomione (`npx supabase start`); brak zależności od innych zmian.
 **Estimated effort:** ~1 sesja implementacyjna, 3 fazy.

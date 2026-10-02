@@ -7,7 +7,7 @@ updated: 2026-09-22
 # Roadmap Questions
 
 Append-only register of cross-cutting questions and future-extension signals raised
-*outside* the initial `/10x-roadmap` generation — discovered via cross-file review of
+_outside_ the initial `/10x-roadmap` generation — discovered via cross-file review of
 `prd.md`, `tech-stack.md`, `infrastructure.md`, and the codebase, plus follow-up with the
 user. Mirrors `## Open Roadmap Questions` in `context/foundation/roadmap.md`; that section
 references this file rather than duplicating it in full.

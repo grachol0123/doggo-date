@@ -28,7 +28,7 @@ Another agent is implementing `dog-profile-crud` (roadmap S-01) in parallel. Bef
 
 > **Superseded, see "Follow-up (2026-09-26 18:14 CEST)" below**: as of the follow-up pass, S-01 is fully implemented (`status: impl_reviewed`, all 5 phases committed). The snapshot immediately below reflects the state at 15:05 CEST and is kept for history.
 
-`dog-profile-crud` (S-01) is **not yet done** — its `change.md` status is `implementing`, and per its own `plan.md` Progress section only Phase 1 of 5 is committed (`a87fa2c`). Phase 2 (the save API route) has code written but is uncommitted/unverified in the working tree, and no dog profile *page* or *form* exists yet, so there is still no way for an owner to actually create a dog through the UI (`context/changes/dog-profile-crud/plan.md:279-296`). Consequently there is no route yet to populate the `dogs` table with real profiles, which `dashboard-page` needs to browse. The `dogs` data model itself (table, RLS, storage bucket) is fully in place and stable (F-01, done). No likes/matches schema, swipe-gesture library, or hamburger/side-menu UI pattern exists anywhere in the repo yet — `dashboard-page` would be greenfield for all of those.
+`dog-profile-crud` (S-01) is **not yet done** — its `change.md` status is `implementing`, and per its own `plan.md` Progress section only Phase 1 of 5 is committed (`a87fa2c`). Phase 2 (the save API route) has code written but is uncommitted/unverified in the working tree, and no dog profile _page_ or _form_ exists yet, so there is still no way for an owner to actually create a dog through the UI (`context/changes/dog-profile-crud/plan.md:279-296`). Consequently there is no route yet to populate the `dogs` table with real profiles, which `dashboard-page` needs to browse. The `dogs` data model itself (table, RLS, storage bucket) is fully in place and stable (F-01, done). No likes/matches schema, swipe-gesture library, or hamburger/side-menu UI pattern exists anywhere in the repo yet — `dashboard-page` would be greenfield for all of those.
 
 ## Detailed Findings
 
@@ -36,7 +36,7 @@ Another agent is implementing `dog-profile-crud` (roadmap S-01) in parallel. Bef
 
 - `context/changes/dog-profile-crud/change.md:4` — `status: implementing` (not `done`).
 - `context/changes/dog-profile-crud/plan.md:279-296` (Progress, Phase 1) — all 3 automated checks are checked off with commit `a87fa2c` ("validation foundations and missing UI primitives"): zod dependency, shadcn/ui primitives, `dog-enums.ts`, `dogProfileSchema`.
-- `context/changes/dog-profile-crud/plan.md:298-311` (Progress, Phase 2) — the 3 automated checks (lint/build pass, `save.ts` exports `POST`) are checked off *without* a commit sha, and all 4 manual-verification items (create/edit/photo-replace/invalid-input behavior) are still unchecked `- [ ]`.
+- `context/changes/dog-profile-crud/plan.md:298-311` (Progress, Phase 2) — the 3 automated checks (lint/build pass, `save.ts` exports `POST`) are checked off _without_ a commit sha, and all 4 manual-verification items (create/edit/photo-replace/invalid-input behavior) are still unchecked `- [ ]`.
 - `context/changes/dog-profile-crud/plan.md:313-334` (Progress, Phases 3-4) — every item for the protected page (`/dashboard/dog`), the `PROTECTED_ROUTES` update, the dashboard link, and the `DogProfileForm.tsx` component is unchecked `- [ ]`.
 - `context/changes/dog-profile-crud/plan.md:336-346` (Progress, Phase 5) — final lint/build/full-flow/smoke verification is unchecked.
 - `git log --oneline -15` (repo root, this inspected history only) — the newest commit is `a87fa2c feat(dog-profile-crud): validation foundations and missing UI primitives (p1)`; no later commit for this change exists yet.
@@ -71,8 +71,8 @@ Another agent is implementing `dog-profile-crud` (roadmap S-01) in parallel. Bef
 
 ## Architecture Insights
 
-- The repo's established backend convention for form submissions is `formData` → Supabase call → `context.redirect` with `?error=<message>` on failure (established by `src/pages/api/auth/signup.ts`, being followed again by the in-progress `src/pages/api/dogs/save.ts`). Any browse/swipe API (like/pass action) would need a *different* pattern if it should feel instantaneous (NFR: next profile loads in <1s), since a full-page redirect per swipe would not meet that bar — this is a live architectural decision for `dashboard-page`'s plan, not yet precedented anywhere in the repo.
-- RLS already grants every authenticated user read access to all `dogs` rows (`dogs_select_authenticated`), so no RLS migration is strictly required just to *read* candidate profiles for swiping — but a new table (likes/passes and/or matches) with its own RLS will be needed to record swipe actions and derive matches, per PRD FR-004/FR-005.
+- The repo's established backend convention for form submissions is `formData` → Supabase call → `context.redirect` with `?error=<message>` on failure (established by `src/pages/api/auth/signup.ts`, being followed again by the in-progress `src/pages/api/dogs/save.ts`). Any browse/swipe API (like/pass action) would need a _different_ pattern if it should feel instantaneous (NFR: next profile loads in <1s), since a full-page redirect per swipe would not meet that bar — this is a live architectural decision for `dashboard-page`'s plan, not yet precedented anywhere in the repo.
+- RLS already grants every authenticated user read access to all `dogs` rows (`dogs_select_authenticated`), so no RLS migration is strictly required just to _read_ candidate profiles for swiping — but a new table (likes/passes and/or matches) with its own RLS will be needed to record swipe actions and derive matches, per PRD FR-004/FR-005.
 
 ## Historical Context (from prior changes)
 

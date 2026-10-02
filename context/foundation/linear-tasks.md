@@ -4,6 +4,7 @@
 > Wszystkie zadania roadmapy zostały zmigrowane z GitHub Issues (etykieta `Migrated`) i są 1:1 powiązane z odpowiadającymi issues w `grachol0123/doggo-date` (patrz `tasks-github.md`).
 
 ## Milestone: M-1 — Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość
+
 **Linear:** [DOG-9](https://linear.app/doggo-date/issue/DOG-9/m-1-pierwsza-petla-dopasowan-profil-przegladanie-match-wiadomosc) · **Status:** Backlog
 **GitHub:** [#5](https://github.com/grachol0123/doggo-date/issues/5)
 

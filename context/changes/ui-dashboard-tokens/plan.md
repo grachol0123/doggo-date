@@ -60,7 +60,7 @@ navy/purple gradient in either color scheme (light class toggle / OS dark-mode).
    shared `Button` component (or, if it must stay a bare `<button>` for form-submission
    semantics, restyle with `bg-primary text-primary-foreground hover:bg-primary/90`); replace
    the spinner's `border-white/30 border-t-white` with `border-primary-foreground/30
-   border-t-primary-foreground`.
+border-t-primary-foreground`.
 
 **Automated verification**: `npm run lint`, `npm run build` succeed.
 **Manual verification**: `/dashboard` and `/dashboard/dog` render with the new warm token
@@ -109,4 +109,3 @@ both color schemes for the two pages.
       (grep + rendered-HTML class inspection) verification substitute for this gap; a human
       should do one real click-through in a browser (with a confirmed test account or local
       Supabase + "Confirm email" disabled) before merge.
-

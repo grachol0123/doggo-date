@@ -12,6 +12,7 @@ description: >
   "agent nie widzi błędów z hooka". Use AFTER /10x-test-plan (M3L1). Does
   not write git pre-commit/pre-push config — it only recommends it.
 ---
+
 # 10x Configure Hook — bramki jakości jako hooki agenta, sprawdzone
 
 Ta umiejętność zamienia bramki już wybrane przez projekt w hooki, które agent faktycznie odbiera. Hook jest użyteczny tylko wtedy, gdy jego komunikat dociera do agenta kanałem, który harness odczytuje dla tego zdarzenia. Większość zepsutych hooków działa poprawnie i wypisuje do kanału, którego nikt nie nasłuchuje — dlatego ta umiejętność nigdy nie przekazuje hooka, którego nie uruchomiła.
@@ -67,13 +68,13 @@ Czytaj manifest i konfigurację, nie polegaj na pamięci. Dla każdej bramki zap
 
 **Momenty**, najpierw najtańszy sygnał:
 
-| Moment | Należy tutaj | Dociera do agenta |
-| --- | --- | --- |
-| Przy każdej edycji | Lint/formatowanie edytowanego pliku; powiązane testy, gdy kończą się w kilka sekund | Tak |
-| Koniec tury | Lint + testy dla każdego pliku zmienionego w tej turze; typecheck całego projektu | Tak |
-| Przed commitem | Lint + testy na plikach staged (wychwytuje edycje wykonane bez agenta) | Nie |
-| Przed push | Cięższe suity, lokalne e2e | Nie |
-| CI | Integracja, współdzielony stan, infrastruktura, której nie masz lokalnie | Nie |
+| Moment             | Należy tutaj                                                                        | Dociera do agenta |
+| ------------------ | ----------------------------------------------------------------------------------- | ----------------- |
+| Przy każdej edycji | Lint/formatowanie edytowanego pliku; powiązane testy, gdy kończą się w kilka sekund | Tak               |
+| Koniec tury        | Lint + testy dla każdego pliku zmienionego w tej turze; typecheck całego projektu   | Tak               |
+| Przed commitem     | Lint + testy na plikach staged (wychwytuje edycje wykonane bez agenta)              | Nie               |
+| Przed push         | Cięższe suity, lokalne e2e                                                          | Nie               |
+| CI                 | Integracja, współdzielony stan, infrastruktura, której nie masz lokalnie            | Nie               |
 
 Heurystyka szybkości: **im wolniejsza kontrola, tym rzadszy moment.** Kilka sekund mieści się przy każdej edycji; dziesiątki sekund lub zakres całego projektu należą do końca tury; minuty należą do commita, push lub CI.
 

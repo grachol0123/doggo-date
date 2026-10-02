@@ -17,16 +17,16 @@ A signed-in owner visits `/dashboard/dog`, sees an empty or pre-filled form depe
 
 ## Key Decisions Made
 
-| Decision                    | Choice                                                             | Why (1 sentence)                                                                 | Source   |
-| ---------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------- | -------- |
-| Field scope                  | Full F-01 field set (base + breed/temperament/activity_level/interests) | Schema already supports it at no extra migration cost; S-02 will want these fields | Plan     |
-| API pattern                  | FormData + `context.redirect` with `?error=`                          | Only existing pattern in the repo (auth routes); avoids introducing a JSON API     | Plan     |
-| Create vs edit                | One page/form, insert-or-update in one API route                     | One dog per owner (unique constraint) makes "create" and "edit" the same action   | Plan     |
-| Route                        | `/dashboard/dog`                                                      | Groups with the existing `/dashboard`, easy to find and protect                   | Plan     |
-| Photo required?               | Optional at creation, addable later                                  | Lowers the barrier to creating a profile; simpler validation                      | Plan     |
-| Photo replacement              | Delete old storage object after new upload succeeds                   | Prevents orphaned files accumulating in a public bucket                           | Plan     |
-| PL enum labels                | New `src/lib/dog-enums.ts` constants file                             | Reusable by S-02 later; keeps translations out of the form component              | Plan     |
-| Missing form primitives        | Add via `npx shadcn@latest add ...`                                   | Matches the project's declared shadcn/ui ("new-york") convention                  | Plan     |
+| Decision                | Choice                                                                  | Why (1 sentence)                                                                   | Source |
+| ----------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------ |
+| Field scope             | Full F-01 field set (base + breed/temperament/activity_level/interests) | Schema already supports it at no extra migration cost; S-02 will want these fields | Plan   |
+| API pattern             | FormData + `context.redirect` with `?error=`                            | Only existing pattern in the repo (auth routes); avoids introducing a JSON API     | Plan   |
+| Create vs edit          | One page/form, insert-or-update in one API route                        | One dog per owner (unique constraint) makes "create" and "edit" the same action    | Plan   |
+| Route                   | `/dashboard/dog`                                                        | Groups with the existing `/dashboard`, easy to find and protect                    | Plan   |
+| Photo required?         | Optional at creation, addable later                                     | Lowers the barrier to creating a profile; simpler validation                       | Plan   |
+| Photo replacement       | Delete old storage object after new upload succeeds                     | Prevents orphaned files accumulating in a public bucket                            | Plan   |
+| PL enum labels          | New `src/lib/dog-enums.ts` constants file                               | Reusable by S-02 later; keeps translations out of the form component               | Plan   |
+| Missing form primitives | Add via `npx shadcn@latest add ...`                                     | Matches the project's declared shadcn/ui ("new-york") convention                   | Plan   |
 
 ## Scope
 
@@ -40,13 +40,13 @@ Astro SSR page (`src/pages/dashboard/dog.astro`) reads the current user's `dogs`
 
 ## Phases at a Glance
 
-| Phase                                              | What it delivers                                           | Key risk                                                      |
-| --------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------- |
-| 1. Validation foundations & missing UI primitives    | zod dependency, shadcn primitives, enum labels, zod schema      | None significant — additive setup work                          |
-| 2. API route for saving the dog profile              | `POST /api/dogs/save`: validate, upload/replace photo, insert-or-update | Orphaned storage files if old-photo cleanup is skipped/misordered |
-| 3. Protected dog profile page                        | `/dashboard/dog` page, `PROTECTED_ROUTES` update, dashboard link | Forgetting the route in `PROTECTED_ROUTES` would leave data exposed via SSR fetch |
-| 4. Dog profile form component                        | `DogProfileForm.tsx` with all fields, select/multi-select/file preview | First multi-select and file-upload UI in the repo — no pattern to copy |
-| 5. Final verification                                | Lint/build gate + full manual create→edit→replace-photo walkthrough | None — verification only                                        |
+| Phase                                             | What it delivers                                                        | Key risk                                                                          |
+| ------------------------------------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 1. Validation foundations & missing UI primitives | zod dependency, shadcn primitives, enum labels, zod schema              | None significant — additive setup work                                            |
+| 2. API route for saving the dog profile           | `POST /api/dogs/save`: validate, upload/replace photo, insert-or-update | Orphaned storage files if old-photo cleanup is skipped/misordered                 |
+| 3. Protected dog profile page                     | `/dashboard/dog` page, `PROTECTED_ROUTES` update, dashboard link        | Forgetting the route in `PROTECTED_ROUTES` would leave data exposed via SSR fetch |
+| 4. Dog profile form component                     | `DogProfileForm.tsx` with all fields, select/multi-select/file preview  | First multi-select and file-upload UI in the repo — no pattern to copy            |
+| 5. Final verification                             | Lint/build gate + full manual create→edit→replace-photo walkthrough     | None — verification only                                                          |
 
 **Prerequisites:** F-01 (`dog-profile-data-foundation`) is done — schema, RLS, and storage bucket already exist.
 **Estimated effort:** ~3-4 sessions across 5 phases (Phase 2 and Phase 4 are the largest units of work).

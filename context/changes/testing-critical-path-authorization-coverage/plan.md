@@ -15,7 +15,7 @@ rollout Phase 1 of `context/foundation/test-plan.md` (risks #1 and #5).
   (form-post) `dogs/save`, `GET /api/dogs/next-candidate`. No `matches` or
   `messages` route exists yet — `matches` is only ever written by a
   `security definer` DB trigger.
-- `src/middleware.ts` only redirects unauthenticated *page* requests under
+- `src/middleware.ts` only redirects unauthenticated _page_ requests under
   `/dashboard`; none of the three API paths are protected there, so each
   route's own `if (!user)` check is the only authentication gate — and it is
   inconsistent: `swipes`/`next-candidate` return 401 JSON, `dogs/save`
@@ -45,10 +45,10 @@ rollout Phase 1 of `context/foundation/test-plan.md` (risks #1 and #5).
   always resolved server-side from `owner_id = user.id`. There is no
   forgeable ownership parameter for these two routes today, so the
   HTTP-level ownership proof is: an authenticated caller's mutation only
-  ever touches their own row (verified by reading the *other* owner's
+  ever touches their own row (verified by reading the _other_ owner's
   unaffected state afterwards), not "a forged ID is rejected."
 - Postgres RLS `UPDATE`/`DELETE` policies using only `USING` (no `WITH
-  CHECK`) do not raise an error for a cross-owner attempt — the
+CHECK`) do not raise an error for a cross-owner attempt — the
   non-matching row is silently excluded from the affected set (0 rows
   changed). Only `INSERT` (and any `WITH CHECK` failure) raises `42501`.
   This applies to `dogs_update_own`, `dogs_delete_own`,
@@ -81,7 +81,7 @@ alongside the existing `smoke` script and stays green.
 - `.github/workflows/ci.yml` `smoke` job — already starts local Supabase,
   builds, and runs a preview server; the new script's CI step slots in
   right after the existing `Run smoke test` step, before `Stop local
-  Supabase`.
+Supabase`.
 
 ## What We're NOT Doing
 
@@ -99,7 +99,7 @@ alongside the existing `smoke` script and stays green.
   phase.
 - Not wiring `npx supabase test db` (pgTAP) into CI — that is explicitly
   rollout Phase 4 ("Quality-gates wiring") in `context/foundation/test-plan.md`.
-  This phase only adds the pgTAP test *files*, runnable locally.
+  This phase only adds the pgTAP test _files_, runnable locally.
 - Not reusing the `gen1..gen20@doggo-date.test` demo-seed accounts for
   automated tests — a separate, dedicated fixture migration is added
   instead to avoid coupling automated tests to manual-QA seed data.
@@ -133,6 +133,7 @@ following the same `auth.users`/`auth.identities` insert shape as
 `20260926164458_seed_test_dog_profiles.sql`.
 
 **Contract**:
+
 - Two `auth.users` rows with deterministic UUIDs
   `77777777-7777-4777-8777-777777777777` (owner A) and
   `88888888-8888-4888-8888-888888888888` (owner B), emails
@@ -152,7 +153,7 @@ following the same `auth.users`/`auth.identities` insert shape as
 #### Automated Verification:
 
 - Migration applies cleanly: `npx supabase db reset` (or `npx supabase
-  start` on a fresh volume) completes without error
+start` on a fresh volume) completes without error
 - Existing pgTAP suite still passes unaffected: `npx supabase test db`
 
 #### Manual Verification:
@@ -279,6 +280,7 @@ server backed by local Supabase (never production).
 (`authz-owner-a@doggo-date.test` / `authz-owner-b@doggo-date.test` /
 `AuthzTestPassw0rd!`). Step list (each an independent cookie jar unless
 noted):
+
 - Unauthenticated `GET /api/dogs/next-candidate` → `401`,
   `{status:"unauthenticated"}`.
 - Unauthenticated `POST /api/swipes` → `401`, `{status:"unauthenticated"}`.
@@ -408,7 +410,7 @@ transition.
 1. Run `npx supabase test db` locally and confirm all new/extended
    assertions pass.
 2. Run `npm run build && npm run preview -- --port 4321` plus `BASE_URL=
-   http://localhost:4321 npm run test:authz` locally and confirm all steps
+http://localhost:4321 npm run test:authz` locally and confirm all steps
    pass.
 3. Push/open a PR and confirm the CI `smoke` job's new step is green.
 

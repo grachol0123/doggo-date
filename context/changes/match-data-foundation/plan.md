@@ -15,6 +15,7 @@ Implement the data foundation for roadmap S-02 (`browse-and-match`): a `swipes` 
 ## Desired End State
 
 Two new tables exist in Postgres with RLS enabled:
+
 - `swipes(id, actor_dog_id, target_dog_id, decision, created_at)` — one row per (actor dog, target dog) pair, immutable, insertable only by the swipe's own actor (verified via `dogs.owner_id = auth.uid()`), readable only by rows the current user's dog authored.
 - `matches(id, dog_a_id, dog_b_id, created_at)` — created only by a trigger (no direct insert/update/delete policy for the `authenticated` role), one row per unordered pair (`dog_a_id < dog_b_id` enforced), readable by either matched owner.
 
@@ -56,6 +57,7 @@ Add the `swipe_decision` enum, the `swipes` and `matches` tables, RLS policies f
 **Intent**: Establish the complete data foundation for browsing/matching in one atomic migration, following the F-01 migration's structure exactly.
 
 **Contract**:
+
 - `create type public.swipe_decision as enum ('like', 'pass');`
 - `create table public.swipes (id uuid primary key default gen_random_uuid(), actor_dog_id uuid not null references public.dogs(id) on delete cascade, target_dog_id uuid not null references public.dogs(id) on delete cascade, decision public.swipe_decision not null, created_at timestamptz not null default now(), constraint swipes_no_self_swipe check (actor_dog_id <> target_dog_id), constraint swipes_actor_target_unique unique (actor_dog_id, target_dog_id));`
 - `create table public.matches (id uuid primary key default gen_random_uuid(), dog_a_id uuid not null references public.dogs(id) on delete cascade, dog_b_id uuid not null references public.dogs(id) on delete cascade, created_at timestamptz not null default now(), constraint matches_canonical_order check (dog_a_id < dog_b_id), constraint matches_pair_unique unique (dog_a_id, dog_b_id));`
