@@ -61,9 +61,7 @@ let changed = [];
 try {
   const tracked = execSync("git diff --name-only HEAD", { cwd: repoRoot, encoding: "utf8" });
   const untracked = execSync("git ls-files -o --exclude-standard", { cwd: repoRoot, encoding: "utf8" });
-  changed = [...new Set([...tracked.split(/\r?\n/), ...untracked.split(/\r?\n/)])]
-    .map((f) => f.trim())
-    .filter(Boolean);
+  changed = [...new Set([...tracked.split(/\r?\n/), ...untracked.split(/\r?\n/)])].map((f) => f.trim()).filter(Boolean);
 } catch {
   succeed();
 }
@@ -88,12 +86,10 @@ run("npx", ["astro", "sync"]);
 
 const tscResult = run("npx", ["tsc", "--noEmit", "--pretty", "false"]);
 if (!tscResult.ok) {
-  const relevant = tscResult.out
-    .split(/\r?\n/)
-    .filter((line) => {
-      const m = /^([^():]+)\((\d+),(\d+)\)/.exec(line);
-      return m ? changedSet.has(m[1].replace(/\\/g, "/")) : false;
-    });
+  const relevant = tscResult.out.split(/\r?\n/).filter((line) => {
+    const m = /^([^():]+)\((\d+),(\d+)\)/.exec(line);
+    return m ? changedSet.has(m[1].replace(/\\/g, "/")) : false;
+  });
   if (relevant.length > 0) report += `\nTypecheck fails in changed files:\n${relevant.join("\n")}`;
 }
 
