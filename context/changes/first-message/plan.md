@@ -399,24 +399,24 @@ Brak nowych zmian w kodzie — ta faza jest wyłącznie weryfikacyjna.
 
 #### Automated
 
-- [x] 1.1 `supabase test db` przechodzi, w tym nowy plik `messages_rls.test.sql`
-- [x] 1.2 `npx astro sync && npm run lint` przechodzi
+- [x] 1.1 `supabase test db` przechodzi, w tym nowy plik `messages_rls.test.sql` — 9c4e348
+- [x] 1.2 `npx astro sync && npm run lint` przechodzi — 9c4e348
 
 #### Manual
 
-- [x] 1.3 `messages` widoczna w `supabase_realtime` publication w lokalnym Supabase Studio
+- [x] 1.3 `messages` widoczna w `supabase_realtime` publication w lokalnym Supabase Studio — 9c4e348
 
 ### Phase 2: API wiadomości i przeglądarkowy klient Supabase
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` przechodzi
-- [ ] 2.2 `npm run build` przechodzi
+- [x] 2.1 `npm run lint` przechodzi
+- [x] 2.2 `npm run build` przechodzi
 
 #### Manual
 
-- [ ] 2.3 `GET /api/messages?matchId=<cudze-dopasowanie>` zwraca `not_participant`
-- [ ] 2.4 `POST /api/messages` z pustym/za długim `body` zwraca `invalid_body`
+- [x] 2.3 `GET /api/messages?matchId=<cudze-dopasowanie>` zwraca `not_participant`
+- [x] 2.4 `POST /api/messages` z pustym/za długim `body` zwraca `invalid_body`
 
 ### Phase 3: Wątek wiadomości (UI) i podłączenie przycisku
 
