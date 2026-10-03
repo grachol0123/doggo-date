@@ -10,10 +10,13 @@ const { user } = Astro.locals;
     <p class="text-muted-foreground text-xs uppercase tracking-[0.3em]">Dashboard</p>
     <p class="text-muted-foreground mt-3 break-all text-sm">{user?.email}</p>
 
-    <!-- Future nav items (Przeglądaj, Matche) will be added here by later changes. -->
+    <!-- Future nav items (Przeglądaj) will be added here by later changes. -->
     <nav class="mt-6 flex flex-col gap-3">
       <a href="/dashboard/dog" class:list={[cn(buttonVariants({ variant: "outline" }), "justify-start")]}>
         Mój profil psa
+      </a>
+      <a href="/dashboard/matches" class:list={[cn(buttonVariants({ variant: "outline" }), "justify-start")]}>
+        Matche
       </a>
     </nav>
 

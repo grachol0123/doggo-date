@@ -198,32 +198,32 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 1.1 npm run lint passes
-- [x] 1.2 npm run build passes
+- [x] 1.1 npm run lint passes — 46cf9b3
+- [x] 1.2 npm run build passes — 46cf9b3
 
 #### Manual
 
-- [x] 1.3 Owner with no dogs row gets no_own_dog
-- [x] 1.4 Owner with a dog but zero matches gets ok with matches: []
-- [x] 1.5 Two mutually-liked owners each see exactly one correct entry for each other
-- [x] 1.6 Multiple matches are ordered newest-first
-- [x] 1.7 sharedInterestCount matches the real intersection size
+- [x] 1.3 Owner with no dogs row gets no_own_dog — 46cf9b3
+- [x] 1.4 Owner with a dog but zero matches gets ok with matches: [] — 46cf9b3
+- [x] 1.5 Two mutually-liked owners each see exactly one correct entry for each other — 46cf9b3
+- [x] 1.6 Multiple matches are ordered newest-first — 46cf9b3
+- [x] 1.7 sharedInterestCount matches the real intersection size — 46cf9b3
 
 ### Phase 2: Matches list page (UI)
 
 #### Automated
 
-- [ ] 2.1 npm run lint passes
-- [ ] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes
+- [x] 2.2 npm run build passes
 
 #### Manual
 
-- [ ] 2.3 Empty state shows for an owner with zero matches
-- [ ] 2.4 No-own-dog prompt shows for an owner without a dog profile
-- [ ] 2.5 Match card appears for both owners after a mutual like, with correct data
-- [ ] 2.6 "Napisz wiadomość" button is disabled and inert
-- [ ] 2.7 Sidebar "Matche" link appears and navigates correctly
-- [ ] 2.8 Network failure shows inline error + retry, retry succeeds after recovery
+- [x] 2.3 Empty state shows for an owner with zero matches
+- [x] 2.4 No-own-dog prompt shows for an owner without a dog profile
+- [x] 2.5 Match card appears for both owners after a mutual like, with correct data
+- [x] 2.6 "Napisz wiadomość" button is disabled and inert
+- [x] 2.7 Sidebar "Matche" link appears and navigates correctly
+- [x] 2.8 Network failure shows inline error + retry, retry succeeds after recovery
 
 ### Phase 3: Final verification
 
