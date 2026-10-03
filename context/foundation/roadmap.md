@@ -3,7 +3,7 @@ project: "Doggo Date"
 version: 1
 status: draft
 created: 2026-09-22
-updated: 2026-09-26
+updated: 2026-10-09
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -44,8 +44,8 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 | F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
 | S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done        |
 | F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done        |
-| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | in-progress |
-| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | proposed    |
+| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | done        |
+| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | in-progress |
 
 ## Baseline
 
@@ -111,8 +111,8 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Reguła sortowania (najpierw najnowsze profile, potem trafność dopasowania — zdefiniowana jako liczba wspólnych `interests`) i logika „nie pokazuj ponownie już ocenionych profili” to główna logika biznesowa MVP — błąd tu bezpośrednio narusza NFR dot. płynności przeglądania (<1s, zawsze inny nieoceniony profil). Tworzenie matcha przy równoczesnym obustronnym polubieniu wymaga trigger'a DB (atomowość), nie logiki aplikacyjnej.
-- **Status:** in-progress
-- **Implementation split:** ta zmiana jest realizowana jako 3 osobne foldery zmian, wykonywane po kolei: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy gotowe, weryfikacja DB zablokowana brakiem lokalnej instancji Supabase/Docker), `browse-dogs` (API przeglądania/swipe + strona główna — następny krok), `matches-list` (API + strona listy matchy). `dashboard-sidebar-nav` (F-02) — **zmergowany do `develop`** (PR #10), gotowy jako prerekwizyt UI dla `browse-dogs`.
+- **Status:** done
+- **Implementation split:** ta zmiana została zrealizowana jako 3 osobne foldery zmian, wykonane po kolei, wszystkie w pełni zaimplementowane i zweryfikowane 2026-10-03: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy zweryfikowane lokalnie), `browse-dogs` (API przeglądania/swipe + strona główna — **implemented**, wszystkie fazy zweryfikowane), `matches-list` (API + strona listy matchy — **impl_reviewed**, APPROVED bez ustaleń krytycznych). `dashboard-sidebar-nav` (F-02) — **zmergowany do `develop`** (PR #10). Formalne `/10x-archive` dla trzech pod-zmian i przeniesienie wpisu do `## Done` pozostaje do wykonania osobno (Change ID tej umbrelli nie pokrywa się 1:1 z żadnym z trzech folderów).
 
 ### S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem
 
@@ -124,17 +124,17 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Wiadomości muszą być dostarczane natychmiast przez WebSocket (Supabase Realtime), nie przez polling — błędna konfiguracja Realtime/RLS na tabeli wiadomości może po cichu zdegradować UX do pollingu albo złamać prywatność wiadomości między niezmatchowanymi użytkownikami.
-- **Status:** proposed
+- **Status:** in-progress
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID                   | Suggested issue title                                            | Ready for `/10x-plan` | Notes                                                                                           |
-| ---------- | --------------------------- | ---------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------- |
-| F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                   | Run `/10x-plan dog-profile-data-foundation`                                                     |
-| S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                    | Archived, done                                                                                  |
-| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                    | Merged (PR #10), pending archive                                                                |
-| S-02       | browse-and-match            | Owner can browse dogs and create a match                         | yes                   | Split into 3 sub-changes: `match-data-foundation`, `browse-dogs`, `matches-list` — run in order |
-| S-03       | first-message               | Owner can send/receive real-time messages with a match           | no                    | Blocked until S-02 is done                                                                      |
+| Roadmap ID | Change ID                   | Suggested issue title                                            | Ready for `/10x-plan`  | Notes                                                                                                 |
+| ---------- | --------------------------- | ---------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
+| F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                    | Run `/10x-plan dog-profile-data-foundation`                                                           |
+| S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                     | Archived, done                                                                                        |
+| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                     | Merged (PR #10), pending archive                                                                      |
+| S-02       | browse-and-match            | Owner can browse dogs and create a match                         | n/a — już zrealizowane | Wszystkie 3 pod-zmiany zaimplementowane i zweryfikowane 2026-10-03; pozostaje formalne `/10x-archive` |
+| S-03       | first-message               | Owner can send/receive real-time messages with a match           | yes                    | Odblokowane — S-02 ukończone; run `/10x-plan first-message`                                           |
 
 This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Include one row for every `F-NN` and `S-NN`. It should be compact enough to copy into issues, but it must not duplicate the detailed roadmap body.
 

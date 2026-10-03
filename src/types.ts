@@ -120,6 +120,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      messages: {
+        Row: {
+          body: string;
+          created_at: string;
+          id: string;
+          match_id: string;
+          sender_dog_id: string;
+        };
+        Insert: {
+          body: string;
+          created_at?: string;
+          id?: string;
+          match_id: string;
+          sender_dog_id: string;
+        };
+        Update: {
+          body?: string;
+          created_at?: string;
+          id?: string;
+          match_id?: string;
+          sender_dog_id?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -282,3 +306,4 @@ export const Constants = {
 export type Dog = Database["public"]["Tables"]["dogs"]["Row"];
 export type Swipe = Database["public"]["Tables"]["swipes"]["Row"];
 export type Match = Database["public"]["Tables"]["matches"]["Row"];
+export type Message = Database["public"]["Tables"]["messages"]["Row"];

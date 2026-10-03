@@ -1,0 +1,18 @@
+---
+import MessageThread from "@/components/dog/MessageThread";
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+import { createClient } from "@/lib/supabase";
+
+const matchId = Astro.params.matchId ?? "";
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+const session = supabase ? (await supabase.auth.getSession()).data.session : null;
+---
+
+<DashboardLayout title="Wiadomości">
+  <MessageThread client:load matchId={matchId} accessToken={session?.access_token ?? null} />
+  <p class="text-muted-foreground mt-4 text-center text-sm">
+    <a href="/dashboard/matches" class="text-primary hover:underline">
+      Powrót do dopasowań
+    </a>
+  </p>
+</DashboardLayout>

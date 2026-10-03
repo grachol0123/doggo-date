@@ -1,0 +1,13 @@
+---
+import MatchesList from "@/components/dog/MatchesList";
+import DashboardLayout from "@/layouts/DashboardLayout.astro";
+---
+
+<DashboardLayout title="Moje dopasowania">
+  <MatchesList client:load />
+  <p class="text-muted-foreground mt-4 text-center text-sm">
+    <a href="/dashboard" class="text-primary hover:underline">
+      Powrót do panelu
+    </a>
+  </p>
+</DashboardLayout>

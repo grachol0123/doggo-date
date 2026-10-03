@@ -3,7 +3,7 @@ change_id: match-data-foundation
 title: Minimal swipe and match data schema
 status: impl_reviewed
 created: 2026-09-26
-updated: 2026-09-26
+updated: 2026-10-03
 archived_at: null
 ---
 
