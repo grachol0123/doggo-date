@@ -183,12 +183,12 @@ If a local Supabase/Docker instance becomes available later, regenerate `src/typ
 
 #### Manual
 
-- [ ] 1.4 As owner A (dog A) inserting a like swipe on dog B, then owner B (dog B) inserting a like swipe on dog A: exactly one row appears in matches after the second insert, in canonical order — blocked, no local Supabase instance available
-- [ ] 1.5 A one-sided like produces zero rows in matches — blocked, no local Supabase instance available
-- [ ] 1.6 A pass swipe never triggers a match, even if a prior like exists in the opposite direction — blocked, no local Supabase instance available
-- [ ] 1.7 Inserting a swipe with actor_dog_id owned by a different user is rejected by RLS — blocked, no local Supabase instance available
-- [ ] 1.8 Selecting another user's swipes rows returns zero rows — blocked, no local Supabase instance available
-- [ ] 1.9 A user can select a matches row where their dog is either dog_a_id or dog_b_id, and cannot see matches they're not part of — blocked, no local Supabase instance available
+- [x] 1.4 As owner A (dog A) inserting a like swipe on dog B, then owner B (dog B) inserting a like swipe on dog A: exactly one row appears in matches after the second insert, in canonical order — verified via rolled-back psql transaction against local Supabase (Podman), 2026-10-03
+- [x] 1.5 A one-sided like produces zero rows in matches — verified via rolled-back psql transaction against local Supabase (Podman), 2026-10-03
+- [x] 1.6 A pass swipe never triggers a match, even if a prior like exists in the opposite direction — verified via rolled-back psql transaction against local Supabase (Podman), 2026-10-03
+- [x] 1.7 Inserting a swipe with actor_dog_id owned by a different user is rejected by RLS — verified by `supabase/tests/database/swipes_rls.test.sql` (pgTAP, PASS)
+- [x] 1.8 Selecting another user's swipes rows returns zero rows — verified by `supabase/tests/database/swipes_rls.test.sql` (pgTAP, PASS)
+- [x] 1.9 A user can select a matches row where their dog is either dog_a_id or dog_b_id, and cannot see matches they're not part of — verified by `supabase/tests/database/matches_rls.test.sql` (pgTAP, PASS)
 
 ### Phase 2: Type definitions
 
@@ -207,5 +207,5 @@ If a local Supabase/Docker instance becomes available later, regenerate `src/typ
 
 #### Manual
 
-- [ ] 3.3 Local Supabase manual verification of mutual-like/one-sided/pass/RLS scenarios — blocked, no local Supabase instance available; must be run before merging to main
-- [ ] 3.4 npm run smoke still passes against a running server — not run (requires a running server)
+- [x] 3.3 Local Supabase manual verification of mutual-like/one-sided/pass/RLS scenarios — verified via rolled-back psql transaction + pgTAP suite against local Supabase (Podman), 2026-10-03
+- [x] 3.4 npm run smoke still passes against a running server — all 8 smoke steps PASS against local build+preview, 2026-10-03
