@@ -226,8 +226,8 @@ export default function MatchesList() {
                 </CardContent>
 
                 <CardFooter className="mt-auto border-t px-5 py-4">
-                  <Button type="button" className="w-full" disabled>
-                    Napisz wiadomość
+                  <Button asChild className="w-full">
+                    <a href={`/dashboard/messages/${match.matchId}`}>Napisz wiadomość</a>
                   </Button>
                 </CardFooter>
               </Card>

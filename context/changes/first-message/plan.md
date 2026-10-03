@@ -410,29 +410,29 @@ Brak nowych zmian w kodzie — ta faza jest wyłącznie weryfikacyjna.
 
 #### Automated
 
-- [x] 2.1 `npm run lint` przechodzi
-- [x] 2.2 `npm run build` przechodzi
+- [x] 2.1 `npm run lint` przechodzi — 8275945
+- [x] 2.2 `npm run build` przechodzi — 8275945
 
 #### Manual
 
-- [x] 2.3 `GET /api/messages?matchId=<cudze-dopasowanie>` zwraca `not_participant`
-- [x] 2.4 `POST /api/messages` z pustym/za długim `body` zwraca `invalid_body`
+- [x] 2.3 `GET /api/messages?matchId=<cudze-dopasowanie>` zwraca `not_participant` — 8275945
+- [x] 2.4 `POST /api/messages` z pustym/za długim `body` zwraca `invalid_body` — 8275945
 
 ### Phase 3: Wątek wiadomości (UI) i podłączenie przycisku
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` przechodzi
-- [ ] 3.2 `npm run build` przechodzi
-- [ ] 3.3 `npm run smoke` przechodzi bez regresji
+- [x] 3.1 `npm run lint` przechodzi
+- [x] 3.2 `npm run build` przechodzi
+- [x] 3.3 `npm run smoke` przechodzi bez regresji
 
 #### Manual
 
-- [ ] 3.4 Kliknięcie "Napisz wiadomość" prowadzi do `/dashboard/messages/<matchId>`
-- [ ] 3.5 Pusty wątek pokazuje podpowiedź, nie błąd
-- [ ] 3.6 Błąd wysyłki pokazuje inline alert z ponowieniem, bez utraty tekstu
-- [ ] 3.7 Dwie sesje: wiadomość wysłana w jednej pojawia się w drugiej bez odświeżania
-- [ ] 3.8 Wejście na cudzy wątek kończy się `not_participant`, bez ujawnienia treści
+- [x] 3.4 Kliknięcie "Napisz wiadomość" prowadzi do `/dashboard/messages/<matchId>`
+- [x] 3.5 Pusty wątek pokazuje podpowiedź, nie błąd
+- [x] 3.6 Błąd wysyłki pokazuje inline alert z ponowieniem, bez utraty tekstu
+- [x] 3.7 Dwie sesje: wiadomość wysłana w jednej pojawia się w drugiej bez odświeżania
+- [x] 3.8 Wejście na cudzy wątek kończy się `not_participant`, bez ujawnienia treści
 
 ### Phase 4: Końcowa weryfikacja
 
