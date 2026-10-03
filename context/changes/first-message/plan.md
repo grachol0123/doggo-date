@@ -422,28 +422,28 @@ Brak nowych zmian w kodzie — ta faza jest wyłącznie weryfikacyjna.
 
 #### Automated
 
-- [x] 3.1 `npm run lint` przechodzi
-- [x] 3.2 `npm run build` przechodzi
-- [x] 3.3 `npm run smoke` przechodzi bez regresji
+- [x] 3.1 `npm run lint` przechodzi — de4b09a
+- [x] 3.2 `npm run build` przechodzi — de4b09a
+- [x] 3.3 `npm run smoke` przechodzi bez regresji — de4b09a
 
 #### Manual
 
-- [x] 3.4 Kliknięcie "Napisz wiadomość" prowadzi do `/dashboard/messages/<matchId>`
-- [x] 3.5 Pusty wątek pokazuje podpowiedź, nie błąd
-- [x] 3.6 Błąd wysyłki pokazuje inline alert z ponowieniem, bez utraty tekstu
-- [x] 3.7 Dwie sesje: wiadomość wysłana w jednej pojawia się w drugiej bez odświeżania
-- [x] 3.8 Wejście na cudzy wątek kończy się `not_participant`, bez ujawnienia treści
+- [x] 3.4 Kliknięcie "Napisz wiadomość" prowadzi do `/dashboard/messages/<matchId>` — de4b09a
+- [x] 3.5 Pusty wątek pokazuje podpowiedź, nie błąd — de4b09a
+- [x] 3.6 Błąd wysyłki pokazuje inline alert z ponowieniem, bez utraty tekstu — de4b09a
+- [x] 3.7 Dwie sesje: wiadomość wysłana w jednej pojawia się w drugiej bez odświeżania — de4b09a
+- [x] 3.8 Wejście na cudzy wątek kończy się `not_participant`, bez ujawnienia treści — de4b09a
 
 ### Phase 4: Końcowa weryfikacja
 
 #### Automated
 
-- [ ] 4.1 `npm run lint` przechodzi
-- [ ] 4.2 `npm run build` przechodzi
-- [ ] 4.3 `supabase test db` przechodzi (cały pakiet pgTAP)
-- [ ] 4.4 `npm run smoke` przechodzi
+- [x] 4.1 `npm run lint` przechodzi
+- [x] 4.2 `npm run build` przechodzi
+- [x] 4.3 `supabase test db` przechodzi (cały pakiet pgTAP)
+- [x] 4.4 `npm run smoke` przechodzi
 
 #### Manual
 
-- [ ] 4.5 Pełny przepływ end-to-end dwusesyjny działa bez pollingu
-- [ ] 4.6 RLS blokuje bezpośredni select/insert nieuczestnika na `messages`
+- [x] 4.5 Pełny przepływ end-to-end dwusesyjny działa bez pollingu
+- [x] 4.6 RLS blokuje bezpośredni select/insert nieuczestnika na `messages`
