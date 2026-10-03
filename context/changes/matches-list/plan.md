@@ -213,27 +213,27 @@ None — no schema changes in this plan.
 
 #### Automated
 
-- [x] 2.1 npm run lint passes
-- [x] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes — f0b3caa
+- [x] 2.2 npm run build passes — f0b3caa
 
 #### Manual
 
-- [x] 2.3 Empty state shows for an owner with zero matches
-- [x] 2.4 No-own-dog prompt shows for an owner without a dog profile
-- [x] 2.5 Match card appears for both owners after a mutual like, with correct data
-- [x] 2.6 "Napisz wiadomość" button is disabled and inert
-- [x] 2.7 Sidebar "Matche" link appears and navigates correctly
-- [x] 2.8 Network failure shows inline error + retry, retry succeeds after recovery
+- [x] 2.3 Empty state shows for an owner with zero matches — f0b3caa
+- [x] 2.4 No-own-dog prompt shows for an owner without a dog profile — f0b3caa
+- [x] 2.5 Match card appears for both owners after a mutual like, with correct data — f0b3caa
+- [x] 2.6 "Napisz wiadomość" button is disabled and inert — f0b3caa
+- [x] 2.7 Sidebar "Matche" link appears and navigates correctly — f0b3caa
+- [x] 2.8 Network failure shows inline error + retry, retry succeeds after recovery — f0b3caa
 
 ### Phase 3: Final verification
 
 #### Automated
 
-- [ ] 3.1 npm run lint passes with zero errors
-- [ ] 3.2 npm run build passes
-- [ ] 3.3 npm run smoke passes against a running server
+- [x] 3.1 npm run lint passes with zero errors
+- [x] 3.2 npm run build passes
+- [x] 3.3 npm run smoke passes against a running server
 
 #### Manual
 
-- [ ] 3.4 Full manual scenarios re-run together in one session
-- [ ] 3.5 No regression to /dashboard, /dashboard/dog, or existing Sidebar link
+- [x] 3.4 Full manual scenarios re-run together in one session
+- [x] 3.5 No regression to /dashboard, /dashboard/dog, or existing Sidebar link

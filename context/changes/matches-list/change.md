@@ -1,7 +1,7 @@
 ---
 change_id: matches-list
 title: Owner views their list of matches
-status: implementing
+status: implemented
 created: 2026-10-03
 updated: 2026-10-03
 archived_at: null
