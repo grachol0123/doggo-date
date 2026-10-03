@@ -438,12 +438,12 @@ Brak nowych zmian w kodzie — ta faza jest wyłącznie weryfikacyjna.
 
 #### Automated
 
-- [x] 4.1 `npm run lint` przechodzi
-- [x] 4.2 `npm run build` przechodzi
-- [x] 4.3 `supabase test db` przechodzi (cały pakiet pgTAP)
-- [x] 4.4 `npm run smoke` przechodzi
+- [x] 4.1 `npm run lint` przechodzi — f062d14
+- [x] 4.2 `npm run build` przechodzi — f062d14
+- [x] 4.3 `supabase test db` przechodzi (cały pakiet pgTAP) — f062d14
+- [x] 4.4 `npm run smoke` przechodzi — f062d14
 
 #### Manual
 
-- [x] 4.5 Pełny przepływ end-to-end dwusesyjny działa bez pollingu
-- [x] 4.6 RLS blokuje bezpośredni select/insert nieuczestnika na `messages`
+- [x] 4.5 Pełny przepływ end-to-end dwusesyjny działa bez pollingu — f062d14
+- [x] 4.6 RLS blokuje bezpośredni select/insert nieuczestnika na `messages` — f062d14
