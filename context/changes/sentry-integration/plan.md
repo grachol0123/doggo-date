@@ -216,7 +216,7 @@ No database or user-data migration is required. Before deployment, provision a S
 
 #### Automated
 
-- [x] 2.1 The GitHub Actions build succeeds without the production source-map opt-in and performs no Sentry source-map upload.
+- [x] 2.1 The GitHub Actions build succeeds without the production source-map opt-in and performs no Sentry source-map upload. — 5d8931b
 - [ ] 2.2 The production Cloudflare Workers Build succeeds with the source-map opt-in and Sentry build secret and reports a successful Sentry source-map upload.
 
 #### Manual
