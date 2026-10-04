@@ -57,3 +57,16 @@ where it's a CTA); (4) `DashboardLayout.astro` now wraps pages in a
 `bg-gradient-to-br from-secondary/40 via-background to-primary/10` instead of a flat
 `bg-background`, so the dashboard reads as an actual brown/pink mix, not a single tint.
 `npm run lint` and `npm run build` both pass after these changes.
+
+**2026-10-04 follow-up #2 (chroma too subtle + production deploy gap)**: user screenshotted
+production still showing a white background after the above. Two separate causes: (a) the
+above commits had only reached `develop`; production (Cloudflare Workers Builds, native Git
+integration) deploys on push to `main`, so none of it had shipped yet — fixed by merging the
+`develop → main` release PR (#17); (b) independently, `--background`/`--card` chroma (0.008–
+0.02) was so low it read as plain white even when deployed. Raised chroma across
+`--background` (0.035), `--card`/`--popover` (0.02), `--secondary`/`--muted`/`--accent` and
+all `--sidebar-*` tokens, and strengthened `DashboardLayout.astro`'s gradient to
+`from-accent/50 via-background to-primary/25`. Verified post-deploy by fetching the live
+`/_astro/*.css` bundle from `doggo-date.maciej-graszek.workers.dev` and confirming it contains
+the new `--background:oklch(95% .035 40)` value and the brown `bg-cosmic` hex. `npm run lint`
+and `npm run build` pass; shipped via PR #19 (develop) then PR #17 (develop → main).
