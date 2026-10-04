@@ -13,13 +13,38 @@ import Layout from "@/layouts/Layout.astro";
     >
       Trigger test browser error
     </button>
+    <div class="flex flex-wrap justify-center gap-4">
+      <button class="rounded-md border px-5 py-3 font-semibold" data-server-mode="handled" type="button">
+        Trigger handled server error
+      </button>
+      <button class="rounded-md border px-5 py-3 font-semibold" data-server-mode="uncaught" type="button">
+        Trigger uncaught server error
+      </button>
+    </div>
+    <p id="sentry-preview-result" aria-live="polite"></p>
   </main>
 </Layout>
 
 <script>
   const button = document.querySelector<HTMLButtonElement>("#sentry-preview-error");
+  const result = document.querySelector<HTMLParagraphElement>("#sentry-preview-result");
 
   button?.addEventListener("click", () => {
     throw new Error("Controlled Sentry preview browser capture test");
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-server-mode]").forEach((serverButton) => {
+    serverButton.addEventListener("click", async () => {
+      const mode = serverButton.dataset.serverMode;
+      if (!mode || !result) return;
+
+      result.textContent = "Sending controlled server test…";
+      try {
+        const response = await fetch(`/api/sentry-preview-test?mode=${mode}`, { method: "POST" });
+        result.textContent = `Server test returned HTTP ${response.status}.`;
+      } catch {
+        result.textContent = "The server test request failed before returning a response.";
+      }
+    });
   });
 </script>
