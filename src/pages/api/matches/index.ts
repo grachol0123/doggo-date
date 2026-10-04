@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
+import { captureServerFailure } from "@/lib/sentry";
 import { createClient } from "@/lib/supabase";
 import type { Dog } from "@/types";
 
+const ROUTE = "/api/matches";
 const DOG_PHOTOS_BUCKET = "dog-photos";
 
 export const prerender = false;
@@ -36,6 +38,7 @@ export const GET: APIRoute = async (context) => {
   const supabase = createClient(context.request.headers, context.cookies);
 
   if (!supabase) {
+    captureServerFailure(new Error("Supabase is not configured"), ROUTE);
     return jsonResponse({ status: "error", message: "Supabase is not configured" }, 500);
   }
 
@@ -46,6 +49,7 @@ export const GET: APIRoute = async (context) => {
     .maybeSingle();
 
   if (ownDogError) {
+    captureServerFailure(ownDogError, ROUTE);
     return jsonResponse({ status: "error", message: ownDogError.message }, 500);
   }
 
@@ -59,6 +63,7 @@ export const GET: APIRoute = async (context) => {
     .or(`dog_a_id.eq.${ownDog.id},dog_b_id.eq.${ownDog.id}`);
 
   if (matchesError) {
+    captureServerFailure(matchesError, ROUTE);
     return jsonResponse({ status: "error", message: matchesError.message }, 500);
   }
 
@@ -71,6 +76,7 @@ export const GET: APIRoute = async (context) => {
   const { data: otherDogs, error: otherDogsError } = await supabase.from("dogs").select("*").in("id", otherDogIds);
 
   if (otherDogsError) {
+    captureServerFailure(otherDogsError, ROUTE);
     return jsonResponse({ status: "error", message: otherDogsError.message }, 500);
   }
 

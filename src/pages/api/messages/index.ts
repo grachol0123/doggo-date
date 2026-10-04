@@ -1,9 +1,11 @@
 import type { APIRoute } from "astro";
 import { sendMessageSchema } from "@/lib/schemas/message";
+import { captureServerFailure } from "@/lib/sentry";
 import { createClient } from "@/lib/supabase";
 import type { Database, Dog, Message } from "@/types";
 
 const DOG_PHOTOS_BUCKET = "dog-photos";
+const ROUTE = "/api/messages";
 
 export const prerender = false;
 
@@ -72,12 +74,14 @@ export const GET: APIRoute = async (context) => {
   const supabase = createClient(context.request.headers, context.cookies);
 
   if (!supabase) {
+    captureServerFailure(new Error("Supabase is not configured"), ROUTE);
     return jsonResponse({ status: "error", message: "Supabase is not configured" }, 500);
   }
 
   const { data: ownDog, error: ownDogError } = await findOwnDogId(supabase, user.id);
 
   if (ownDogError) {
+    captureServerFailure(ownDogError, ROUTE);
     return jsonResponse({ status: "error", message: ownDogError.message }, 500);
   }
 
@@ -88,6 +92,7 @@ export const GET: APIRoute = async (context) => {
   const { data: match, error: matchError } = await findAuthorizedMatch(supabase, parsedMatchId.data, ownDog.id);
 
   if (matchError) {
+    captureServerFailure(matchError, ROUTE);
     return jsonResponse({ status: "error", message: matchError.message }, 500);
   }
 
@@ -106,14 +111,17 @@ export const GET: APIRoute = async (context) => {
   ]);
 
   if (otherDogError) {
+    captureServerFailure(otherDogError, ROUTE);
     return jsonResponse({ status: "error", message: otherDogError.message }, 500);
   }
 
   if (!otherDog) {
+    captureServerFailure(new Error("Matched dog not found"), ROUTE);
     return jsonResponse({ status: "error", message: "Matched dog not found" }, 500);
   }
 
   if (messagesError) {
+    captureServerFailure(messagesError, ROUTE);
     return jsonResponse({ status: "error", message: messagesError.message }, 500);
   }
 
@@ -149,12 +157,14 @@ export const POST: APIRoute = async (context) => {
   const supabase = createClient(context.request.headers, context.cookies);
 
   if (!supabase) {
+    captureServerFailure(new Error("Supabase is not configured"), ROUTE);
     return jsonResponse({ status: "error", message: "Supabase is not configured" }, 500);
   }
 
   const { data: ownDog, error: ownDogError } = await findOwnDogId(supabase, user.id);
 
   if (ownDogError) {
+    captureServerFailure(ownDogError, ROUTE);
     return jsonResponse({ status: "error", message: ownDogError.message }, 500);
   }
 
@@ -166,6 +176,7 @@ export const POST: APIRoute = async (context) => {
   const { data: match, error: matchError } = await findAuthorizedMatch(supabase, matchId, ownDog.id);
 
   if (matchError) {
+    captureServerFailure(matchError, ROUTE);
     return jsonResponse({ status: "error", message: matchError.message }, 500);
   }
 
@@ -188,6 +199,7 @@ export const POST: APIRoute = async (context) => {
       return jsonResponse({ status: "not_participant" }, 404);
     }
 
+    captureServerFailure(insertError, ROUTE);
     return jsonResponse({ status: "error", message: insertError.message }, 500);
   }
 

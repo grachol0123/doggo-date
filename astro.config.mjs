@@ -5,11 +5,12 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import cloudflare from "@astrojs/cloudflare";
+import sentry from "@sentry/astro";
 
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  integrations: [react(), sitemap()],
+  integrations: [react(), sitemap(), sentry({ enabled: { client: false } })],
   vite: {
     plugins: [tailwindcss()],
   },
@@ -20,6 +21,7 @@ export default defineConfig({
       SUPABASE_KEY: envField.string({ context: "server", access: "secret", optional: true }),
       PUBLIC_SUPABASE_URL: envField.string({ context: "client", access: "public", optional: true }),
       PUBLIC_SUPABASE_ANON_KEY: envField.string({ context: "client", access: "public", optional: true }),
+      PUBLIC_SENTRY_DSN: envField.string({ context: "client", access: "public", optional: true }),
     },
   },
 });

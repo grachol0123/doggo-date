@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
+import { captureServerFailure } from "@/lib/sentry";
 import { createClient } from "@/lib/supabase";
 import { dogProfileSchema, type DogProfileInput } from "@/lib/schemas/dog-profile";
 import type { TablesInsert, TablesUpdate } from "@/types";
+import type { PostgrestError } from "@supabase/supabase-js";
 
 const DOG_PROFILE_PATH = "/dashboard/dog";
 const DOG_PHOTOS_BUCKET = "dog-photos";
@@ -189,20 +191,27 @@ export const POST: APIRoute = async (context) => {
   }
 
   const nextPhotoPath = uploadedPhotoPath ?? existingDog?.photo_path ?? null;
-  const dogPayload = existingDog
-    ? buildUpdatePayload(parsedProfile.data, nextPhotoPath)
-    : buildInsertPayload(user.id, parsedProfile.data, nextPhotoPath);
+  let saveError: PostgrestError | null;
 
-  const saveQuery = existingDog
-    ? supabase.from("dogs").update(dogPayload).eq("id", existingDog.id)
-    : supabase.from("dogs").insert(dogPayload);
-  const { error: saveError } = await saveQuery;
+  if (existingDog) {
+    const { error } = await supabase
+      .from("dogs")
+      .update(buildUpdatePayload(parsedProfile.data, nextPhotoPath))
+      .eq("id", existingDog.id);
+    saveError = error;
+  } else {
+    const { error } = await supabase
+      .from("dogs")
+      .insert(buildInsertPayload(user.id, parsedProfile.data, nextPhotoPath));
+    saveError = error;
+  }
 
   if (saveError) {
     if (uploadedPhotoPath) {
       const { error: rollbackError } = await supabase.storage.from(DOG_PHOTOS_BUCKET).remove([uploadedPhotoPath]);
 
       if (rollbackError) {
+        captureServerFailure(rollbackError, "/api/dogs/save");
         console.error("Failed to delete uploaded dog photo after save error", rollbackError);
       }
     }
@@ -214,6 +223,7 @@ export const POST: APIRoute = async (context) => {
     const { error: cleanupError } = await supabase.storage.from(DOG_PHOTOS_BUCKET).remove([existingDog.photo_path]);
 
     if (cleanupError) {
+      captureServerFailure(cleanupError, "/api/dogs/save");
       console.error("Failed to delete replaced dog photo", cleanupError);
     }
   }
