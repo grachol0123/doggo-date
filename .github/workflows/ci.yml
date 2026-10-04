@@ -51,14 +51,19 @@ jobs:
 
       - name: Write local Supabase credentials to .dev.vars
         run: |
+          # `supabase status --override-name` keys its overrides by source field
+          # (e.g. `api.url`), so mapping the same field to two output names in one
+          # invocation silently keeps only the last one — SUPABASE_URL/SUPABASE_KEY
+          # were being dropped in favor of PUBLIC_SUPABASE_URL/PUBLIC_SUPABASE_ANON_KEY.
+          # Derive the PUBLIC_* duplicates from the written values instead.
           supabase status -o env \
             --override-name api.url=SUPABASE_URL \
             --override-name auth.anon_key=SUPABASE_KEY \
-            --override-name api.url=PUBLIC_SUPABASE_URL \
-            --override-name auth.anon_key=PUBLIC_SUPABASE_ANON_KEY \
             > .dev.vars
           grep -q '^SUPABASE_URL=' .dev.vars
           grep -q '^SUPABASE_KEY=' .dev.vars
+          printf '\nPUBLIC_SUPABASE_URL=%s\n' "$(sed -n 's/^SUPABASE_URL=//p' .dev.vars)" >> .dev.vars
+          printf '\nPUBLIC_SUPABASE_ANON_KEY=%s\n' "$(sed -n 's/^SUPABASE_KEY=//p' .dev.vars)" >> .dev.vars
           grep -q '^PUBLIC_SUPABASE_URL=' .dev.vars
           grep -q '^PUBLIC_SUPABASE_ANON_KEY=' .dev.vars
 

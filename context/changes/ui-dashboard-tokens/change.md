@@ -41,3 +41,19 @@ whatever other process/session is also touching styling, per user instruction).
 
 Existing `context/changes/dashboard-page/` is a **different, unrelated** change (the S-02
 browse/swipe matching page, roadmap item) — do not confuse the two.
+
+**2026-10-04 follow-up (scope widened to whole app)**: user reported the shipped theme only
+showed a plain white page background with pink/brown limited to buttons/accents — confirmed
+root cause: `--background`/`--card` were left at the stock shadcn near-white values, and
+`Welcome.astro`/auth pages/`Topbar.astro`/`FormField.tsx`/`LibBadge.astro` (explicitly out of
+scope in the original note above) still used the old navy `bg-cosmic` gradient plus
+blue/purple/indigo accent classes. Resolved by: (1) retinting `--background`/`--card`/
+`--border`/`--input`/sidebar tokens in both `:root` and `.dark` to warm cream/brown instead of
+neutral gray/white; (2) recoloring the `bg-cosmic` utility gradient from navy to dark brown;
+(3) replacing every remaining `purple-*`/`blue-*`/`indigo-*` literal class across
+`Welcome.astro`, `auth/{signin,signup,confirm-email}.astro`, `Topbar.astro`, `FormField.tsx`,
+`SignUpForm.tsx`, `LibBadge.astro` with rose/amber/pink equivalents (or the `--primary` token
+where it's a CTA); (4) `DashboardLayout.astro` now wraps pages in a
+`bg-gradient-to-br from-secondary/40 via-background to-primary/10` instead of a flat
+`bg-background`, so the dashboard reads as an actual brown/pink mix, not a single tint.
+`npm run lint` and `npm run build` both pass after these changes.
