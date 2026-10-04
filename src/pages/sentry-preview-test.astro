@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Sentry Preview Test">
+  <main class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center gap-6 p-8">
+    <h1 class="text-3xl font-bold">Sentry preview test</h1>
+    <p>Press the button to send one controlled browser error to the preview Sentry project.</p>
+    <button
+      id="sentry-preview-error"
+      class="rounded-md bg-primary px-5 py-3 font-semibold text-primary-foreground"
+      type="button"
+    >
+      Trigger test browser error
+    </button>
+  </main>
+</Layout>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("#sentry-preview-error");
+
+  button?.addEventListener("click", () => {
+    throw new Error("Controlled Sentry preview browser capture test");
+  });
+</script>
