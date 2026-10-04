@@ -163,6 +163,23 @@ npx wrangler deploy
 
 Set `SUPABASE_URL` and `SUPABASE_KEY` as secrets in your Cloudflare dashboard or via `npx wrangler secret put`.
 
+### Sentry
+
+Sentry is optional locally: leave both DSNs blank to disable event reporting. `SENTRY_DSN` is the Worker runtime secret; put it in `.dev.vars` for local Cloudflare development and configure it separately for the production Worker and the `preview` Wrangler environment:
+
+```bash
+npx wrangler secret put SENTRY_DSN
+npx wrangler secret put SENTRY_DSN --env preview
+```
+
+`PUBLIC_SENTRY_DSN` is a public, write-only Sentry DSN used by the browser bundle. Set it in `.env` for local builds and as a non-secret Cloudflare Workers Build variable for deployed builds. It is not an auth credential.
+
+The root Wrangler configuration tags the default production Worker as `production` and defines the `preview` environment as `preview`. Configure the Workers Builds Preview command as `npx wrangler preview --env preview` so preview deployments use the preview bindings. Both environments use Cloudflare version metadata for their Sentry release identifier.
+
+Sentry source maps are uploaded only by the production Cloudflare Workers Build. In that Worker's **Build variables and secrets**, set `SENTRY_ORG` and `SENTRY_PROJECT` to the Sentry organization and project slugs, set `SENTRY_PRODUCTION_BRANCH` to the Worker's configured production branch, and set `SENTRY_UPLOAD_SOURCE_MAPS` to `true`. Add `SENTRY_AUTH_TOKEN` as a **build secret** with source-map upload permission. The build additionally checks Cloudflare's `WORKERS_CI_BRANCH` against `SENTRY_PRODUCTION_BRANCH`; a token shared with preview builds cannot enable uploads there. Do not add `SENTRY_AUTH_TOKEN` to Wrangler variables/secrets, application runtime settings, or GitHub Actions. GitHub Actions builds do not deploy Workers or upload Sentry source maps.
+
+Create the Sentry new-issue alert in the Sentry project UI and target project members for notifications.
+
 ## Smoke test
 
 `scripts/smoke.mjs` is a dependency-free Node script that walks the whole auth flow (sign-up, sign-in, protected page, sign-out) over HTTP. Run it against the dev server or the production preview after dependency upgrades:

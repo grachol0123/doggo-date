@@ -1,7 +1,10 @@
 import type { APIRoute } from "astro";
 import { z } from "zod";
+import { captureServerFailure } from "@/lib/sentry";
 import { createClient } from "@/lib/supabase";
 import type { TablesInsert } from "@/types";
+
+const ROUTE = "/api/swipes";
 
 const swipeRequestSchema = z.object({
   targetDogId: z.uuid(),
@@ -50,6 +53,7 @@ export const POST: APIRoute = async (context) => {
   const supabase = createClient(context.request.headers, context.cookies);
 
   if (!supabase) {
+    captureServerFailure(new Error("Supabase is not configured"), ROUTE);
     return jsonResponse({ status: "error", message: "Supabase is not configured" }, 500);
   }
 
@@ -60,6 +64,7 @@ export const POST: APIRoute = async (context) => {
     .maybeSingle();
 
   if (ownDogError) {
+    captureServerFailure(ownDogError, ROUTE);
     return jsonResponse({ status: "error", message: ownDogError.message }, 500);
   }
 
@@ -80,6 +85,7 @@ export const POST: APIRoute = async (context) => {
       return jsonResponse({ status: "invalid" }, 400);
     }
 
+    captureServerFailure(swipeError, ROUTE);
     return jsonResponse({ status: "error", message: swipeError.message }, 500);
   }
 
@@ -96,6 +102,7 @@ export const POST: APIRoute = async (context) => {
     .maybeSingle();
 
   if (matchError) {
+    captureServerFailure(matchError, ROUTE);
     return jsonResponse({ status: "error", message: matchError.message }, 500);
   }
 
