@@ -65,9 +65,7 @@ export const GET: APIRoute = async (context) => {
     .order("created_at", { ascending: false });
 
   if (excludedDogIds.size > 0) {
-    const excludedIdFilter = Array.from(excludedDogIds)
-      .map((dogId) => JSON.stringify(dogId))
-      .join(",");
+    const excludedIdFilter = Array.from(excludedDogIds).join(",");
 
     candidatesQuery = candidatesQuery.not("id", "in", `(${excludedIdFilter})`);
   }
