@@ -1,6 +1,6 @@
 # Tasks (na podstawie Linear)
 
-> Wygenerowano na podstawie `list_issues` w workspace Linear (`doggo-date`), zespół **Doggo-date**, 2026-09-22.
+> Wygenerowano na podstawie `list_issues` w workspace Linear (`doggo-date`), zespół **Doggo-date**, 2026-09-22; statusy odświeżone 2026-10-03.
 > Wszystkie zadania roadmapy zostały zmigrowane z GitHub Issues (etykieta `Migrated`) i są 1:1 powiązane z odpowiadającymi issues w `grachol0123/doggo-date` (patrz `tasks-github.md`).
 
 ## Milestone: M-1 — Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość
@@ -14,35 +14,44 @@
 
 ### Zadania (kolejność zależności)
 
-- [x] **DOG-5 — [F-01] Minimalny schemat danych profilu psa** — status: **Todo** ✅ (przełożone z Backlog)
+- [x] **DOG-5 — [F-01] Minimalny schemat danych profilu psa** — status: **Done** ✅
   - Etykiety: `roadmap`, `foundation`, `status:ready`, `Migrated`
-  - GitHub: [#1](https://github.com/grachol0123/doggo-date/issues/1)
+  - GitHub: [#1](https://github.com/grachol0123/doggo-date/issues/1) — zamknięty
   - Outcome: tabela `dogs` (imię, wiek, jedno zdjęcie, opis) w Supabase z granularnymi RLS ograniczonymi do właściciela + storage bucket na zdjęcie. Nie jest widoczne dla użytkownika.
   - PRD refs: FR-002
   - Unlocks: DOG-6 (S-01)
   - Prerequisites: brak (projekt Supabase już skonfigurowany)
-  - **To pierwsze zadanie do realizacji — jedyne bez blokujących zależności.**
+  - Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`.
 
-- [ ] **DOG-6 — [S-01] Właściciel tworzy i edytuje profil swojego psa** — status: **Backlog**
+- [x] **DOG-6 — [S-01] Właściciel tworzy i edytuje profil swojego psa** — status: **Done** ✅
   - Etykiety: `roadmap`, `slice`, `status:proposed`, `Migrated`
-  - GitHub: [#2](https://github.com/grachol0123/doggo-date/issues/2)
+  - GitHub: [#2](https://github.com/grachol0123/doggo-date/issues/2) — zamknięty
   - Outcome: właściciel tworzy profil psa (imię, wiek, jedno zdjęcie, opis) i może go edytować.
   - PRD refs: FR-001, FR-002
   - Blocked by: DOG-5
+  - Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`.
 
-- [ ] **DOG-7 — [S-02] Właściciel przegląda profile i tworzy dopasowanie** — status: **Backlog**
-  - Etykiety: `roadmap`, `slice`, `status:proposed`, `Migrated`
-  - GitHub: [#3](https://github.com/grachol0123/doggo-date/issues/3)
+- [x] **DOG-13 — [F-02] Sidebar nawigacyjny dashboardu** — status: **Done** ✅ (nie uwzględnione w migracji 2026-09-22, dodane później)
+  - Etykiety: `roadmap`, `foundation`, `status:proposed`
+  - GitHub: [#9](https://github.com/grachol0123/doggo-date/issues/9) — zamknięty
+  - Outcome: sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02).
+  - Merged (PR #10), pending formal archive.
+
+- [x] **DOG-7 — [S-02] Właściciel przegląda profile i tworzy dopasowanie** — status: **Done** ✅ (przełożone z Backlog, 2026-10-03)
+  - Etykiety: `roadmap`, `slice`, `status:proposed` (nieaktualna, nieczyszczona przy zamknięciu — patrz konwencja #2/#9), `Migrated`
+  - GitHub: [#3](https://github.com/grachol0123/doggo-date/issues/3) — zamknięty automatycznie przez integrację Linear↔GitHub
   - Outcome: przeglądanie profili psów (swipe, bez filtrów); przy obustronnym polubieniu powstaje match widoczny natychmiast na liście matchy.
   - PRD refs: US-01, FR-003, FR-004, FR-005
   - Blocked by: DOG-6
+  - Zaimplementowane jako 3 pod-zmiany (`match-data-foundation`, `browse-dogs`, `matches-list`), zweryfikowane 2026-10-03. Formalny `/10x-archive` pozostaje do wykonania.
 
-- [ ] **DOG-8 — [S-03] Właściciel wysyła pierwszą wiadomość** 🌟 North star — status: **Backlog**
-  - Etykiety: `roadmap`, `slice`, `status:proposed`, `Migrated`
+- [ ] **DOG-8 — [S-03] Właściciel wysyła pierwszą wiadomość** 🌟 North star — status: **In Progress** (przełożone z Backlog, 2026-10-03)
+  - Etykiety: `roadmap`, `slice`, `status:proposed` (nieaktualna — prerequisite DOG-7 już done), `Migrated`
   - GitHub: [#4](https://github.com/grachol0123/doggo-date/issues/4)
   - Outcome: wysyłanie/odbieranie prostych wiadomości tekstowych do/od dopasowanego właściciela, dostarczanych natychmiast bez odświeżania strony.
   - PRD refs: US-01, FR-006
-  - Blocked by: DOG-7
+  - Blocked by: DOG-7 (odblokowane)
+  - `context/changes/first-message/change.md` → status: implemented (kod wdrożony i zweryfikowany wg planu), jeszcze nie impl_reviewed/zarchiwizowany.
 
 ## Otwarte pytania roadmapy (nie blokują M-1)
 
