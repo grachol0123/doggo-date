@@ -15,6 +15,12 @@
     "vars": {
       "SENTRY_ENVIRONMENT": "preview",
     },
+    "kv_namespaces": [
+      {
+        "binding": "SESSION",
+        "id": "a8269cae799743f38f46afff43ceec4e",
+      },
+    ],
   },
   "vars": {
     "SENTRY_ENVIRONMENT": "production",
