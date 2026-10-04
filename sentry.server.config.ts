@@ -90,6 +90,79 @@ function getOptionalBinding(env: unknown, name: "SENTRY_DSN" | "SENTRY_ENVIRONME
   return value;
 }
 
+function getVersionMetadataRelease(env: unknown) {
+  if (typeof env !== "object" || env === null || !("CF_VERSION_METADATA" in env)) {
+    return undefined;
+  }
+
+  const metadata: unknown = Reflect.get(env, "CF_VERSION_METADATA");
+
+  if (typeof metadata !== "object" || metadata === null || !("id" in metadata)) {
+    return undefined;
+  }
+
+  const release: unknown = Reflect.get(metadata, "id");
+  return typeof release === "string" && release ? release : undefined;
+}
+
+function escapeHtmlAttribute(value: string) {
+  return value.replace(/[&"<>']/g, (character) => {
+    switch (character) {
+      case "&":
+        return "&amp;";
+      case '"':
+        return "&quot;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      default:
+        return "&#39;";
+    }
+  });
+}
+
+async function addSentryMetadata(response: Response, env: unknown) {
+  const release = getVersionMetadataRelease(env);
+  const environment = getOptionalBinding(env, "SENTRY_ENVIRONMENT");
+
+  if ((!release && !environment) || !response.headers.get("content-type")?.match(/^text\/html\b/i)) {
+    return response;
+  }
+
+  const metadata = [
+    release && `<meta name="sentry-release" content="${escapeHtmlAttribute(release)}">`,
+    environment && `<meta name="sentry-environment" content="${escapeHtmlAttribute(environment)}">`,
+  ]
+    .filter(Boolean)
+    .join("");
+  const html = await response.text();
+  const updatedHtml = html.replace(/<head(?:\s[^>]*)?>/i, (head) => `${head}${metadata}`);
+  const headers = new Headers(response.headers);
+
+  headers.delete("content-length");
+  headers.delete("content-encoding");
+  headers.delete("etag");
+
+  return new Response(updatedHtml, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+const releaseAwareHandler: typeof handler = {
+  ...handler,
+  fetch: async (request: Request, env: unknown, ctx: unknown) => {
+    const response: unknown = await handler.fetch(request, env, ctx);
+    if (!(response instanceof Response)) {
+      throw new TypeError("Astro Cloudflare handler must return a Response");
+    }
+
+    return addSentryMetadata(response, env);
+  },
+};
+
 export default Sentry.withSentry(
   (env: unknown) => ({
     dsn: getOptionalBinding(env, "SENTRY_DSN"),
@@ -97,5 +170,5 @@ export default Sentry.withSentry(
     tracesSampleRate: 0,
     beforeSend: scrubEvent,
   }),
-  handler,
+  releaseAwareHandler,
 );

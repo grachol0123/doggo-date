@@ -204,8 +204,8 @@ No database or user-data migration is required. Before deployment, provision a S
 
 #### Automated
 
-- [x] 1.1 `npm run lint` passes with the new Sentry configuration and server capture calls.
-- [x] 1.2 `npm run build` succeeds without Sentry runtime secrets or build-upload credentials configured locally.
+- [x] 1.1 `npm run lint` passes with the new Sentry configuration and server capture calls. — 9c876c3
+- [x] 1.2 `npm run build` succeeds without Sentry runtime secrets or build-upload credentials configured locally. — 9c876c3
 
 #### Manual
 
@@ -216,7 +216,7 @@ No database or user-data migration is required. Before deployment, provision a S
 
 #### Automated
 
-- [ ] 2.1 The GitHub Actions build succeeds without the production source-map opt-in and performs no Sentry source-map upload.
+- [x] 2.1 The GitHub Actions build succeeds without the production source-map opt-in and performs no Sentry source-map upload.
 - [ ] 2.2 The production Cloudflare Workers Build succeeds with the source-map opt-in and Sentry build secret and reports a successful Sentry source-map upload.
 
 #### Manual
