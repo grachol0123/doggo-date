@@ -198,6 +198,13 @@ No database or user-data migration is required. Before deployment, provision a S
 
 ## Progress
 
+> Scope exception approved by the user on 2026-10-06: the closed production training
+> deployment may temporarily host `/sentry-preview-test` and its API to exercise M3L5
+> scenarios. The probes require `SENTRY_TEST_ENABLED=true` and an authenticated
+> session; server probes additionally require a same-origin POST. Disable the flag
+> after verification and remove the harness before public launch. Production
+> source-map and alert checklist items remain pending until Sentry confirms them.
+
 > Convention: `- [ ]` pending, `- [x]` done. Append ` — <commit sha>` when a step lands. Do not rename step titles. See `references/progress-format.md`.
 
 ### Phase 1: Server-Side Foundation and Error Capture
