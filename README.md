@@ -197,6 +197,8 @@ The production source-map upload gate requires all of `WORKERS_CI=1`, `SENTRY_UP
 
 #### Temporary M3L5 production probes
 
+JavaScript chunks remain external rather than being inlined into HTML, so Sentry can match their debug IDs to uploaded source maps. This also keeps small Astro page scripts symbolicatable; image and other asset inlining retains Vite's defaults.
+
 The lesson harness at `/sentry-preview-test` also works on the closed production training deployment. Both the page and `/api/sentry-preview-test` return 404 unless the **Worker runtime** binding `SENTRY_TEST_ENABLED` is exactly `true`. For this lesson release, `wrangler.jsonc` enables it in production and explicitly disables it in preview. Log in with an existing Supabase account. Server probes require an authenticated session and a same-origin POST; no data is written to Supabase.
 
 After deploying this code, open `https://doggo-date.maciej-graszek.workers.dev/sentry-preview-test`. The browser, handled-server and uncaught-server buttons produce `SentryBrowserTestError`, `SentryHandledTestError` and `SentryUncaughtTestError` respectively. The server responses should be 503 and 500. Events retain the deployment's environment/release; production tests deliberately enter the production issue stream and may trigger notifications.
