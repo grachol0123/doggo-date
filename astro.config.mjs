@@ -32,6 +32,10 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      // Inline scripts have no separate artifact for Sentry source-map resolution.
+      assetsInlineLimit: (filePath) => (filePath.endsWith(".js") ? false : undefined),
+    },
   },
   adapter: cloudflare(),
   env: {
