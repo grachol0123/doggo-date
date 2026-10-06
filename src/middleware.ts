@@ -1,10 +1,15 @@
 import { defineMiddleware } from "astro:middleware";
+import { SENTRY_TEST_ENABLED } from "astro:env/server";
 import { captureServerFailure } from "@/lib/sentry";
 import { createClient } from "@/lib/supabase";
 
-const PROTECTED_ROUTES = ["/dashboard", "/dashboard/dog"];
+const PROTECTED_ROUTES = ["/dashboard", "/dashboard/dog", "/sentry-preview-test"];
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  if (context.url.pathname.startsWith("/sentry-preview-test") && SENTRY_TEST_ENABLED !== "true") {
+    return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
+  }
+
   const supabase = createClient(context.request.headers, context.cookies);
 
   if (supabase) {
