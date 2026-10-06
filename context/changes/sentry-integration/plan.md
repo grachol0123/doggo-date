@@ -209,28 +209,28 @@ No database or user-data migration is required. Before deployment, provision a S
 
 #### Manual
 
-- [ ] 1.3 With a Sentry project DSN configured in a preview Worker, a controlled uncaught server error and a selected operational failure appear as Sentry events, while expected validation/authentication/domain outcomes do not.
-- [ ] 1.4 The captured server events contain no user identifiers, request bodies, headers, or URL query strings.
+- [x] 1.3 With a Sentry project DSN configured in a preview Worker, a controlled uncaught server error and a selected operational failure appear as Sentry events, while expected validation/authentication/domain outcomes do not.
+- [x] 1.4 The captured server events contain no user identifiers, request bodies, headers, or URL query strings.
 
 ### Phase 2: Browser Errors and Release Diagnostics
 
 #### Automated
 
 - [x] 2.1 The GitHub Actions build succeeds without the production source-map opt-in and performs no Sentry source-map upload. — 5d8931b
-- [ ] 2.2 The production Cloudflare Workers Build succeeds with the source-map opt-in and Sentry build secret and reports a successful Sentry source-map upload.
+- [x] 2.2 The production Cloudflare Workers Build succeeds with the source-map opt-in and Sentry build secret and reports a successful Sentry source-map upload.
 
 #### Manual
 
-- [ ] 2.3 A controlled browser error in a preview deployment appears as a `preview` event with its Cloudflare release identifier; production events are tagged `production`, and the browser event contains no user identifier, request body, headers, or URL query string.
+- [x] 2.3 A controlled browser error in a preview deployment appears as a `preview` event with its Cloudflare release identifier; production events are tagged `production`, and the browser event contains no user identifier, request body, headers, or URL query string.
 - [ ] 2.4 A production Sentry event resolves to original source paths/lines rather than only bundled output.
 
 ### Phase 3: End-to-End and Operational Verification
 
 #### Automated
 
-- [ ] 3.1 The existing `npm run smoke` and `npm run test:authz` checks pass against the production preview with the local Supabase test setup.
+- [x] 3.1 The existing `npm run smoke` and `npm run test:authz` checks pass against the production preview with the local Supabase test setup.
 
 #### Manual
 
 - [ ] 3.2 A Sentry new-issue alert is configured to notify project members and fires for a controlled preview test event.
-- [ ] 3.3 A preview event remains separate from production events, and local development with no Sentry DSN sends no event.
+- [x] 3.3 A preview event remains separate from production events, and local development with no Sentry DSN sends no event.
