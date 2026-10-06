@@ -9,8 +9,7 @@
     "binding": "CF_VERSION_METADATA"
   },
   "vars": {
-    "SENTRY_ENVIRONMENT": "production",
-    "SENTRY_TEST_ENABLED": "true"
+    "SENTRY_ENVIRONMENT": "production"
   },
   "assets": {
     "binding": "ASSETS",
@@ -26,8 +25,7 @@
         "binding": "CF_VERSION_METADATA"
       },
       "vars": {
-        "SENTRY_ENVIRONMENT": "preview",
-        "SENTRY_TEST_ENABLED": "false"
+        "SENTRY_ENVIRONMENT": "preview"
       }
     }
   }

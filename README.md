@@ -189,21 +189,19 @@ For a controlled preview check:
 1. Confirm the preview URL is served by the `preview` environment and that production remains untouched.
 2. On a temporary branch used only for preview, add a short-lived browser event-handler error and a short-lived uncaught server error. Do not include user data, request bodies, headers, cookies, or secrets in either test. Never add a permanent public test endpoint.
 3. Trigger both errors on the preview URL. In Sentry, verify the events arrive as `preview`, include the Cloudflare release identifier, and contain no user/request data. Confirm the production issue stream remains separate.
-4. For the closed M3L5 training deployment, use the opt-in lesson probes below to verify production source maps. Otherwise use an existing safe operational failure; do not enable lesson probes on a public deployment.
+4. Verify production source maps using an existing safe operational failure. Temporary lesson probes were removed after M3L5 verification; do not add a permanent public error-triggering endpoint.
 5. Configure a new-issue alert for project members and confirm it fires for the preview event.
 6. Remove the temporary preview error code, then run `npm run lint`, `npm run build`, `npm run smoke`, and `npm run test:authz` before merging. With both DSNs absent locally, confirm the app starts normally and no Sentry event is received.
 
 The production source-map upload gate requires all of `WORKERS_CI=1`, `SENTRY_UPLOAD_SOURCE_MAPS=true`, `SENTRY_PRODUCTION_BRANCH` matching Cloudflare's `WORKERS_CI_BRANCH`, and `SENTRY_AUTH_TOKEN`. Set `SENTRY_ORG` and `SENTRY_PROJECT` as build variables and `SENTRY_AUTH_TOKEN` as a build secret in Workers Builds. Cloudflare injects `WORKERS_CI` and `WORKERS_CI_BRANCH` for Workers Builds; verify the production build log reports the Sentry upload succeeded. Do not infer upload success solely from a green deployment.
 
-#### Temporary M3L5 production probes
+#### M3L5 verification completed
 
 JavaScript chunks remain external rather than being inlined into HTML, so Sentry can match their debug IDs to uploaded source maps. This also keeps small Astro page scripts symbolicatable; image and other asset inlining retains Vite's defaults.
 
-The lesson harness at `/sentry-preview-test` also works on the closed production training deployment. Both the page and `/api/sentry-preview-test` return 404 unless the **Worker runtime** binding `SENTRY_TEST_ENABLED` is exactly `true`. For this lesson release, `wrangler.jsonc` enables it in production and explicitly disables it in preview. Log in with an existing Supabase account. Server probes require an authenticated session and a same-origin POST; no data is written to Supabase.
+On 2026-10-06, the closed production lesson deployment confirmed original application source context in Sentry issue `JAVASCRIPT-ASTRO-5` and delivered an actual alert email to the configured project member. Evidence is recorded in `context/changes/sentry-integration/plan.md`.
 
-After deploying this code, open `https://doggo-date.maciej-graszek.workers.dev/sentry-preview-test`. The browser, handled-server and uncaught-server buttons produce `SentryBrowserTestError`, `SentryHandledTestError` and `SentryUncaughtTestError` respectively. The server responses should be 503 and 500. Events retain the deployment's environment/release; production tests deliberately enter the production issue stream and may trigger notifications.
-
-In Sentry, check the new **production** events for source-mapped original files/lines, redaction and alert delivery. SDK capture or an HTTP error alone does not prove ingestion or notification delivery. Set `SENTRY_TEST_ENABLED` to `false` in `wrangler.jsonc` and redeploy immediately afterward (a temporary runtime override must also be reflected in this file before the next deploy). Confirm both routes are unavailable; remove the harness before opening production to real users.
+The temporary `/sentry-preview-test` page, `/api/sentry-preview-test` endpoint and `SENTRY_TEST_ENABLED` configuration have been removed. Both routes now return 404. The application error tracker, environment/release tags, source-map configuration and alert rule remain in place.
 
 ## Smoke test
 
