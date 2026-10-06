@@ -203,7 +203,8 @@ No database or user-data migration is required. Before deployment, provision a S
 > scenarios. The probes require `SENTRY_TEST_ENABLED=true` and an authenticated
 > session; server probes additionally require a same-origin POST. Disable the flag
 > after verification and remove the harness before public launch. Production
-> source-map and alert checklist items remain pending until Sentry confirms them.
+> source maps and email delivery were confirmed on 2026-10-06; the temporary page,
+> API and runtime flag were subsequently removed as lesson cleanup.
 
 > Convention: `- [ ]` pending, `- [x]` done. Append ` — <commit sha>` when a step lands. Do not rename step titles. See `references/progress-format.md`.
 
@@ -229,7 +230,7 @@ No database or user-data migration is required. Before deployment, provision a S
 #### Manual
 
 - [x] 2.3 A controlled browser error in a preview deployment appears as a `preview` event with its Cloudflare release identifier; production events are tagged `production`, and the browser event contains no user identifier, request body, headers, or URL query string.
-- [ ] 2.4 A production Sentry event resolves to original source paths/lines rather than only bundled output.
+- [x] 2.4 A production Sentry event resolves to original source paths/lines rather than only bundled output. — Confirmed 2026-10-06 by user screenshot: issue JAVASCRIPT-ASTRO-5, event ec65a177, production release 60e06a9d-2b19-451f-95c9-447e5bb981c2; application frame resolves to src/pages/sentry-preview-test.astro with original TypeScript source context.
 
 ### Phase 3: End-to-End and Operational Verification
 
@@ -239,5 +240,5 @@ No database or user-data migration is required. Before deployment, provision a S
 
 #### Manual
 
-- [ ] 3.2 A Sentry new-issue alert is configured to notify project members and fires for a controlled preview test event.
+- [x] 3.2 A Sentry new-issue alert is configured to notify project members and fires for a controlled preview test event. — Verified 2026-10-06 with the user-approved closed production lesson scenario instead of preview: rule targets Member grachol0123; user screenshot confirms received email for JAVASCRIPT-ASTRO-5 (SentryBrowserTestError), alert ID 26a4b2ce2bab49699ca2d5cdce5ce2f5, sent at 18:10:39 UTC by Notify grachol0123.
 - [x] 3.3 A preview event remains separate from production events, and local development with no Sentry DSN sends no event.
