@@ -1,5 +1,6 @@
 ---
 import Topbar from "@/components/Topbar.astro";
+import SocialLinks from "@/components/SocialLinks.astro";
 ---
 
 <div
@@ -17,23 +18,25 @@ import Topbar from "@/components/Topbar.astro";
     style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 200px 200px, 150px 150px, 100px 100px; background-position: 0 0, 40px 60px, 80px 30px;"
   ></div>
 
-  <div class="relative z-10 p-4 sm:p-8">
+  <div class="relative z-10 flex min-h-screen flex-col p-4 sm:p-8">
     <Topbar />
 
-    <!-- Hero section -->
-    <div class="mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-24 text-center sm:py-32 lg:py-40">
-      <h1 class="mb-6 bg-gradient-to-r from-amber-200 via-rose-200 to-pink-300 bg-clip-text text-5xl leading-tight font-bold text-transparent drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-6xl lg:text-7xl">
-        Doggo Date
-      </h1>
-      <p class="mb-10 max-w-2xl text-lg text-amber-100/70 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] sm:text-xl">
-        Find the perfect walking buddy for your dog. Match with nearby owners, plan walks and playdates, and let the
-        tails wag.
-      </p>
+    <!-- Hero section: split layout, left = brand/pitch, right = sign-in panel -->
+    <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center gap-12 px-4 py-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-0">
+      <!-- Left column -->
+      <div class="flex max-w-xl flex-col items-center text-center lg:items-start lg:text-left">
+        <h1 class="brand-title mb-6 text-5xl leading-tight sm:text-6xl lg:text-7xl">Doggo Date</h1>
+        <p class="mb-8 max-w-md text-lg text-amber-100/70 drop-shadow-[0_1px_6px_rgba(0,0,0,0.5)] sm:text-xl">
+          Find the perfect walking buddy for your dog. Match with nearby owners, plan walks and playdates, and let the
+          tails wag.
+        </p>
+        <SocialLinks />
+      </div>
 
-      <!-- Login invite window -->
+      <!-- Right column: login invite window -->
       <div class="w-full max-w-sm rounded-2xl border border-white/15 bg-white/10 p-8 shadow-2xl backdrop-blur-xl">
-        <h2 class="mb-2 text-xl font-semibold text-white">Join the pack</h2>
-        <p class="mb-6 text-sm text-amber-100/70">
+        <h2 class="mb-2 text-center text-xl font-semibold text-white lg:text-left">Sign in</h2>
+        <p class="mb-6 text-center text-sm text-amber-100/70 lg:text-left">
           Create a free account or sign in to start matching with dogs nearby.
         </p>
         <div class="flex flex-col gap-3">
