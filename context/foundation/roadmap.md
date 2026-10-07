@@ -3,7 +3,7 @@ project: "Doggo Date"
 version: 1
 status: draft
 created: 2026-09-22
-updated: 2026-10-09
+updated: 2026-10-07
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
@@ -39,13 +39,13 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 
 ## At a glance
 
-| ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status      |
-| ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ----------- |
-| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
-| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done        |
-| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done        |
-| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | done        |
-| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | in-progress |
+| ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status |
+| ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ------ |
+| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done   |
+| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done   |
+| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done   |
+| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | done   |
+| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | done   |
 
 ## Baseline
 
@@ -124,7 +124,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Wiadomości muszą być dostarczane natychmiast przez WebSocket (Supabase Realtime), nie przez polling — błędna konfiguracja Realtime/RLS na tabeli wiadomości może po cichu zdegradować UX do pollingu albo złamać prywatność wiadomości między niezmatchowanymi użytkownikami.
-- **Status:** in-progress
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -165,3 +165,4 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 
 - **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
 - **S-01: Właściciel tworzy i edytuje profil swojego psa** — Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`. Lesson: —.
+- **S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem** — Archived 2026-10-07 → `context/archive/2026-10-03-first-message/`. Lesson: —.
