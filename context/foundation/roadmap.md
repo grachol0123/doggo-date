@@ -3,13 +3,13 @@ project: "Doggo Date"
 version: 1
 status: draft
 created: 2026-09-22
-updated: 2026-10-07
+updated: 2026-10-08
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
 milestone_id: first-match-and-message
 milestone_seq: 1
-milestone_status: open
+milestone_status: closed
 ---
 
 # Roadmap: Doggo Date
@@ -20,7 +20,7 @@ milestone_status: open
 
 ## Milestone
 
-**M-1: Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość** — Status: open
+**M-1: Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość** — Status: closed
 
 - **Intent:** Dostarczyć najmniejszy kompletny przepływ end-to-end, w którym właściciel psa zakłada profil, przegląda inne psy, tworzy dopasowanie i wymienia pierwszą wiadomość z innym właścicielem — udowadniając, że mechanizm swatania psów (a przy okazji ich właścicieli) działa.
 - **Source materials:** `context/foundation/prd.md` (v1)
