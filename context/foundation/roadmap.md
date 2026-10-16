@@ -4,7 +4,7 @@ version: 1
 status: draft
 created: 2026-09-22
 updated: 2026-10-16
-prd_version: 1
+prd_version: 2
 main_goal: speed
 top_blocker: capacity
 milestone_id: first-match-and-message
@@ -112,7 +112,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Unknowns:** —
 - **Risk:** Reguła sortowania (najpierw najnowsze profile, potem trafność dopasowania — zdefiniowana jako liczba wspólnych `interests`) i logika „nie pokazuj ponownie już ocenionych profili” to główna logika biznesowa MVP — błąd tu bezpośrednio narusza NFR dot. płynności przeglądania (<1s, zawsze inny nieoceniony profil). Tworzenie matcha przy równoczesnym obustronnym polubieniu wymaga trigger'a DB (atomowość), nie logiki aplikacyjnej.
 - **Status:** done
-- **Implementation split:** ta zmiana została zrealizowana jako 3 osobne foldery zmian, wykonane po kolei, wszystkie w pełni zaimplementowane i zweryfikowane 2026-10-03: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy zweryfikowane lokalnie), `browse-dogs` (API przeglądania/swipe + strona główna — **implemented**, wszystkie fazy zweryfikowane), `matches-list` (API + strona listy matchy — **impl_reviewed**, APPROVED bez ustaleń krytycznych). `dashboard-sidebar-nav` (F-02) — **zmergowany do `develop`** (PR #10). Formalne `/10x-archive` dla trzech pod-zmian i przeniesienie wpisu do `## Done` pozostaje do wykonania osobno (Change ID tej umbrelli nie pokrywa się 1:1 z żadnym z trzech folderów).
+- **Implementation split:** ta zmiana została zrealizowana jako 3 osobne foldery zmian, wykonane po kolei, wszystkie w pełni zaimplementowane i zweryfikowane 2026-10-03: `match-data-foundation` (tabele `swipes`/`matches` + RLS + trigger — **impl_reviewed**, migracja + typy zweryfikowane lokalnie), `browse-dogs` (API przeglądania/swipe + strona główna — **implemented**, wszystkie fazy zweryfikowane), `matches-list` (API + strona listy matchy — **impl_reviewed**, APPROVED bez ustaleń krytycznych). `dashboard-sidebar-nav` (F-02) — **zmergowany do `develop`** (PR #10). Formalnie zarchiwizowane 2026-10-16: `context/archive/2026-09-26-match-data-foundation/`, `context/archive/2026-09-27-browse-dogs/`, `context/archive/2026-10-03-matches-list/`, `context/archive/2026-09-26-dashboard-sidebar-nav/`, oraz umbrella `context/archive/2026-09-26-browse-and-match/`.
 
 ### S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem
 
@@ -132,8 +132,8 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 | ---------- | --------------------------- | ---------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                    | Run `/10x-plan dog-profile-data-foundation`                                                           |
 | S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                     | Archived, done                                                                                        |
-| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                     | Merged (PR #10), pending archive                                                                      |
-| S-02       | browse-and-match            | Owner can browse dogs and create a match                         | n/a — już zrealizowane | Wszystkie 3 pod-zmiany zaimplementowane i zweryfikowane 2026-10-03; pozostaje formalne `/10x-archive` |
+| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                     | Archived 2026-10-16                                                                                   |
+| S-02       | browse-and-match            | Owner can browse dogs and create a match                         | n/a — już zrealizowane | Archived 2026-10-16 (sub-changes match-data-foundation, browse-dogs, matches-list + umbrella browse-and-match) |
 | S-03       | first-message               | Owner can send/receive real-time messages with a match           | yes                    | Odblokowane — S-02 ukończone; run `/10x-plan first-message`                                           |
 
 This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Include one row for every `F-NN` and `S-NN`. It should be compact enough to copy into issues, but it must not duplicate the detailed roadmap body.
@@ -166,3 +166,5 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 - **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
 - **S-01: Właściciel tworzy i edytuje profil swojego psa** — Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`. Lesson: —.
 - **S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem** — Archived 2026-10-07 → `context/archive/2026-10-03-first-message/`. Lesson: —.
+- **F-02: (foundation) treść dashboardu (powitanie, link do profilu psa, wylogowanie) przenosi się do bocznego panelu nawigacyjnego (`Sidebar`), zwalniając stronę główną `/dashboard` pod przyszły widok przeglądania psów (S-02, browse-dogs)** — Archived 2026-10-16 → `context/archive/2026-09-26-dashboard-sidebar-nav/`. Lesson: —.
+- **S-02: właściciel przegląda profile innych psów (swipe, bez filtrów), a przy obustronnym polubieniu powstaje match widoczny natychmiast na liście matchy** — Archived 2026-10-16 → `context/archive/2026-09-26-browse-and-match/`. Lesson: —.
