@@ -1,10 +1,10 @@
 ---
 change_id: first-message
 title: Owner sends and receives real-time messages with a matched owner
-status: implemented
+status: archived
 created: 2026-10-03
-updated: 2026-10-03
-archived_at: null
+updated: 2026-10-07
+archived_at: 2026-10-07T18:36:41Z
 ---
 
 ## Notes

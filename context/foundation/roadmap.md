@@ -3,13 +3,13 @@ project: "Doggo Date"
 version: 1
 status: draft
 created: 2026-09-22
-updated: 2026-10-09
+updated: 2026-10-16
 prd_version: 1
 main_goal: speed
 top_blocker: capacity
 milestone_id: first-match-and-message
 milestone_seq: 1
-milestone_status: open
+milestone_status: closed
 ---
 
 # Roadmap: Doggo Date
@@ -20,7 +20,7 @@ milestone_status: open
 
 ## Milestone
 
-**M-1: Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość** — Status: open
+**M-1: Pierwsza pętla dopasowań — profil, przeglądanie, match, wiadomość** — Status: closed
 
 - **Intent:** Dostarczyć najmniejszy kompletny przepływ end-to-end, w którym właściciel psa zakłada profil, przegląda inne psy, tworzy dopasowanie i wymienia pierwszą wiadomość z innym właścicielem — udowadniając, że mechanizm swatania psów (a przy okazji ich właścicieli) działa.
 - **Source materials:** `context/foundation/prd.md` (v1)
@@ -39,13 +39,13 @@ Właściciele psów nie mają dedykowanego miejsca, w którym mogliby znaleźć 
 
 ## At a glance
 
-| ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status      |
-| ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ----------- |
-| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done        |
-| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done        |
-| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done        |
-| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | done        |
-| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | in-progress |
+| ID   | Change ID                   | Outcome (user can …)                                                                                             | Prerequisites | PRD refs                      | Status |
+| ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------- | ------ |
+| F-01 | dog-profile-data-foundation | (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)                                  | —             | FR-002                        | done   |
+| S-01 | dog-profile-crud            | Właściciel tworzy i edytuje profil swojego psa                                                                   | F-01          | FR-001, FR-002                | done   |
+| F-02 | dashboard-sidebar-nav       | (foundation) sidebar nawigacyjny zastępujący treść dashboardu, zwalniający stronę główną pod przeglądanie (S-02) | S-01          | —                             | done   |
+| S-02 | browse-and-match            | Właściciel przegląda profile innych psów i tworzy dopasowanie widoczne na liście matchy                          | S-01, F-02    | US-01, FR-003, FR-004, FR-005 | done   |
+| S-03 | first-message               | Właściciel wysyła i odbiera wiadomości tekstowe w czasie rzeczywistym z dopasowanym właścicielem                 | S-02          | US-01, FR-006                 | done   |
 
 ## Baseline
 
@@ -124,7 +124,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Wiadomości muszą być dostarczane natychmiast przez WebSocket (Supabase Realtime), nie przez polling — błędna konfiguracja Realtime/RLS na tabeli wiadomości może po cichu zdegradować UX do pollingu albo złamać prywatność wiadomości między niezmatchowanymi użytkownikami.
-- **Status:** in-progress
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -143,8 +143,7 @@ This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Includ
 Pełne szczegóły w `context/foundation/roadmap-questions.md` (append-only rejestr pytań przekrojowych ujawnionych przez porównanie plików fundamentowych, poza pierwszym przebiegiem `/10x-roadmap`). Żadne z poniższych nie blokuje M-1.
 
 1. **RQ-01 — AI-owy ranking profili wg podobieństwa do wcześniejszych rozmów.** Owner: user. Block: `roadmap-wide` (potwierdzony kandydat na przyszły kamień milowy, wymaga własnego FR w PRD zanim trafi na roadmapę). GitHub: #6.
-2. **RQ-02 — Brak mechanizmu zgłaszania/blokowania użytkowników.** Owner: user (decyzja w toku). Block: `roadmap-wide` (nie blokuje S-03 w M-1, ale wymaga rozstrzygnięcia przed szerszym launchem). GitHub: #7.
-3. **RQ-03 — Schemat F-01 będzie wymagał rozszerzenia** pod przyszłe sygnały (AI ranking, filtry, wiele zdjęć, soft-delete matchy, spacery grupowe). Owner: team. Block: nie, informacyjne dla przyszłego planowania F-01.
+2. **RQ-03 — Schemat F-01 będzie wymagał rozszerzenia** pod przyszłe sygnały (AI ranking, filtry, wiele zdjęć, soft-delete matchy, spacery grupowe). Owner: team. Block: nie, informacyjne dla przyszłego planowania F-01.
 
 ## Parked
 
@@ -156,6 +155,7 @@ Pełne szczegóły w `context/foundation/roadmap-questions.md` (append-only reje
 - **Moduł spacerów grupowych (GPS + mapa Leaflet, FR-007)** — Why parked: PRD §Non-Goals oraz Socrates przy FR-007 — nice-to-have, poza rdzeniem MVP; potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
 - **Wiele zdjęć w profilu psa (zamiast jednego)** — Why parked: PRD Socrates przy FR-002 ("jedno zdjęcie wystarczy na start"); potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
 - **AI-owy ranking profili wg podobieństwa do wcześniejszych rozmów** — Why parked: nowy pomysł, brak FR w PRD (RQ-01); potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
+- **Zgłaszanie lub blokowanie użytkowników/profili** — Why parked: poza zakresem ograniczonego MVP według PRD v2; ponownie ocenić przed szerszym publicznym uruchomieniem (RQ-02).
 
 ## Milestone History
 
@@ -165,3 +165,4 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 
 - **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
 - **S-01: Właściciel tworzy i edytuje profil swojego psa** — Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`. Lesson: —.
+- **S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem** — Archived 2026-10-07 → `context/archive/2026-10-03-first-message/`. Lesson: —.

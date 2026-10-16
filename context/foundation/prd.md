@@ -1,8 +1,9 @@
 ---
 project: "Doggo Date"
-version: 1
+version: 2
 status: draft
 created: 2026-09-17
+updated: 2026-10-16
 context_type: greenfield
 product_type: web-app
 target_scale:
@@ -98,6 +99,7 @@ Logowanie przez email + hasło. Każdy właściciel psa rejestruje konto i zarz�
 - Aparat w aplikacji do robienia zdjęć — tylko upload istniejącego zdjęcia, bez integracji z kamerą.
 - Filtry dopasowania (wiek/zainteresowania/lokalizacja) — odłożone do v2 (patrz Socrates przy FR-003).
 - Usuwanie matchy — odłożone do v2.
+- Zgłaszanie lub blokowanie użytkowników/profili — poza zakresem ograniczonego MVP, aby utrzymać jego zakres wokół głównego przepływu dopasowania i wiadomości. To nie oznacza, że ryzyko nadużyć jest rozwiązane: przed szerszym publicznym uruchomieniem należy ponownie ocenić tę decyzję i określić sposób reagowania na nadużycia.
 - Moduł spacerów grupowych (GPS + mapa Leaflet) — nice-to-have, poza rdzeniem MVP (patrz FR-007); może zostać dodany, jeśli czas na to pozwoli.
 
 ## Open Questions
