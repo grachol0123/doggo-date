@@ -1,10 +1,10 @@
 ---
 change_id: browse-and-match
 title: Owner browses dog profiles and creates a match
-status: new
+status: archived
 created: 2026-09-26
-updated: 2026-09-26
-archived_at: null
+updated: 2026-10-16
+archived_at: 2026-10-16T17:10:32Z
 ---
 
 ## Notes
