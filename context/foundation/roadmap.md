@@ -4,7 +4,7 @@ version: 1
 status: draft
 created: 2026-09-22
 updated: 2026-10-16
-prd_version: 1
+prd_version: 2
 main_goal: speed
 top_blocker: capacity
 milestone_id: first-match-and-message
