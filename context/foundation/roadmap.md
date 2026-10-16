@@ -132,7 +132,7 @@ Foundations poniżej zakładają, że to jest obecne i NIE odtwarzają tego od n
 | ---------- | --------------------------- | ---------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------- |
 | F-01       | dog-profile-data-foundation | Add minimal dog profile data schema (dogs table + RLS + storage) | yes                    | Run `/10x-plan dog-profile-data-foundation`                                                           |
 | S-01       | dog-profile-crud            | Owner can create and edit their dog's profile                    | no                     | Archived, done                                                                                        |
-| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                     | Merged (PR #10), pending archive                                                                      |
+| F-02       | dashboard-sidebar-nav       | Add sidebar navigation, free up main page for browsing           | no                     | Archived 2026-10-16                                                                                   |
 | S-02       | browse-and-match            | Owner can browse dogs and create a match                         | n/a — już zrealizowane | Wszystkie 3 pod-zmiany zaimplementowane i zweryfikowane 2026-10-03; pozostaje formalne `/10x-archive` |
 | S-03       | first-message               | Owner can send/receive real-time messages with a match           | yes                    | Odblokowane — S-02 ukończone; run `/10x-plan first-message`                                           |
 
@@ -166,3 +166,4 @@ _(brak — to pierwszy kamień milowy tej mapy drogowej.)_
 - **F-01: (foundation) schemat danych profilu psa (tabela `dogs` + storage zdjęcia + RLS)** — Archived 2026-09-25 → `context/archive/2026-09-25-dog-profile-data-foundation/`. Lesson: —.
 - **S-01: Właściciel tworzy i edytuje profil swojego psa** — Archived 2026-09-26 → `context/archive/2026-09-26-dog-profile-crud/`. Lesson: —.
 - **S-03: Właściciel wysyła i odbiera wiadomości w czasie rzeczywistym z dopasowanym właścicielem** — Archived 2026-10-07 → `context/archive/2026-10-03-first-message/`. Lesson: —.
+- **F-02: (foundation) treść dashboardu (powitanie, link do profilu psa, wylogowanie) przenosi się do bocznego panelu nawigacyjnego (`Sidebar`), zwalniając stronę główną `/dashboard` pod przyszły widok przeglądania psów (S-02, browse-dogs)** — Archived 2026-10-16 → `context/archive/2026-09-26-dashboard-sidebar-nav/`. Lesson: —.
