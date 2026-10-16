@@ -35,9 +35,8 @@ references this file rather than duplicating it in full.
 ## RQ-02: Trust & safety — no report/block mechanism defined
 
 - **Raised:** 2026-09-22 (cross-file review)
-- **Owner:** product (user) — decision pending
-- **Status:** open — not selected as a confirmed extension candidate; still unresolved
-  whether this is an intentional MVP Non-Goal or a real gap
+- **Owner:** product (user)
+- **Status:** resolved 2026-10-16 — explicitly excluded from the limited MVP; see PRD v2 `## Non-Goals`
 - **Context:** The app enables real-time text messaging between strangers (FR-006), but
   neither `## Functional Requirements` nor `## Non-Goals` in `prd.md` mentions reporting
   or blocking abusive users/profiles. The only stated guardrail concerns data/photo
@@ -45,9 +44,8 @@ references this file rather than duplicating it in full.
 - **Blocks:** Nothing in M-1 currently (not treated as a blocker for S-03), but flagged
   for explicit resolution before a wider public launch, given the risk profile of
   real-time messaging between strangers.
-- **Next step:** Decide and record one of: (a) explicitly move to `## Non-Goals` for MVP
-  with a stated rationale, or (b) add as a must-have/nice-to-have FR in a PRD revision.
-- **GitHub:** #7
+- **Decision:** Reporting/blocking is outside the limited MVP to keep scope focused on the core matching and messaging flow. This accepts, but does not resolve, the abuse risk; revisit the decision and define an abuse-response approach before wider public access.
+- **GitHub:** #7 (decision recorded; close after the PR is merged)
 
 ## RQ-03: F-01 data model will need extension for future signals
 
