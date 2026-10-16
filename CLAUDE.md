@@ -1,6 +1,8 @@
 # Rules for AI
 
-This file provides guidance to AI Agent when working with code in this repository.
+This file provides guidance to AI Agent when working with code in this repository. It mirrors `AGENTS.md`; keep the two in sync.
+
+Before starting work, also read `LESSONS_LEARNED.md` at the repo root — an incident log of concrete git/tooling pitfalls hit by prior AI agent sessions in this repo (shared working trees, background-agent git operations, Windows `git mv` failures, etc.) and the fixes applied. It complements `context/foundation/lessons.md` (durable planning/implementation rules used by the `/10x-*` skills).
 
 ## Commands
 
@@ -42,13 +44,39 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 - **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
 - **Shared types** (entities, DTOs) go in `src/types.ts`.
 
-### Environment
+## The `context/` folder
+
+Project knowledge managed by the `/10x-*` skills — read it before planning or implementing non-trivial work:
+
+- `context/foundation/` — living, cross-change docs that outlive any single change: `prd.md` (product requirements), `roadmap.md`, `tech-stack.md`, `test-plan.md`/`test-stack.md`, `lessons.md` (durable planning/implementation rules), `infrastructure.md`. Edited in place as the project evolves; see `context/foundation/README.md` for conventions.
+- `context/changes/<change-id>/` — one folder per in-flight change, created via `/10x-new` and identified by a `change.md` file. Holds that change's research, plan, and reviews. See `context/changes/README.md`.
+- `context/archive/` — completed changes, moved here from `context/changes/` via `/10x-archive`. Read-only historical record.
+- `context/audits/` — point-in-time audit reports (e.g. `observability/`) produced by audit skills, not routinely edited.
+
+Don't confuse this with `LESSONS_LEARNED.md` at the repo root, which is a git/tooling incident log for AI agent sessions, not product/planning context.
+
+## Environment
 
 - Node.js v22.14.0 (see `.nvmrc`)
 - Env vars: `SUPABASE_URL`, `SUPABASE_KEY` (copy `.env.example` to `.env` for Node, or `.dev.vars` for Cloudflare local dev)
 - Local Supabase: `npx supabase start` (requires Docker)
 - Cloudflare local dev: secrets go in `.dev.vars` (gitignored)
 - Deploy: `npx wrangler deploy` (requires Cloudflare account + `wrangler` auth)
+
+### Container runtime: Podman, not Docker
+
+This machine has **Podman** installed instead of Docker Desktop (no `docker` CLI
+on PATH). The Supabase CLI (`npx supabase start`, used for the local dev stack
+and E2E test-user setup) shells out to a Docker-compatible API, so point it at
+Podman's exposed named pipe before running it:
+
+```powershell
+$env:DOCKER_HOST = "npipe:////./pipe/podman-machine-default"
+npx supabase start
+```
+
+Ensure the machine is running first (`podman machine list` / `podman machine start`).
+Without `DOCKER_HOST` set, `supabase start` fails trying to find Docker.
 
 ## CI
 
