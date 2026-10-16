@@ -2,8 +2,8 @@
   "package": "@przeprogramowani/10x-cli",
   "version": "1.22.1",
   "manifestVersion": 3,
-  "lastApplied": "2026-10-04T07:04:17.640Z",
-  "lessonId": "m3l5",
+  "lastApplied": "2026-10-16T17:33:17.010Z",
+  "lessonId": "m4l5",
   "course": "10xdevs4",
   "tool": "copilot",
   "files": {
@@ -227,7 +227,7 @@
         ],
         "contentHashes": {
           "SKILL.md": "d05121f8f279d61ec158c9a0faddd379e3fa04e7bc476624b6266b292cbf6fab",
-          "references/archive-sha.md": "3f0f6bb319b1521fbe735ca84b1241b57e89074e93f35bbd77539bb0c31a8ca2"
+          "references/archive-sha.md": "771b29797985b826d78e379bf9c8a5e33b860d5ea356567e8e86e0a04c37352b"
         }
       },
       "10x-status": {
@@ -379,6 +379,72 @@
           "references/runtime-probes.md": "5b2b2784874f1de693b41d312a01d519bc31b0e5632b6a3b9f5c7d771e76a1e1",
           "scripts/fake-ingest.mjs": "ad5877bb0924a1faa42b5d186d05b314ed899fc973de422f200074237510bc12"
         }
+      },
+      "10x-ray": {
+        "files": [
+          "SKILL.md",
+          "assets/xray.html",
+          "references/example-map-10x-research.json",
+          "references/mapping-guide.md",
+          "references/worker-brief.md",
+          "scripts/xray.mjs"
+        ],
+        "contentHashes": {
+          "SKILL.md": "6a007eff881004e154a6ff76554fb4b745a066773244da0357885113a54d6ed9",
+          "assets/xray.html": "49e03f9f7470f2a2b082a316607fff42fcb078bb17c394ff22e3d73c4aa5a131",
+          "references/example-map-10x-research.json": "8b3587ad3133e262f8d991a2802bb5f116915ce6ce851092a2ba64f5ba68dcd7",
+          "references/mapping-guide.md": "531431abd944b81b7259343fc64e3051861f8fd1fcea1aa544708aaacca45ed5",
+          "references/worker-brief.md": "26c7663a07bbe79d8f9c7e66ff9e321f834d4535387044b3ee7bac75ae9344f2",
+          "scripts/xray.mjs": "bd70fe098b2eaa90c5ec12a36b24721aefd6e61b06808950cf7a091f46c21dff"
+        }
+      },
+      "10x-repo-map": {
+        "files": [
+          "SKILL.md",
+          "references/agent-discussion.md",
+          "references/agent-history.md",
+          "references/agent-people.md",
+          "references/agent-structure.md",
+          "references/capability-inventory.md",
+          "references/false-signals.md",
+          "references/graph-tools.md",
+          "references/report.md",
+          "references/scan-contract.md",
+          "scripts/graph-metrics.mjs",
+          "scripts/graph-metrics.test.mjs"
+        ],
+        "contentHashes": {
+          "SKILL.md": "b9c20c7c5b68d48eaa33787116e0361539c6e79c1b15349c10ae90ddc714fbda",
+          "references/agent-discussion.md": "8ba5c803bafcf21fa6b5923479e01aabef68b2b2b5720a865fe0b3ecf2924cd9",
+          "references/agent-history.md": "d50cd23c326216e3f3a68b34f29363f56e521037a09173c1890b81257c4ef723",
+          "references/agent-people.md": "9be4466fb9d4100bb463b9240d510f55ddc7ad92a11624b76424c5cbe0260fae",
+          "references/agent-structure.md": "661e0493d3f7bdcaacdacb37ecd6142756789af413ac9d9066ee304a17f64586",
+          "references/capability-inventory.md": "feae97f771fecffafce65ce72f54ef998a893308b1a9131ea9c516fa282253db",
+          "references/false-signals.md": "339c78be9c8ea07a992fb2001fee5b6fbc23c5ee51f7bfa7d85c530405876e50",
+          "references/graph-tools.md": "33196a0aaf9aeec1e3833e4fd5d94b953739d766fd6736ab8f669e1ce7efab1d",
+          "references/report.md": "ce1fd8995093e0b811150040f83739cfe85ce726f6892908c6f6621309c756b1",
+          "references/scan-contract.md": "2a416ce37e180f47497cb6a42f2ff5d659ce28b08c7357a67461fbe3459d1ad8",
+          "scripts/graph-metrics.mjs": "0049c3360b8f480e70136f00c391224ff2d82de8badbffe5f74244c520451676",
+          "scripts/graph-metrics.test.mjs": "8f0aceea8d2b0f44f6f96decbcc5fd4ca17b47103ad2b3477add307da901c3e8"
+        }
+      },
+      "10x-domain-distillation": {
+        "files": [
+          "SKILL.md",
+          "references/agent-code-language.md",
+          "references/agent-code-rules.md",
+          "references/agent-docs-language.md",
+          "references/report.md",
+          "references/source-inventory.md"
+        ],
+        "contentHashes": {
+          "SKILL.md": "91cdd3597e55387ac072cc4911e0fa1013e67a084b18f985879d32e86384c55b",
+          "references/agent-code-language.md": "ee98180b5130bd0055f6de168f34d19d7e0fab2e9151ea420223783982fdb3f2",
+          "references/agent-code-rules.md": "3c57d52673d53e76a302a6e63a5a92c9c764e1a4c9e5a09d34e836f45e14de99",
+          "references/agent-docs-language.md": "eba99ef21989eac1f3682d90564ea1631e03f80f56008615a5af827cb7b7e802",
+          "references/report.md": "d4504847d5fb2c3e87febc4cceb4c4c2d7e40e071b69ae612e9ff0f8b7f2b09d",
+          "references/source-inventory.md": "4df28fff543d7b4836b5855f276820c19e2e240477ac0a83eaf9ae0825aeafde"
+        }
       }
     },
     "prompts": [
@@ -387,7 +453,19 @@
       "m1l5-2-constrain-approach.md",
       "m1l5-3-extend-prerequisites.md",
       "m1l5-4-store-plan.md",
-      "m3l2-ad-hoc-testing.md"
+      "m3l2-ad-hoc-testing.md",
+      "m4l2-1-territory-git-history.md",
+      "m4l2-2-structure-dependency-cruiser.md",
+      "m4l2-3-contributors-git.md",
+      "m4l2-repo-map-synthesis.md",
+      "m4l3-1-research-with-map.md",
+      "m4l3-2-ast-grep-verification.md",
+      "m4l4-1-new-change-intention.md",
+      "m4l4-2-refactor-opportunities-research.md",
+      "m4l4-3-ranking-ast-grep-verification.md",
+      "m4l5-1-domain-distillation.md",
+      "m4l5-2-invariant-aggregate-refactor.md",
+      "m4l5-3-anti-corruption-layer.md"
     ],
     "configs": [],
     "promptHashes": {
@@ -396,7 +474,19 @@
       "m1l5-2-constrain-approach.md": "2708716aecac24ad3c5f6793ba2c2385f4d7e53f33f5d735c5de07be43b1081e",
       "m1l5-3-extend-prerequisites.md": "90eaf318eade9962d118b67707cc8426c70567a9951105c4a1964623858ab8a7",
       "m1l5-4-store-plan.md": "1f5db15fadaa9a5c3acd9a47f3a97db060f5093005ad696e182be7d4bedd8d7d",
-      "m3l2-ad-hoc-testing.md": "6a4509b6b90d3ea9229d19dbec77aea0c6812d0d706144006f9465e195f5387f"
+      "m3l2-ad-hoc-testing.md": "6a4509b6b90d3ea9229d19dbec77aea0c6812d0d706144006f9465e195f5387f",
+      "m4l2-1-territory-git-history.md": "6a8e65cba64d6aff00651a1b738aa61b54ee2542d8f90f6121a19737856d1371",
+      "m4l2-2-structure-dependency-cruiser.md": "e9a3cdd315ff2a909225525a9bb2f133b9349ddf74085093a63d40caa8e7b607",
+      "m4l2-3-contributors-git.md": "4be5a758eab58a763fbd3170c46d82c2a585147cb5281767e2645632540206ea",
+      "m4l2-repo-map-synthesis.md": "91f8216e2861abefeb823f89383f19f623b7299d1a13b2fcac32199bba00f8d0",
+      "m4l3-1-research-with-map.md": "f9c972fb2d0374c72d03f60fe005006d09cb4424a9c96ab419238efe80e4c2ea",
+      "m4l3-2-ast-grep-verification.md": "2906f106a25e8a7cc214cdc97274ac17d0ff6beefd2585104b9c13c6721c96cb",
+      "m4l4-1-new-change-intention.md": "5f446fcffbfc594f43af46c06bd6197841bc0a58e4872ed7d09706f887e167b0",
+      "m4l4-2-refactor-opportunities-research.md": "ba414b6112081d0b1a35191c4c8883a6b9ac0d6f1482dfa83ee3832ff3c4b191",
+      "m4l4-3-ranking-ast-grep-verification.md": "b316f9059ab6690af73465941862f2b52cfe19c4c064910d607950a8baeb75d5",
+      "m4l5-1-domain-distillation.md": "a823792adfb32f57e93084208d84ee070b0774ca2b6755276fa8b2aa9ffdcb6c",
+      "m4l5-2-invariant-aggregate-refactor.md": "13e8126637c600a55a1f97ebdda9a42cd5576de49b8a5da5d44aa3e16a040dcc",
+      "m4l5-3-anti-corruption-layer.md": "e98d764688a98f68e6669057f0ebc1c4bb006e8349da770c12251ca50c11abf5"
     },
     "configHashes": {}
   },
@@ -2199,6 +2289,670 @@
         "m3l2-ad-hoc-testing.md"
       ],
       "configs": []
+    },
+    "m4l1": {
+      "appliedAt": "2026-10-16T17:33:04.624Z",
+      "skills": {
+        "10x-idea-check": {
+          "files": [
+            "references/examples.md"
+          ]
+        },
+        "10x-tech-stack-selector": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-stack-assess": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-bootstrapper": {
+          "files": [
+            "references/bootstrapper-config.yaml",
+            "references/handoff-consumer.md",
+            "references/post-scaffold-verification.md",
+            "references/pre-scaffold-verification.md"
+          ]
+        },
+        "10x-health-check": {
+          "files": [
+            "references/health-check-schema.md"
+          ]
+        },
+        "10x-new": {
+          "files": [
+            "references/change-md.md"
+          ]
+        },
+        "10x-plan": {
+          "files": [
+            "references/plan-persistence.md",
+            "references/progress-format.md",
+            "references/task-orchestration.md"
+          ]
+        },
+        "10x-plan-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-implement": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-archive": {
+          "files": [
+            "references/archive-sha.md"
+          ]
+        },
+        "10x-status": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-impl-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-research": {
+          "files": [
+            "references/task-orchestration.md",
+            "scripts/prose-json-check.mjs"
+          ]
+        },
+        "10x-ui": {
+          "files": [
+            "references/ui-quality-checklist.md"
+          ]
+        },
+        "10x-tdd": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-configure-hook": {
+          "files": [
+            "references/other-harnesses.md"
+          ]
+        },
+        "10x-observability-audit": {
+          "files": [
+            "references/auditor-briefs.md",
+            "scripts/fake-ingest.mjs"
+          ]
+        },
+        "10x-ray": {
+          "files": [
+            "SKILL.md",
+            "assets/xray.html",
+            "references/example-map-10x-research.json",
+            "references/mapping-guide.md",
+            "references/worker-brief.md",
+            "scripts/xray.mjs"
+          ]
+        }
+      },
+      "prompts": [],
+      "configs": []
+    },
+    "m4l2": {
+      "appliedAt": "2026-10-16T17:33:07.672Z",
+      "skills": {
+        "10x-idea-check": {
+          "files": [
+            "references/examples.md"
+          ]
+        },
+        "10x-tech-stack-selector": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-stack-assess": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-bootstrapper": {
+          "files": [
+            "references/bootstrapper-config.yaml",
+            "references/handoff-consumer.md",
+            "references/post-scaffold-verification.md",
+            "references/pre-scaffold-verification.md"
+          ]
+        },
+        "10x-health-check": {
+          "files": [
+            "references/health-check-schema.md"
+          ]
+        },
+        "10x-new": {
+          "files": [
+            "references/change-md.md"
+          ]
+        },
+        "10x-plan": {
+          "files": [
+            "references/plan-persistence.md",
+            "references/progress-format.md",
+            "references/task-orchestration.md"
+          ]
+        },
+        "10x-plan-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-implement": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-archive": {
+          "files": [
+            "references/archive-sha.md"
+          ]
+        },
+        "10x-status": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-impl-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-research": {
+          "files": [
+            "references/task-orchestration.md",
+            "scripts/prose-json-check.mjs"
+          ]
+        },
+        "10x-ui": {
+          "files": [
+            "references/ui-quality-checklist.md"
+          ]
+        },
+        "10x-tdd": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-configure-hook": {
+          "files": [
+            "references/other-harnesses.md"
+          ]
+        },
+        "10x-observability-audit": {
+          "files": [
+            "references/auditor-briefs.md",
+            "scripts/fake-ingest.mjs"
+          ]
+        },
+        "10x-ray": {
+          "files": [
+            "SKILL.md",
+            "assets/xray.html",
+            "references/example-map-10x-research.json",
+            "references/mapping-guide.md",
+            "references/worker-brief.md",
+            "scripts/xray.mjs"
+          ]
+        },
+        "10x-repo-map": {
+          "files": [
+            "SKILL.md",
+            "references/agent-discussion.md",
+            "references/agent-history.md",
+            "references/agent-people.md",
+            "references/agent-structure.md",
+            "references/capability-inventory.md",
+            "references/false-signals.md",
+            "references/graph-tools.md",
+            "references/report.md",
+            "references/scan-contract.md",
+            "scripts/graph-metrics.mjs",
+            "scripts/graph-metrics.test.mjs"
+          ]
+        }
+      },
+      "prompts": [
+        "m4l2-1-territory-git-history.md",
+        "m4l2-2-structure-dependency-cruiser.md",
+        "m4l2-3-contributors-git.md",
+        "m4l2-repo-map-synthesis.md"
+      ],
+      "configs": []
+    },
+    "m4l3": {
+      "appliedAt": "2026-10-16T17:33:10.637Z",
+      "skills": {
+        "10x-idea-check": {
+          "files": [
+            "references/examples.md"
+          ]
+        },
+        "10x-tech-stack-selector": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-stack-assess": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-bootstrapper": {
+          "files": [
+            "references/bootstrapper-config.yaml",
+            "references/handoff-consumer.md",
+            "references/post-scaffold-verification.md",
+            "references/pre-scaffold-verification.md"
+          ]
+        },
+        "10x-health-check": {
+          "files": [
+            "references/health-check-schema.md"
+          ]
+        },
+        "10x-new": {
+          "files": [
+            "references/change-md.md"
+          ]
+        },
+        "10x-plan": {
+          "files": [
+            "references/plan-persistence.md",
+            "references/progress-format.md",
+            "references/task-orchestration.md"
+          ]
+        },
+        "10x-plan-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-implement": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-archive": {
+          "files": [
+            "references/archive-sha.md"
+          ]
+        },
+        "10x-status": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-impl-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-research": {
+          "files": [
+            "references/task-orchestration.md",
+            "scripts/prose-json-check.mjs"
+          ]
+        },
+        "10x-ui": {
+          "files": [
+            "references/ui-quality-checklist.md"
+          ]
+        },
+        "10x-tdd": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-configure-hook": {
+          "files": [
+            "references/other-harnesses.md"
+          ]
+        },
+        "10x-observability-audit": {
+          "files": [
+            "references/auditor-briefs.md",
+            "scripts/fake-ingest.mjs"
+          ]
+        },
+        "10x-ray": {
+          "files": [
+            "SKILL.md",
+            "assets/xray.html",
+            "references/example-map-10x-research.json",
+            "references/mapping-guide.md",
+            "references/worker-brief.md",
+            "scripts/xray.mjs"
+          ]
+        },
+        "10x-repo-map": {
+          "files": [
+            "SKILL.md",
+            "references/agent-discussion.md",
+            "references/agent-history.md",
+            "references/agent-people.md",
+            "references/agent-structure.md",
+            "references/capability-inventory.md",
+            "references/false-signals.md",
+            "references/graph-tools.md",
+            "references/report.md",
+            "references/scan-contract.md",
+            "scripts/graph-metrics.mjs",
+            "scripts/graph-metrics.test.mjs"
+          ]
+        }
+      },
+      "prompts": [
+        "m4l2-1-territory-git-history.md",
+        "m4l2-2-structure-dependency-cruiser.md",
+        "m4l2-3-contributors-git.md",
+        "m4l2-repo-map-synthesis.md",
+        "m4l3-1-research-with-map.md",
+        "m4l3-2-ast-grep-verification.md"
+      ],
+      "configs": []
+    },
+    "m4l4": {
+      "appliedAt": "2026-10-16T17:33:14.075Z",
+      "skills": {
+        "10x-idea-check": {
+          "files": [
+            "references/examples.md"
+          ]
+        },
+        "10x-tech-stack-selector": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-stack-assess": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-bootstrapper": {
+          "files": [
+            "references/bootstrapper-config.yaml",
+            "references/handoff-consumer.md",
+            "references/post-scaffold-verification.md",
+            "references/pre-scaffold-verification.md"
+          ]
+        },
+        "10x-health-check": {
+          "files": [
+            "references/health-check-schema.md"
+          ]
+        },
+        "10x-new": {
+          "files": [
+            "references/change-md.md"
+          ]
+        },
+        "10x-plan": {
+          "files": [
+            "references/plan-persistence.md",
+            "references/progress-format.md",
+            "references/task-orchestration.md"
+          ]
+        },
+        "10x-plan-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-implement": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-archive": {
+          "files": [
+            "references/archive-sha.md"
+          ]
+        },
+        "10x-status": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-impl-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-research": {
+          "files": [
+            "references/task-orchestration.md",
+            "scripts/prose-json-check.mjs"
+          ]
+        },
+        "10x-ui": {
+          "files": [
+            "references/ui-quality-checklist.md"
+          ]
+        },
+        "10x-tdd": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-configure-hook": {
+          "files": [
+            "references/other-harnesses.md"
+          ]
+        },
+        "10x-observability-audit": {
+          "files": [
+            "references/auditor-briefs.md",
+            "scripts/fake-ingest.mjs"
+          ]
+        },
+        "10x-ray": {
+          "files": [
+            "SKILL.md",
+            "assets/xray.html",
+            "references/example-map-10x-research.json",
+            "references/mapping-guide.md",
+            "references/worker-brief.md",
+            "scripts/xray.mjs"
+          ]
+        },
+        "10x-repo-map": {
+          "files": [
+            "SKILL.md",
+            "references/agent-discussion.md",
+            "references/agent-history.md",
+            "references/agent-people.md",
+            "references/agent-structure.md",
+            "references/capability-inventory.md",
+            "references/false-signals.md",
+            "references/graph-tools.md",
+            "references/report.md",
+            "references/scan-contract.md",
+            "scripts/graph-metrics.mjs",
+            "scripts/graph-metrics.test.mjs"
+          ]
+        }
+      },
+      "prompts": [
+        "m4l2-1-territory-git-history.md",
+        "m4l2-2-structure-dependency-cruiser.md",
+        "m4l2-3-contributors-git.md",
+        "m4l2-repo-map-synthesis.md",
+        "m4l3-1-research-with-map.md",
+        "m4l3-2-ast-grep-verification.md",
+        "m4l4-1-new-change-intention.md",
+        "m4l4-2-refactor-opportunities-research.md",
+        "m4l4-3-ranking-ast-grep-verification.md"
+      ],
+      "configs": []
+    },
+    "m4l5": {
+      "appliedAt": "2026-10-16T17:33:17.010Z",
+      "skills": {
+        "10x-idea-check": {
+          "files": [
+            "references/examples.md"
+          ]
+        },
+        "10x-tech-stack-selector": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-stack-assess": {
+          "files": [
+            "references/decision-flow.md",
+            "references/starter-registry.yaml"
+          ]
+        },
+        "10x-bootstrapper": {
+          "files": [
+            "references/bootstrapper-config.yaml",
+            "references/handoff-consumer.md",
+            "references/post-scaffold-verification.md",
+            "references/pre-scaffold-verification.md"
+          ]
+        },
+        "10x-health-check": {
+          "files": [
+            "references/health-check-schema.md"
+          ]
+        },
+        "10x-new": {
+          "files": [
+            "references/change-md.md"
+          ]
+        },
+        "10x-plan": {
+          "files": [
+            "references/plan-persistence.md",
+            "references/progress-format.md",
+            "references/task-orchestration.md"
+          ]
+        },
+        "10x-plan-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-implement": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-archive": {
+          "files": [
+            "references/archive-sha.md"
+          ]
+        },
+        "10x-status": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-impl-review": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-research": {
+          "files": [
+            "references/task-orchestration.md",
+            "scripts/prose-json-check.mjs"
+          ]
+        },
+        "10x-ui": {
+          "files": [
+            "references/ui-quality-checklist.md"
+          ]
+        },
+        "10x-tdd": {
+          "files": [
+            "references/progress-format.md"
+          ]
+        },
+        "10x-configure-hook": {
+          "files": [
+            "references/other-harnesses.md"
+          ]
+        },
+        "10x-observability-audit": {
+          "files": [
+            "references/auditor-briefs.md",
+            "scripts/fake-ingest.mjs"
+          ]
+        },
+        "10x-ray": {
+          "files": [
+            "SKILL.md",
+            "assets/xray.html",
+            "references/example-map-10x-research.json",
+            "references/mapping-guide.md",
+            "references/worker-brief.md",
+            "scripts/xray.mjs"
+          ]
+        },
+        "10x-repo-map": {
+          "files": [
+            "SKILL.md",
+            "references/agent-discussion.md",
+            "references/agent-history.md",
+            "references/agent-people.md",
+            "references/agent-structure.md",
+            "references/capability-inventory.md",
+            "references/false-signals.md",
+            "references/graph-tools.md",
+            "references/report.md",
+            "references/scan-contract.md",
+            "scripts/graph-metrics.mjs",
+            "scripts/graph-metrics.test.mjs"
+          ]
+        },
+        "10x-domain-distillation": {
+          "files": [
+            "SKILL.md",
+            "references/agent-code-language.md",
+            "references/agent-code-rules.md",
+            "references/agent-docs-language.md",
+            "references/report.md",
+            "references/source-inventory.md"
+          ]
+        }
+      },
+      "prompts": [
+        "m4l2-1-territory-git-history.md",
+        "m4l2-2-structure-dependency-cruiser.md",
+        "m4l2-3-contributors-git.md",
+        "m4l2-repo-map-synthesis.md",
+        "m4l3-1-research-with-map.md",
+        "m4l3-2-ast-grep-verification.md",
+        "m4l4-1-new-change-intention.md",
+        "m4l4-2-refactor-opportunities-research.md",
+        "m4l4-3-ranking-ast-grep-verification.md",
+        "m4l5-1-domain-distillation.md",
+        "m4l5-2-invariant-aggregate-refactor.md",
+        "m4l5-3-anti-corruption-layer.md"
+      ],
+      "configs": []
     }
   },
   "managedRules": {
@@ -2206,5 +2960,9 @@
     "begin": "<!-- BEGIN @przeprogramowani/10x-cli -->",
     "end": "<!-- END @przeprogramowani/10x-cli -->",
     "upstreamHash": "2ce13161214b16d9792c594bf892dcc1e9743d6a63c03e0ca99cea9c43cbf8b0"
+  },
+  "toolkit": {
+    "version": "v2.60.3",
+    "recordedAt": "2026-10-16T17:33:17.164Z"
   }
 }
