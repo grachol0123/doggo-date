@@ -143,8 +143,7 @@ This table is the clean handoff to Jira/Linear or any MCP-backed backlog. Includ
 Pełne szczegóły w `context/foundation/roadmap-questions.md` (append-only rejestr pytań przekrojowych ujawnionych przez porównanie plików fundamentowych, poza pierwszym przebiegiem `/10x-roadmap`). Żadne z poniższych nie blokuje M-1.
 
 1. **RQ-01 — AI-owy ranking profili wg podobieństwa do wcześniejszych rozmów.** Owner: user. Block: `roadmap-wide` (potwierdzony kandydat na przyszły kamień milowy, wymaga własnego FR w PRD zanim trafi na roadmapę). GitHub: #6.
-2. **RQ-02 — Brak mechanizmu zgłaszania/blokowania użytkowników.** Owner: user (decyzja w toku). Block: `roadmap-wide` (nie blokuje S-03 w M-1, ale wymaga rozstrzygnięcia przed szerszym launchem). GitHub: #7.
-3. **RQ-03 — Schemat F-01 będzie wymagał rozszerzenia** pod przyszłe sygnały (AI ranking, filtry, wiele zdjęć, soft-delete matchy, spacery grupowe). Owner: team. Block: nie, informacyjne dla przyszłego planowania F-01.
+2. **RQ-03 — Schemat F-01 będzie wymagał rozszerzenia** pod przyszłe sygnały (AI ranking, filtry, wiele zdjęć, soft-delete matchy, spacery grupowe). Owner: team. Block: nie, informacyjne dla przyszłego planowania F-01.
 
 ## Parked
 
@@ -156,6 +155,7 @@ Pełne szczegóły w `context/foundation/roadmap-questions.md` (append-only reje
 - **Moduł spacerów grupowych (GPS + mapa Leaflet, FR-007)** — Why parked: PRD §Non-Goals oraz Socrates przy FR-007 — nice-to-have, poza rdzeniem MVP; potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
 - **Wiele zdjęć w profilu psa (zamiast jednego)** — Why parked: PRD Socrates przy FR-002 ("jedno zdjęcie wystarczy na start"); potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
 - **AI-owy ranking profili wg podobieństwa do wcześniejszych rozmów** — Why parked: nowy pomysł, brak FR w PRD (RQ-01); potwierdzone jako kandydat na M-2 (patrz `roadmap-questions.md`).
+- **Zgłaszanie lub blokowanie użytkowników/profili** — Why parked: poza zakresem ograniczonego MVP według PRD v2; ponownie ocenić przed szerszym publicznym uruchomieniem (RQ-02).
 
 ## Milestone History
 
