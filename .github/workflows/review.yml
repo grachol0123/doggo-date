@@ -39,7 +39,11 @@ jobs:
       - name: Compute diff
         env:
           BASE_REF: ${{ github.base_ref }}
-        run: git diff "origin/$BASE_REF...HEAD" > "$RUNNER_TEMP/pr.diff"
+        # Fixtures hold deliberately flawed code for evals; lockfiles and context/ are noise for review.
+        run: |
+          git diff "origin/$BASE_REF...HEAD" -- . \
+            ':(exclude)reviewer/fixtures' ':(exclude)*package-lock.json' ':(exclude)context' \
+            > "$RUNNER_TEMP/pr.diff"
 
       - id: review
         uses: ./.github/actions/ai-reviewer
