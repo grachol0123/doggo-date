@@ -203,34 +203,34 @@ None. Rollback: delete `.github/workflows/review.yml`.
 
 #### Automated
 
-- [ ] 1.1 Type checking passes
-- [ ] 1.2 Bundle builds
-- [ ] 1.3 Out-of-range score is rejected by parseReview
+- [x] 1.1 Type checking passes
+- [x] 1.2 Bundle builds
+- [x] 1.3 Out-of-range score is rejected by parseReview
 
 #### Manual
 
-- [ ] 1.4 Local run of dist/review.js prints valid review JSON
+- [x] 1.4 Local run of dist/review.js prints valid review JSON
 
 ### Phase 2: Workflow and action hardening
 
 #### Automated
 
-- [ ] 2.1 Workflow and action YAML parse
-- [ ] 2.2 No untrusted interpolation inside run blocks
+- [x] 2.1 Workflow and action YAML parse
+- [x] 2.2 No untrusted interpolation inside run blocks
 
 #### Manual
 
-- [ ] 2.3 COPILOT_GITHUB_TOKEN secret is created
+- [x] 2.3 COPILOT_GITHUB_TOKEN secret is created
 
 ### Phase 3: Promptfoo evals
 
 #### Automated
 
-- [ ] 3.1 Eval completes with 0 errors
+- [x] 3.1 Eval completes with 0 errors
 
 #### Manual
 
-- [ ] 3.2 Per-model results reviewed and known miss acknowledged
+- [x] 3.2 Per-model results reviewed and known miss acknowledged
 
 ### Phase 4: Live validation on a real PR
 
