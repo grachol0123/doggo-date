@@ -1,0 +1,35 @@
+{
+  "name": "doggo-reviewer",
+  "version": "1.0.0",
+  "description": "AI-powered code reviewer built on the Vercel AI SDK + OpenRouter.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/cli.ts",
+    "start": "tsx --env-file=.env src/cli.ts",
+    "build": "esbuild src/review.ts --bundle --platform=node --format=esm --target=node22 --outfile=dist/review.js",
+    "eval": "promptfoo eval",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@openrouter/ai-sdk-provider": "^3.1.0",
+    "ai": "^7.0.143",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "esbuild": "^0.28.2",
+    "promptfoo": "^0.124.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
