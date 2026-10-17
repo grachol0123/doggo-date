@@ -1,7 +1,7 @@
 ---
 change_id: tool-loop-agent
 title: Refactor the reviewer CLI into a modular AI SDK ToolLoopAgent
-status: implementing
+status: implemented
 created: 2026-10-17
 updated: 2026-10-17
 archived_at: null

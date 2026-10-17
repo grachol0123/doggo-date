@@ -199,10 +199,10 @@ None; single model call per review.
 
 #### Automated
 
-- [x] 3.1 Type check passes: `npx tsc --noEmit -p reviewer`
-- [x] 3.2 Lint passes on changed files: `npx eslint reviewer/src`
+- [x] 3.1 Type check passes: `npx tsc --noEmit -p reviewer` — 8e1e0a9
+- [x] 3.2 Lint passes on changed files: `npx eslint reviewer/src` — 8e1e0a9
 
 #### Manual
 
-- [x] 3.3 `git diff | npm start` (from `reviewer/`) prints a valid review JSON with the free model
-- [x] 3.4 Empty stdin and missing env vars give a clear error and a non-zero exit code
+- [x] 3.3 `git diff | npm start` (from `reviewer/`) prints a valid review JSON with the free model — 8e1e0a9
+- [x] 3.4 Empty stdin and missing env vars give a clear error and a non-zero exit code — 8e1e0a9
