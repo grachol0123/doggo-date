@@ -37,6 +37,7 @@ jobs:
           fetch-depth: 0 # full history, otherwise there is no base to diff against
 
       - name: Compute diff
+        id: diff
         env:
           BASE_REF: ${{ github.base_ref }}
         # Fixtures hold deliberately flawed code for evals; lockfiles and context/ are noise for review.
@@ -44,8 +45,11 @@ jobs:
           git diff "origin/$BASE_REF...HEAD" -- . \
             ':(exclude)reviewer/fixtures' ':(exclude)*package-lock.json' ':(exclude)context' \
             > "$RUNNER_TEMP/pr.diff"
+          # Nothing reviewable (e.g. docs-only change): skip the review instead of failing
+          if [ ! -s "$RUNNER_TEMP/pr.diff" ]; then echo "empty=true" >> "$GITHUB_OUTPUT"; fi
 
       - id: review
+        if: steps.diff.outputs.empty != 'true'
         uses: ./.github/actions/ai-reviewer
         with:
           api-key: ${{ secrets.COPILOT_GITHUB_TOKEN }}
@@ -68,6 +72,7 @@ jobs:
           gh pr edit "$PR" --remove-label ai-cr:review || true
 
       - name: Gate on verdict
+        if: steps.diff.outputs.empty != 'true'
         env:
           VERDICT: ${{ steps.review.outputs.verdict }}
         run: |

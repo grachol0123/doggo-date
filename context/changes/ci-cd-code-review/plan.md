@@ -236,10 +236,10 @@ None. Rollback: delete `.github/workflows/review.yml`.
 
 #### Automated
 
-- [ ] 4.1 Workflow runs complete
+- [x] 4.1 Workflow runs complete
 
 #### Manual
 
-- [ ] 4.2 Comment, label and check match verdict on both PRs
-- [ ] 4.3 ai-cr:review re-runs the review and the label is removed
-- [ ] 4.4 Unrelated label events do not cancel a running review
+- [x] 4.2 Comment, label and check match verdict on both PRs
+- [x] 4.3 ai-cr:review re-runs the review and the label is removed
+- [x] 4.4 Unrelated label events do not cancel a running review
