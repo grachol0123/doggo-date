@@ -177,23 +177,23 @@ None; single model call per review.
 
 #### Automated
 
-- [x] 1.1 Type check passes: `npx tsc --noEmit -p reviewer`
-- [x] 1.2 Lint passes on changed files: `npx eslint reviewer/src`
+- [x] 1.1 Type check passes: `npx tsc --noEmit -p reviewer` — bafd0ce
+- [x] 1.2 Lint passes on changed files: `npx eslint reviewer/src` — bafd0ce
 
 #### Manual
 
-- [x] 1.3 `review-schema.ts` contains no prompt text and `prompts.ts` contains the prompt verbatim
+- [x] 1.3 `review-schema.ts` contains no prompt text and `prompts.ts` contains the prompt verbatim — bafd0ce
 
 ### Phase 2: Agent module and public barrel
 
 #### Automated
 
-- [ ] 2.1 Type check passes: `npx tsc --noEmit -p reviewer`
-- [ ] 2.2 Lint passes on changed files: `npx eslint reviewer/src`
+- [x] 2.1 Type check passes: `npx tsc --noEmit -p reviewer`
+- [x] 2.2 Lint passes on changed files: `npx eslint reviewer/src`
 
 #### Manual
 
-- [ ] 2.3 Importing `index.ts` reads no env and no stdin
+- [x] 2.3 Importing `index.ts` reads no env and no stdin
 
 ### Phase 3: Thin CLI and verification
 
