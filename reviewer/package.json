@@ -10,6 +10,7 @@
     "start": "tsx --env-file=.env src/cli.ts",
     "build": "esbuild src/review.ts --bundle --platform=node --format=esm --target=node22 --outfile=dist/review.js",
     "eval": "promptfoo eval",
+    "test": "tsx --test src/copilot.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [],

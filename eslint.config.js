@@ -83,7 +83,7 @@ const scriptsConfig = defineConfig({
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
   globalIgnores([
-    "reviewer/providers/copilot.mjs",
+    "reviewer/**",
     ".github/skills/10x-plan/scripts/metadata-guard.mjs",
     ".github/skills/10x-plan/scripts/metadata-guard.test.mjs",
     ".github/skills/10x-research/scripts/metadata-guard.mjs",
