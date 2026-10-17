@@ -188,21 +188,21 @@ None; single model call per review.
 
 #### Automated
 
-- [x] 2.1 Type check passes: `npx tsc --noEmit -p reviewer`
-- [x] 2.2 Lint passes on changed files: `npx eslint reviewer/src`
+- [x] 2.1 Type check passes: `npx tsc --noEmit -p reviewer` — 2b006cf
+- [x] 2.2 Lint passes on changed files: `npx eslint reviewer/src` — 2b006cf
 
 #### Manual
 
-- [x] 2.3 Importing `index.ts` reads no env and no stdin
+- [x] 2.3 Importing `index.ts` reads no env and no stdin — 2b006cf
 
 ### Phase 3: Thin CLI and verification
 
 #### Automated
 
-- [ ] 3.1 Type check passes: `npx tsc --noEmit -p reviewer`
-- [ ] 3.2 Lint passes on changed files: `npx eslint reviewer/src`
+- [x] 3.1 Type check passes: `npx tsc --noEmit -p reviewer`
+- [x] 3.2 Lint passes on changed files: `npx eslint reviewer/src`
 
 #### Manual
 
-- [ ] 3.3 `git diff | npm start` (from `reviewer/`) prints a valid review JSON with the free model
-- [ ] 3.4 Empty stdin and missing env vars give a clear error and a non-zero exit code
+- [x] 3.3 `git diff | npm start` (from `reviewer/`) prints a valid review JSON with the free model
+- [x] 3.4 Empty stdin and missing env vars give a clear error and a non-zero exit code
