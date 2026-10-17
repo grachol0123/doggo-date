@@ -1,0 +1,8 @@
+diff --git a/src/api/dogs.ts b/src/api/dogs.ts
+index 1a2b3c4..5d6e7f8 100644
+--- a/src/api/dogs.ts
++++ b/src/api/dogs.ts
+@@ -10,6 +10,6 @@ export async function getDogsByBreed(db: Db, breed: string) {
+-  return db.query("SELECT id, name FROM dogs WHERE breed = $1", [breed]);
++  return db.query(`SELECT id, name FROM dogs WHERE breed = '${breed}'`);
+ }

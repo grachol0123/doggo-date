@@ -1,3 +1,14 @@
+export interface PullRequestMeta {
+  title: string;
+  body?: string;
+}
+
+export function buildReviewPrompt(diff: string, pr?: PullRequestMeta): string {
+  if (!pr) return diff;
+  const body = pr.body?.trim();
+  return [`Tytuł PR: ${pr.title}`, body ? `Opis PR:\n${body}` : "", `Diff:\n${diff}`].filter(Boolean).join("\n\n");
+}
+
 export const SYSTEM_PROMPT = `Jesteś precyzyjnym, konstruktywnym recenzentem kodu oceniającym pull request.
 Oceń podany diff w sześciu kryteriach w skali 1-10 (1 = poważne braki, 10 = wzorowo):
 poprawność implementacji, idiomatyczność, złożoność, pokrycie testami względem ryzyka,
