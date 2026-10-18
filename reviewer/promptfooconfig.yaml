@@ -1,0 +1,59 @@
+# Run from reviewer/: npm run eval (promptfoo needs Node 22.22+).
+# Models are called through the Copilot CLI (providers/copilot.mjs), so it needs
+# `copilot login` or COPILOT_GITHUB_TOKEN; every call uses Copilot premium requests.
+# prompts/review.txt mirrors SYSTEM_PROMPT from src/prompts.ts plus a JSON-output instruction;
+# keep the two in sync.
+description: Code review agent — same diffs, several models
+
+providers:
+  - id: file://providers/copilot.mjs
+    label: gpt-5-mini
+    config: { model: gpt-5-mini }
+  - id: file://providers/copilot.mjs
+    label: claude-haiku-4.5
+    config: { model: claude-haiku-4.5 }
+  - id: file://providers/copilot.mjs
+    label: gpt-4.1
+    config: { model: gpt-4.1 }
+
+prompts:
+  - file://prompts/review.txt
+
+defaultTest:
+  options:
+    # llm-rubric grader
+    provider:
+      id: file://providers/copilot.mjs
+      config: { model: claude-sonnet-4.6 }
+  vars:
+    title: Migrate to React 19
+
+tests:
+  - description: React 16 -> 19 migration with three planted flaws
+    vars:
+      diff: file://fixtures/react19-migration.diff
+    assert:
+      # 1. valid JSON — the CI gate depends on it
+      - type: is-json
+      # 2. a second model checks that the review names what is broken
+      - type: llm-rubric
+        value: >-
+          The review identifies all three planted flaws and explains why each one breaks the component:
+          (1) DogList.defaultProps is ignored for function components in React 19, so pageSize is undefined;
+          (2) the resize listener is added in useEffect without a cleanup, so it leaks and is never removed;
+          (3) the fetch effect has an empty dependency array, so it does not refetch when breed or pageSize
+          change, and it has no cancellation of stale responses.
+      # 3. hard condition on the binding verdict
+      - type: javascript
+        value: JSON.parse(output).verdict === "fail"
+
+  - description: SQL injection
+    vars:
+      title: Add breed lookup
+      diff: file://fixtures/sql-injection.diff
+    assert:
+      - type: is-json
+      - type: llm-rubric
+        value: The review rejects the change and points to the SQL injection
+      - type: javascript
+        value: JSON.parse(output).verdict === "fail" && JSON.parse(output).securitySafety <= 3
