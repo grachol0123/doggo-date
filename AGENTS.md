@@ -81,3 +81,29 @@ Without `DOCKER_HOST` set, `supabase start` fails trying to find Docker.
 ## CI
 
 GitHub Actions workflow (`.github/workflows/ci.yml`) runs lint + build on every push and PR to master. Requires `SUPABASE_URL` and `SUPABASE_KEY` repository secrets for the build step.
+<!-- BEGIN @przeprogramowani/10x-cli -->
+
+## Zestaw narzędzi AI 10xDevs — moduł 5, lekcja 4 (wspólny rejestr AI)
+
+Udostępniaj umiejętności zespołu, prompty i reguły jako wersjonowany pakiet w rejestrze, który Twoja organizacja już posiada. GitHub Packages to domyślna ścieżka; AWS CodeArtifact z Terraform to opcjonalna ścieżka zarządzanej infrastruktury.
+
+```
+m5l4-shared-* -> m5l4-github-packages-spec-* + config templates -> publish -> npm install in consumer repos
+```
+
+### Router zadań — od czego zacząć
+
+| Umiejętność / prompt / szablon                                                                                   | Użyj, gdy                                                                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `m5l4-shared-conventions`, `m5l4-shared-spec-skill` (prompty)                                                    | Definiujesz pierwszą wspólną umiejętność zespołu i jej konwencje.                                                                                                                                  |
+| `m5l4-github-packages-spec-pack`, `m5l4-github-packages-spec-cicd` (prompty) + `m5l4-github-packages-*.template` | Tworzysz domyślny pakiet: package.json, instalator i dezinstalator, konsumencki `.npmrc`, początkowy `rules/AGENTS.md` oraz workflow publikacji.                                                   |
+| `/pack-init` -> `/tf-registry` -> `/setup-cicd`                                                                  | Opcjonalna ścieżka CodeArtifact: utwórz szkielet pakietu, skonfiguruj rejestr za pomocą Terraform, a następnie dodaj CI/CD. Odczytują specyfikacje `m5l4-*` z katalogu promptów Twojego narzędzia. |
+
+### Twarde reguły
+
+- **Nigdy nie nadpisuj tego, co napisał konsument.** Instalatory modyfikują wyłącznie pliki, które śledzą w swoim manifeście, i tylko tekst między ich znacznikami wartowniczymi.
+- **Dezinstalacja usuwa dokładnie to, co dodała instalacja**, używając manifestu.
+- **Publikuj tylko nową wersję.** Zwiększ wersję przed publikacją; rejestr odrzuca wersję, która już istnieje.
+- **Tokeny pozostają w sekretach CI lub lokalnym env**, nigdy w zatwierdzonym `.npmrc`.
+
+<!-- END @przeprogramowani/10x-cli -->
