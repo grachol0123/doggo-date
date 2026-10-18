@@ -12,7 +12,7 @@ import { expect } from "@playwright/test";
 export async function signInViaApi(context: BrowserContext, email: string, password: string) {
   const response = await context.request.post("/api/auth/signin", {
     form: { email, password },
-    // A successful sign-in redirects to "/"; a failed one redirects back to
+    // A successful sign-in redirects to "/dashboard"; a failed one redirects back to
     // /auth/signin?error=... We only care that no error redirect happened.
     maxRedirects: 5,
   });
