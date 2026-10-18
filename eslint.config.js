@@ -89,6 +89,7 @@ export default defineConfig(
     ".github/skills/10x-research/scripts/prose-json-check.mjs",
     ".github/skills/10x-research/scripts/prose-json-check.test.mjs",
     ".github/skills/10x-observability-audit/scripts/fake-ingest.mjs",
+    ".agents/skills/*/scripts/**",
   ]),
   baseConfig,
   reactConfig,
