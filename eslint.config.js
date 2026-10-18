@@ -83,6 +83,7 @@ const scriptsConfig = defineConfig({
 export default defineConfig(
   includeIgnoreFile(gitignorePath),
   globalIgnores([
+    "reviewer/**",
     ".github/skills/10x-plan/scripts/metadata-guard.mjs",
     ".github/skills/10x-plan/scripts/metadata-guard.test.mjs",
     ".github/skills/10x-research/scripts/metadata-guard.mjs",
@@ -90,6 +91,9 @@ export default defineConfig(
     ".github/skills/10x-research/scripts/prose-json-check.test.mjs",
     ".github/skills/10x-observability-audit/scripts/fake-ingest.mjs",
     ".agents/skills/*/scripts/**",
+    ".github/skills/10x-ray/scripts/xray.mjs",
+    ".github/skills/10x-repo-map/scripts/graph-metrics.mjs",
+    ".github/skills/10x-repo-map/scripts/graph-metrics.test.mjs",
   ]),
   baseConfig,
   reactConfig,
