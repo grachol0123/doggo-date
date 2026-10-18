@@ -1,8 +1,15 @@
-# 10x Astro Starter
+# Doggo Date
 
-![](./public/template.png)
+Tinder-style matching app for dogs and their owners. An owner creates a profile for their dog, browses other dogs, swipes, and — when two dogs like each other — gets a match and can chat with the other owner.
 
-A starter template for building Astro + React apps with Supabase auth, deployed to Cloudflare Workers.
+## Features
+
+- Email/password auth (Supabase Auth, cookie sessions)
+- Dog profile with photo upload (Supabase Storage)
+- Browsing candidates and swiping
+- Matches from mutual likes, and messaging between matched owners
+- Row-level security on all tables and storage
+- Sentry error tracking on Cloudflare Workers
 
 ## Tech Stack
 
@@ -25,8 +32,8 @@ See `package.json` for exact versions of all dependencies.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/przeprogramowani/10x-astro-starter.git
-cd 10x-astro-starter
+git clone https://github.com/grachol0123/doggo-date.git
+cd doggo-date
 ```
 
 2. Install dependencies:
@@ -58,10 +65,20 @@ npm run dev
 - `npm run lint:fix` - Auto-fix ESLint issues
 - `npm run format` - Run Prettier
 - `npm run smoke` - Smoke test the auth flow against a running server (`BASE_URL`, defaults to `http://localhost:4321`)
+- `npm run test:authz` - Authorization checks against a running server (`scripts/authz-test.mjs`)
+- `npx playwright test` - End-to-end tests in `tests/e2e` (builds and serves the app; needs local Supabase)
+- `npx supabase test db` - pgTAP row-level-security tests in `supabase/tests/database`
 
 ## Project Structure
 
-See `src/` for the application code (layouts, pages, API routes under `pages/api/`, components, lib) and `wrangler.jsonc` for the Cloudflare Workers config.
+- `src/pages/` - pages (`auth/`, `dashboard/`) and API routes (`api/auth`, `api/dogs`, `api/swipes`, `api/matches`, `api/messages`)
+- `src/components/` - Astro and React components (`ui/` holds shadcn/ui)
+- `src/lib/` - Supabase client, Sentry setup, schemas, helpers
+- `src/middleware.ts` - resolves the user and protects routes (`PROTECTED_ROUTES`)
+- `supabase/migrations/` - schema, RLS policies, storage bucket
+- `tests/e2e/` - Playwright tests; `scripts/` - smoke and authz tests
+- `context/` - product and planning docs (PRD, roadmap, test plan, changes)
+- `wrangler.jsonc` - Cloudflare Workers config
 
 ## Supabase Configuration
 
@@ -136,12 +153,15 @@ Users can then sign in immediately after sign-up without clicking a confirmation
 
 ### Auth routes
 
-| Route                 | Description                                                             |
-| --------------------- | ----------------------------------------------------------------------- |
-| `/auth/signin`        | Email/password sign-in form                                             |
-| `/auth/signup`        | Email/password sign-up form                                             |
-| `/auth/confirm-email` | Post-signup "check your inbox" page                                     |
-| `/dashboard`          | Example protected page (redirects to `/auth/signin` if unauthenticated) |
+| Route                           | Description                                                     |
+| ------------------------------- | --------------------------------------------------------------- |
+| `/auth/signin`                  | Email/password sign-in form                                     |
+| `/auth/signup`                  | Email/password sign-up form                                     |
+| `/auth/confirm-email`           | Post-signup "check your inbox" page                             |
+| `/dashboard`                    | Protected home (redirects to `/auth/signin` if unauthenticated) |
+| `/dashboard/dog`                | Create/edit your dog's profile                                  |
+| `/dashboard/matches`            | Your matches                                                    |
+| `/dashboard/messages/<matchId>` | Chat with a match                                               |
 
 Route protection is handled in `src/middleware.ts`. Add paths to the `PROTECTED_ROUTES` array there to require authentication.
 
@@ -214,14 +234,15 @@ BASE_URL=http://localhost:4321 npm run smoke
 
 It needs a reachable Supabase instance (local or cloud) with email confirmation disabled.
 
-> **Note:** this script exists primarily to guard the development of the starter itself — it is a fast sanity check that dependency upgrades did not break the build, the Cloudflare adapter or the Supabase auth flow. It is **not** a substitute for a real test suite. Once you build your own product on top of this starter, add proper tests (unit, integration, end-to-end) suited to your application.
+> **Note:** the smoke test is a fast sanity check (build, Cloudflare adapter, Supabase auth). Behaviour is covered by `npm run test:authz`, the pgTAP tests and the Playwright suite.
 
 ## CI
 
-GitHub Actions runs two jobs on every push and PR to `master`:
+GitHub Actions runs on every push and PR to `main`:
 
-- **ci** — lint, `astro check` and build. Configure `SUPABASE_URL` and `SUPABASE_KEY` as repository secrets for the build step.
-- **smoke** — starts a local Supabase via the Supabase CLI, builds, serves the production preview on the Cloudflare runtime and runs `npm run smoke` against it. No secrets required.
+- **Lint & Build** — lint, `astro check` and build. Configure `SUPABASE_URL` and `SUPABASE_KEY` as repository secrets for the build step.
+- **Smoke test** — starts a local Supabase, runs the pgTAP tests, builds and serves the production preview on the Cloudflare runtime, then runs `npm run smoke` and `npm run test:authz`. No secrets required.
+- **AI Code Review** (`review.yml`) — Copilot CLI review of pull requests.
 
 ## License
 
