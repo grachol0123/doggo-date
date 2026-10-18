@@ -182,8 +182,11 @@ const steps = [
     "owner A next-candidate excludes owner A dog",
     async () => {
       const signinResponse = await signIn(ownerAJar, OWNER_A_EMAIL);
-      if (signinResponse.status !== 302 || signinResponse.location !== "/") {
-        return fail(`${signinResponse.status} ${signinResponse.location}`, "expected owner A signin to redirect to /");
+      if (signinResponse.status !== 302 || signinResponse.location !== "/dashboard") {
+        return fail(
+          `${signinResponse.status} ${signinResponse.location}`,
+          "expected owner A signin to redirect to /dashboard",
+        );
       }
 
       const dashboardResponse = await request("/dashboard/dog", { jar: ownerAJar });
@@ -258,8 +261,11 @@ const steps = [
     "owner B dashboard remains unchanged after owner A save",
     async () => {
       const signinResponse = await signIn(ownerBJar, OWNER_B_EMAIL);
-      if (signinResponse.status !== 302 || signinResponse.location !== "/") {
-        return fail(`${signinResponse.status} ${signinResponse.location}`, "expected owner B signin to redirect to /");
+      if (signinResponse.status !== 302 || signinResponse.location !== "/dashboard") {
+        return fail(
+          `${signinResponse.status} ${signinResponse.location}`,
+          "expected owner B signin to redirect to /dashboard",
+        );
       }
 
       const dashboardResponse = await request("/dashboard/dog", { jar: ownerBJar });

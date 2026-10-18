@@ -16,6 +16,7 @@ description: >
   drift, classify subdomains, or asks for "domain distillation", "destylacja
   domeny", "słownik domeny", "DDD map of this repo".
 ---
+
 # Destylacja domeny: domena, której kod nigdy nie nazwał
 
 Przygotuj jeden raport, `context/domain/domain-distillation.md`, który odpowiada na pytania:
@@ -36,16 +37,16 @@ rankingiem; wybór tego, co zmienić dalej, pozostaje po stronie użytkownika.
 Wszystkie wyniki znajdują się w `<repo-root>/context/domain/`, również gdy `--root`
 zawęża zakres kodu.
 
-| Ścieżka                                         | Co                                                                      |
-| -------------------------------------------- | ------------------------------------------------------------------------- |
-| `context/domain/domain-distillation.md`      | **Raport** — jedyny plik przeznaczony do czytania przez ludzi i w późniejszej pracy |
-| `context/domain/glossary.md`               | Zwięzły słownik dla agentów i ludzi: termin, znaczenie, nazwa w kodzie, nie nazywaj tego |
-| `context/domain/evidence/0-sources.md`       | Zakres kodu, stos i warstwy, wykluczenia — bez słownictwa domenowego           |
-| `context/domain/evidence/0-documents.md`     | Dokumenty domenowe i cele produktu                                        |
-| `context/domain/evidence/1-docs-language.md` | Terminy, definicje, cykle życia, reguły i cele określone w dokumentach  |
-| `context/domain/evidence/2-code-language.md` | Nazwy domenowe w kodzie: typy, tabele, stany, operacje, zdarzenia      |
-| `context/domain/evidence/3-code-rules*.md`   | Reguły biznesowe, których strzeże kod: gdzie, na której warstwie, jak rygorystycznie      |
-| `context/archive/<stamp>-domain-distillation/` | Wcześniejszy raport, słownik i materiał dowodowy, przeniesione tutaj przy zastąpieniu           |
+| Ścieżka                                        | Co                                                                                       |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `context/domain/domain-distillation.md`        | **Raport** — jedyny plik przeznaczony do czytania przez ludzi i w późniejszej pracy      |
+| `context/domain/glossary.md`                   | Zwięzły słownik dla agentów i ludzi: termin, znaczenie, nazwa w kodzie, nie nazywaj tego |
+| `context/domain/evidence/0-sources.md`         | Zakres kodu, stos i warstwy, wykluczenia — bez słownictwa domenowego                     |
+| `context/domain/evidence/0-documents.md`       | Dokumenty domenowe i cele produktu                                                       |
+| `context/domain/evidence/1-docs-language.md`   | Terminy, definicje, cykle życia, reguły i cele określone w dokumentach                   |
+| `context/domain/evidence/2-code-language.md`   | Nazwy domenowe w kodzie: typy, tabele, stany, operacje, zdarzenia                        |
+| `context/domain/evidence/3-code-rules*.md`     | Reguły biznesowe, których strzeże kod: gdzie, na której warstwie, jak rygorystycznie     |
+| `context/archive/<stamp>-domain-distillation/` | Wcześniejszy raport, słownik i materiał dowodowy, przeniesione tutaj przy zastąpieniu    |
 
 ## 1. Kontrola wstępna
 
@@ -95,11 +96,11 @@ korzeń repozytorium, zakres kodu, pliki inwentaryzacyjne, które może czytać,
 wyjściową, język raportu oraz poniższe reguły. Każdemu pod-agentowi powiedz, aby najpierw przeczytał
 swój opis.
 
-| Pod-agent     | Opis                                                                  | Czyta                     | Pytanie                                                    |
-| ------------- | ---------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------- |
-| docs-language | [references/agent-docs-language.md](references/agent-docs-language.md) | oba pliki inwentaryzacyjne      | Jakie słowa, cykle życia i reguły określa biznes? |
-| code-language | [references/agent-code-language.md](references/agent-code-language.md) | tylko `0-sources.md`       | Jakich słów używa kod i do czego?                |
-| code-rules    | [references/agent-code-rules.md](references/agent-code-rules.md)       | tylko `0-sources.md`       | Których reguł kod faktycznie strzeże i gdzie?        |
+| Pod-agent     | Opis                                                                   | Czyta                      | Pytanie                                           |
+| ------------- | ---------------------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
+| docs-language | [references/agent-docs-language.md](references/agent-docs-language.md) | oba pliki inwentaryzacyjne | Jakie słowa, cykle życia i reguły określa biznes? |
+| code-language | [references/agent-code-language.md](references/agent-code-language.md) | tylko `0-sources.md`       | Jakich słów używa kod i do czego?                 |
+| code-rules    | [references/agent-code-rules.md](references/agent-code-rules.md)       | tylko `0-sources.md`       | Których reguł kod faktycznie strzeże i gdzie?     |
 
 **Duży zakres kodu.** Gdy zakres kodu zawiera więcej niż ~1,500 plików źródłowych,
 podziel code-rules na jednego agenta dla każdej grupy warstw lub obszarów
@@ -140,11 +141,11 @@ i polityki ze statusem każdego niezmiennika (**enforced**,
 **declared**, **ignored**, **contradicted**; **undocumented** dla
 ekspozycji, których nie obejmuje żaden dokument), lista rozbieżności
 modelu względem kodu oraz ranking — następnie nadaj mu charakter operacyjny, jak opisuje `report.md`: stabilne
-ID, stronę naprawy dla każdego wiersza rozbieżności, kryterium *done when* dla każdej pozycji rankingu,
+ID, stronę naprawy dla każdego wiersza rozbieżności, kryterium _done when_ dla każdej pozycji rankingu,
 pytania z właścicielem, zmiany od poprzedniego uruchomienia oraz
 `context/domain/glossary.md`.
 
-Zanim nazwiesz udokumentowaną regułę *ignored* lub termin *missing in code*, wykonaj
+Zanim nazwiesz udokumentowaną regułę _ignored_ lub termin _missing in code_, wykonaj
 samodzielnie ukierunkowane wyszukiwanie (`rg` po terminie, jego wariantach i synonimach w
 warstwie, w której powinien się znajdować). Grupuj je według warstw i cytuj zakres każdej grupy raz.
 

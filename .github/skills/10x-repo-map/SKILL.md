@@ -15,6 +15,7 @@ description: >
   repo", "what are the hot areas here", "zbuduj mapę projektu", "wide scan",
   "repo map", or wants to refresh an existing context/map/repo-map.md.
 ---
+
 # Mapa projektu: gdzie działa biznes i gdzie boli
 
 Przygotuj jeden raport, `context/map/repo-map.md`, który odpowiada na pytania dotyczące repozytorium,
@@ -37,15 +38,15 @@ wskazują, gdzie powinno rozpocząć się głębsze, ukierunkowane badanie.
 
 ## Wyniki
 
-| Ścieżka | Co |
-| -------------------------------------- | ---------------------------------------------------------------------------------- |
-| `context/map/repo-map.md` | **Raport** — jedyny plik przeznaczony do czytania przez ludzi i późniejsze prace |
-| `context/map/evidence/1-history.md` | Aktywność zmian, presja poprawek i współzmienność dla każdej możliwości |
+| Ścieżka                                | Co                                                                                                   |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `context/map/repo-map.md`              | **Raport** — jedyny plik przeznaczony do czytania przez ludzi i późniejsze prace                     |
+| `context/map/evidence/1-history.md`    | Aktywność zmian, presja poprawek i współzmienność dla każdej możliwości                              |
 | `context/map/evidence/2-discussion.md` | PR-y, przeglądy, cofnięcia, zgłoszenia, artefakty planowania i wskaźniki długu dla każdej możliwości |
-| `context/map/evidence/3-structure.md` | Graf zależności między możliwościami i wewnątrz nich: promień oddziaływania, cykle, granice |
-| `context/map/evidence/4-people.md` | Kto odpowiada za każdą możliwość, względem bazowego rozmiaru zespołu |
-| `context/archive/<stamp>-repo-map/` | Wcześniejszy raport i jego dowody, przenoszone tutaj przy zastąpieniu |
-| `context/map/.work/` | Tymczasowe dane pośrednie, ignorowane przez git dzięki własnemu `.gitignore` |
+| `context/map/evidence/3-structure.md`  | Graf zależności między możliwościami i wewnątrz nich: promień oddziaływania, cykle, granice          |
+| `context/map/evidence/4-people.md`     | Kto odpowiada za każdą możliwość, względem bazowego rozmiaru zespołu                                 |
+| `context/archive/<stamp>-repo-map/`    | Wcześniejszy raport i jego dowody, przenoszone tutaj przy zastąpieniu                                |
+| `context/map/.work/`                   | Tymczasowe dane pośrednie, ignorowane przez git dzięki własnemu `.gitignore`                         |
 
 ## 1. Kontrola wstępna
 
@@ -91,12 +92,12 @@ tego katalogu umiejętności (`<loaded-skill-dir>` w opisach), ścieżkę do opi
 ścieżki kontraktu skanowania i możliwości, ścieżkę wyjściową, ścieżkę do listy
 fałszywych sygnałów oraz poniższe reguły. Powiedz każdemu pod-agentowi, aby najpierw przeczytał swój opis.
 
-| Pod-agent | Opis | Pytanie |
-| ---------- | ---------------------------------------------------------------- | ------------------------------------------------------ |
-| history | [references/agent-history.md](references/agent-history.md) | Co się zmienia, co jest naprawiane, co zmienia się razem? |
-| discussion | [references/agent-discussion.md](references/agent-discussion.md) | Gdzie trafiają uwaga, tarcia i ponowne próby? |
-| structure | [references/agent-structure.md](references/agent-structure.md) | Jak daleko sięga zmiana; które granice pękają? |
-| people | [references/agent-people.md](references/agent-people.md) | Kto odpowiada za każdą możliwość? |
+| Pod-agent  | Opis                                                             | Pytanie                                                   |
+| ---------- | ---------------------------------------------------------------- | --------------------------------------------------------- |
+| history    | [references/agent-history.md](references/agent-history.md)       | Co się zmienia, co jest naprawiane, co zmienia się razem? |
+| discussion | [references/agent-discussion.md](references/agent-discussion.md) | Gdzie trafiają uwaga, tarcia i ponowne próby?             |
+| structure  | [references/agent-structure.md](references/agent-structure.md)   | Jak daleko sięga zmiana; które granice pękają?            |
+| people     | [references/agent-people.md](references/agent-people.md)         | Kto odpowiada za każdą możliwość?                         |
 
 Użyj natywnego mechanizmu pod-agentów swojego asystenta programistycznego AI z typem
 pod-agenta ogólnego przeznaczenia — potrzebują dostępu do powłoki i możliwości zapisywania plików.

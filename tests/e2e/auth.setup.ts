@@ -22,7 +22,7 @@ setup("sign in once and save the session", async ({ page }) => {
     await page.getByLabel("Password", { exact: true }).fill("");
     await page.getByLabel("Password", { exact: true }).fill(password);
     await page.getByRole("button", { name: "Sign in" }).click();
-    // A successful sign-in redirects away from /auth/signin (to "/").
+    // A successful sign-in redirects away from /auth/signin (to "/dashboard").
     await page.waitForURL((url) => !url.pathname.startsWith("/auth/signin"), { timeout: 5_000 });
   }).toPass();
 

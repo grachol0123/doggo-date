@@ -11,6 +11,7 @@ description: >
   it. `--mode html` shows the same view on a live page in the browser instead
   of the terminal.
 ---
+
 # 10x-ray
 
 Jesteś obserwatorem i interpretatorem. Czytasz docelową umiejętność i mapujesz
@@ -30,7 +31,7 @@ wszędzie ścieżki bezwzględnej; worker również jej potrzebuje. Wymaga Node 
 ## 1. Przeanalizuj wywołanie
 
 - Wiodące `--mode <terminal|html>` (lub `--mode=<…>`) wybiera miejsce wyświetlania
-  widoku; domyślnie `terminal`. Liczy się tylko flaga trybu *przed* nazwą umiejętności;
+  widoku; domyślnie `terminal`. Liczy się tylko flaga trybu _przed_ nazwą umiejętności;
   wszystko po nazwie umiejętności należy do umiejętności.
 - Następny token = docelowa nazwa umiejętności (usuń wiodące `/`). Wszystko po nim
   = `ARGS` dla tej umiejętności, przekazane dosłownie.
@@ -99,7 +100,7 @@ strony), a następnie zakończ swoją turę.
 
 - Pierwsza linia jest linią statusu `x-ray tick …`, którą host już
   pokazuje w swoim wierszu powiadomień. Pomiń ją i wypisz resztę dosłownie wewnątrz
-  ogrodzenia ```` ```text ````. Powiadomienia przychodzą z encjami HTML: zamień `&amp;`
+  ogrodzenia ` ```text `. Powiadomienia przychodzą z encjami HTML: zamień `&amp;`
   `&lt;` `&gt;` z powrotem na `&` `<` `>`. Nie zmieniaj niczego więcej. Ramki
   zawierają materiał dydaktyczny (koncepcja na krok, notatki o rezultatach), więc dodaj co najwyżej
   jedną krótką linię pod ogrodzeniem, tylko gdy ramka wymaga kontekstu, na który użytkownik
