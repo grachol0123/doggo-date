@@ -37,3 +37,22 @@ playwright-report/
 blob-report/
 playwright/.cache/
 .playwright-cli/
+
+# 10xDevs course packages (`10x get`): local only, never in git
+.10x-cli.json
+.agents/.10x-cli-manifest.json
+.agents/config-templates/
+.agents/prompts/
+.agents/skills/10x-*/
+!.agents/skills/10x-impl-review-ci/
+.agents/skills/pack-init/
+.agents/skills/setup-cicd/
+.agents/skills/tf-registry/
+.github/.10x-cli-manifest.json
+.github/config-templates/
+.github/prompts/
+.github/skills/10x-*/
+!.github/skills/10x-impl-review-ci/
+.github/skills/pack-init/
+.github/skills/setup-cicd/
+.github/skills/tf-registry/
